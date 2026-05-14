@@ -1,2 +1,3 @@
 # My blog
-This is my blog, uses (Astro)[https://astro.build/]
+
+This is my blog, uses [Astro](https://astro.build/)
