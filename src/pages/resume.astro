@@ -14,15 +14,15 @@ import { education, experience, skills } from '../data/site';
 	</section>
 
 	<section class="resume-block">
-		<h3 class="block-title">Học vấn</h3>
+		<h3 class="block-title" data-i18n="resume.education.title">Học vấn</h3>
 		<div class="timeline-list">
-			{education.map((item) => (
+			{education.map((item, index) => (
 				<article class="timeline-item">
 					<div class="timeline-dot"></div>
 					<div class="timeline-copy">
-						<h4>{item.title}</h4>
-						<span>{item.time}</span>
-						<p>{item.body}</p>
+						<h4 data-i18n={`resume.education.${index}.title`}>{item.title}</h4>
+						<span data-i18n={`resume.education.${index}.time`}>{item.time}</span>
+						<p data-i18n={`resume.education.${index}.body`}>{item.body}</p>
 					</div>
 				</article>
 			))}
@@ -30,15 +30,15 @@ import { education, experience, skills } from '../data/site';
 	</section>
 
 	<section class="resume-block">
-		<h3 class="block-title">Kinh nghiệm</h3>
+		<h3 class="block-title" data-i18n="resume.experience.title">Kinh nghiệm</h3>
 		<div class="timeline-list">
-			{experience.map((item) => (
+			{experience.map((item, index) => (
 				<article class="timeline-item">
 					<div class="timeline-dot"></div>
 					<div class="timeline-copy">
-						<h4>{item.title}</h4>
-						<span>{item.time}</span>
-						<p>{item.body}</p>
+						<h4 data-i18n={`resume.experience.${index}.title`}>{item.title}</h4>
+						<span data-i18n={`resume.experience.${index}.time`}>{item.time}</span>
+						<p data-i18n={`resume.experience.${index}.body`}>{item.body}</p>
 					</div>
 				</article>
 			))}
@@ -46,9 +46,9 @@ import { education, experience, skills } from '../data/site';
 	</section>
 
 	<section class="resume-block">
-		<h3 class="block-title">Kỹ năng chính</h3>
+		<h3 class="block-title" data-i18n="resume.skills.title">Kỹ năng chính</h3>
 		<div class="skills-grid">
-			{skills.map((skill) => (
+			{skills.map((skill, index) => (
 				<article class="skill-card">
 					<div class="skill-icon">
 						{
@@ -72,8 +72,8 @@ import { education, experience, skills } from '../data/site';
 						}
 					</div>
 					<div>
-						<h4>{skill.title}</h4>
-						<p>{skill.note}</p>
+						<h4 data-i18n={`resume.skill.${index}.title`}>{skill.title}</h4>
+						<p data-i18n={`resume.skill.${index}.note`}>{skill.note}</p>
 					</div>
 				</article>
 			))}

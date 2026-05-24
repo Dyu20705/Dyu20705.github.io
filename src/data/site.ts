@@ -151,12 +151,12 @@ export const portfolioProjects = [
 ];
 
 export const galleryItems = [
-	{ title: 'Khoảnh khắc 01', caption: 'Ảnh chân dung cá nhân', image: gallery01 },
-	{ title: 'Khoảnh khắc 02', caption: 'Góc nhìn đời sống thường ngày', image: gallery02 },
-	{ title: 'Khoảnh khắc 03', caption: 'Một khung hình ngẫu nhiên', image: gallery03 },
-	{ title: 'Khoảnh khắc 04', caption: 'Không gian và ánh sáng', image: gallery04 },
-	{ title: 'Khoảnh khắc 05', caption: 'Nhịp sinh hoạt cá nhân', image: gallery05 },
-	{ title: 'Khoảnh khắc 06', caption: 'Một chi tiết đáng nhớ', image: gallery06 },
+	{ title: 'Khoảnh khắc 01', caption: 'Event', image: gallery01 },
+	{ title: 'Khoảnh khắc 02', caption: 'Event', image: gallery02 },
+	{ title: 'Khoảnh khắc 03', caption: 'Event', image: gallery03 },
+	{ title: 'Khoảnh khắc 04', caption: 'Event', image: gallery04 },
+	{ title: 'Khoảnh khắc 05', caption: 'Event', image: gallery05 },
+	{ title: 'Khoảnh khắc 06', caption: 'Event', image: gallery06 },
 ];
 
 export const sharedCover = sharedCoverImage;

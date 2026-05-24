@@ -14,12 +14,12 @@ import { galleryItems } from '../data/site';
 	</section>
 
 	<section class="gallery-grid">
-		{galleryItems.map((item) => (
+		{galleryItems.map((item, index) => (
 			<article class="gallery-card">
 				<img src={item.image.src} alt={item.title} loading="lazy" />
 				<div class="gallery-copy">
-					<h3>{item.title}</h3>
-					<p>{item.caption}</p>
+					<h3 data-i18n={`gallery.item.${index}.title`}>{item.title}</h3>
+					<p data-i18n={`gallery.item.${index}.caption`}>{item.caption}</p>
 				</div>
 			</article>
 		))}

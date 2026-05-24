@@ -14,14 +14,14 @@ import { portfolioProjects } from '../data/site';
 	</section>
 
 	<section class="portfolio-filters" aria-label="Portfolio filters">
-		<button class="filter-button is-active" type="button" data-filter="all">All</button>
-		<button class="filter-button" type="button" data-filter="app">App</button>
-		<button class="filter-button" type="button" data-filter="tools">Tools</button>
-		<button class="filter-button" type="button" data-filter="other">Other</button>
+		<button class="filter-button is-active" type="button" data-filter="all" data-i18n="portfolio.filter.all">All</button>
+		<button class="filter-button" type="button" data-filter="app" data-i18n="portfolio.filter.app">App</button>
+		<button class="filter-button" type="button" data-filter="tools" data-i18n="portfolio.filter.tools">Tools</button>
+		<button class="filter-button" type="button" data-filter="other" data-i18n="portfolio.filter.other">Other</button>
 	</section>
 
 	<section class="portfolio-grid" id="portfolio-grid">
-		{portfolioProjects.map((project) => (
+		{portfolioProjects.map((project, index) => (
 			<a
 				class="portfolio-card"
 				href={project.url}
@@ -33,9 +33,9 @@ import { portfolioProjects } from '../data/site';
 				<div class="portfolio-copy">
 					<div class="portfolio-top">
 						<h3>{project.title}</h3>
-						<span class="portfolio-tag">{project.label}</span>
+						<span class="portfolio-tag" data-i18n={`portfolio.project.${index}.label`}>{project.label}</span>
 					</div>
-					<p>{project.description}</p>
+					<p data-i18n={`portfolio.project.${index}.description`}>{project.description}</p>
 				</div>
 			</a>
 		))}

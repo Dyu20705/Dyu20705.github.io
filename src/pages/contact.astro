@@ -15,8 +15,8 @@ import { profile } from '../data/site';
 
 	<section class="contact-hero">
 		<div>
-			<h3>Sẵn sàng trao đổi về system, infrastructure và triển khai thực tế</h3>
-			<p>
+			<h3 data-i18n="contact.hero.title">Sẵn sàng trao đổi về system, infrastructure và triển khai thực tế</h3>
+			<p data-i18n="contact.hero.body">
 				Nếu anh muốn trao đổi về thiết kế hạ tầng, tối ưu quy trình deploy, khả năng vận hành hay bảo mật hệ
 				thống, có thể liên hệ trực tiếp qua email hoặc gửi form bên dưới.
 			</p>
@@ -29,7 +29,7 @@ import { profile } from '../data/site';
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Zm2.2-.5 5.8 5.1L17.8 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
 			</div>
 			<div>
-				<small>Email</small>
+				<small data-i18n="contact.card.email">Email</small>
 				<a href={`mailto:${profile.email}`}>{profile.email}</a>
 			</div>
 		</article>
@@ -38,7 +38,7 @@ import { profile } from '../data/site';
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.9c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2L9.9 10.2c.8 1.5 2 2.8 3.4 3.6l1.3-1.3c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2l-1.1 1.1c-.9.9-2.2 1.2-3.4.8-5-1.7-9-5.7-10.7-10.7-.4-1.2-.1-2.5.8-3.4L7.2 4.9Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
 			</div>
 			<div>
-				<small>Điện thoại</small>
+				<small data-i18n="contact.card.phone">Điện thoại</small>
 				<a href="tel:0869630908">{profile.phone}</a>
 			</div>
 		</article>
@@ -47,7 +47,7 @@ import { profile } from '../data/site';
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20s6-5.6 6-10a6 6 0 1 0-12 0c0 4.4 6 10 6 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.7"/></svg>
 			</div>
 			<div>
-				<small>Địa điểm</small>
+				<small data-i18n="contact.card.location">Địa điểm</small>
 				<span>{profile.location}</span>
 			</div>
 		</article>
@@ -56,19 +56,19 @@ import { profile } from '../data/site';
 	<form class="contact-form" action={`mailto:${profile.email}`} method="post" enctype="text/plain">
 		<div class="form-row">
 			<label>
-				<span>Họ và tên</span>
-				<input type="text" name="name" placeholder="Nguyễn Văn A" required />
+				<span data-i18n="contact.form.name">Họ và tên</span>
+				<input type="text" name="name" placeholder="Nguyễn Văn A" data-i18n-placeholder="contact.form.name.placeholder" required />
 			</label>
 			<label>
-				<span>Email</span>
-				<input type="email" name="email" placeholder="tenban@example.com" required />
+				<span data-i18n="contact.form.email">Email</span>
+				<input type="email" name="email" placeholder="tenban@example.com" data-i18n-placeholder="contact.form.email.placeholder" required />
 			</label>
 		</div>
 		<label>
-			<span>Nội dung</span>
-			<textarea name="message" placeholder="Viết nội dung cần trao đổi..." required></textarea>
+			<span data-i18n="contact.form.message">Nội dung</span>
+			<textarea name="message" placeholder="Viết nội dung cần trao đổi..." data-i18n-placeholder="contact.form.message.placeholder" required></textarea>
 		</label>
-		<button class="submit-button" type="submit">Gửi tin nhắn</button>
+		<button class="submit-button" type="submit" data-i18n="contact.form.submit">Gửi tin nhắn</button>
 	</form>
 
 	<style>

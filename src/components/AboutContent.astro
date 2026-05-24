@@ -6,11 +6,11 @@ import { aboutHighlights, serviceCards } from '../data/site';
 	<h2 class="page-title" data-i18n="page.about.title">Về tôi</h2>
 	<div class="page-accent"></div>
 	<div class="about-copy">
-		<p class="about-lead">
+		<p class="about-lead" data-i18n="about.lead">
 			Tôi muốn thiết kế, xây dựng và bảo trì những system hoặc hạ tầng có tiêu chuẩn rõ ràng: dễ bảo trì,
 			đủ tin cậy, an toàn ngay từ mặc định và sẵn sàng mở rộng khi bài toán lớn dần lên.
 		</p>
-		<p>
+		<p data-i18n="about.body">
 			Cách tôi tiếp cận một hệ thống không dừng ở việc “chạy được”. Tôi quan tâm tới cấu trúc sau khi bàn
 			giao, cách nó được vận hành trong production, mức độ dễ quan sát khi có lỗi và chi phí thay đổi khi sản
 			phẩm tiếp tục phát triển.
@@ -18,19 +18,19 @@ import { aboutHighlights, serviceCards } from '../data/site';
 	</div>
 
 	<div class="highlight-list">
-		{aboutHighlights.map((item) => (
+		{aboutHighlights.map((item, index) => (
 			<div class="highlight-item">
 				<span class="highlight-dot"></span>
-				<p>{item}</p>
+				<p data-i18n={`about.highlight.${index}`}>{item}</p>
 			</div>
 		))}
 	</div>
 </section>
 
 <section class="page-section">
-	<h3 class="section-heading">Tôi đang tập trung vào</h3>
+	<h3 class="section-heading" data-i18n="about.focus.title">Tôi đang tập trung vào</h3>
 	<div class="service-grid">
-		{serviceCards.map((card) => (
+		{serviceCards.map((card, index) => (
 			<article class="service-card">
 				<div class="service-icon">
 					{
@@ -46,8 +46,8 @@ import { aboutHighlights, serviceCards } from '../data/site';
 					}
 				</div>
 				<div>
-					<h4>{card.title}</h4>
-					<p>{card.body}</p>
+					<h4 data-i18n={`about.service.${index}.title`}>{card.title}</h4>
+					<p data-i18n={`about.service.${index}.body`}>{card.body}</p>
 				</div>
 			</article>
 		))}

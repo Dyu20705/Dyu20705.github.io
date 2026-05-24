@@ -1,6 +1,8 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import { profile, navItems, socialLinks } from '../data/site';
+import entranceSong from '../assets/theme-song/entrance.mp3?url';
+import goodbyeSong from '../assets/theme-song/goodbye.mp3?url';
 
 interface Props {
 	headTitle: string;
@@ -280,7 +282,10 @@ const { headTitle, description, activeNav } = Astro.props;
 								) : item.id === 'linkedin' ? (
 									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.49 2.49 0 1 1 0 3.5a2.49 2.49 0 0 1 4.98 0ZM.5 8.5h4.9V24H.5V8.5Zm7.4 0H12v2.1h.1c.6-1.1 2-2.3 4.2-2.3 4.5 0 5.3 2.9 5.3 6.8V24h-4.9v-6.1c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V24H7.9V8.5Z"/></svg>
 								) : (
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.2 13.8c-.8 1.5-1.8 2.2-3.2 2.2-1.2 0-2.2-.5-2.9-1.4-.8-.9-1.2-2-1.2-3.2 0-1.5.5-2.7 1.4-3.8.9-1 2.2-1.6 3.7-1.6 1.4 0 2.6.4 3.6 1.1l-.9 1.5c-.8-.5-1.7-.8-2.7-.8s-1.8.4-2.4 1.1c-.6.8-.9 1.6-.9 2.6 0 .9.3 1.7.8 2.3.5.6 1.2 1 2 1 .9 0 1.7-.4 2.2-1.3l1.5 1.3ZM20.5 3H24l-5.8 6.6 6.4 11.4H21l-4.8-8.7-1.6 1.8V21H11V3h3.6v7l5.9-7Z"/></svg>
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+										<path d="M8 4 14 12 8 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M13 4h3l-4 8 4 8h-3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
 								)
 							}
 						</a>
@@ -329,6 +334,94 @@ const { headTitle, description, activeNav } = Astro.props;
 						'profile.birthday': 'Ngày sinh',
 						'profile.location': 'Địa điểm',
 						'role.main': 'System & Infrastructure Engineer',
+						'about.lead': 'Tôi muốn thiết kế, xây dựng và bảo trì những system hoặc hạ tầng có tiêu chuẩn rõ ràng: dễ bảo trì, đủ tin cậy, an toàn ngay từ mặc định và sẵn sàng mở rộng khi bài toán lớn dần lên.',
+						'about.body': 'Cách tôi tiếp cận một hệ thống không dừng ở việc “chạy được”. Tôi quan tâm tới cấu trúc sau khi bàn giao, cách nó được vận hành trong production, mức độ dễ quan sát khi có lỗi và chi phí thay đổi khi sản phẩm tiếp tục phát triển.',
+						'about.highlight.0': 'Thiết kế hệ thống dễ bảo trì ngay từ cấu trúc đầu tiên.',
+						'about.highlight.1': 'Ưu tiên độ tin cậy, khả năng khôi phục và quan sát vận hành.',
+						'about.highlight.2': 'Xem bảo mật và khả năng mở rộng là tiêu chuẩn nền, không phải phần thêm sau.',
+						'about.focus.title': 'Tôi đang tập trung vào',
+						'about.service.0.title': 'Thiết kế hạ tầng',
+						'about.service.0.body': 'Xây dựng kiến trúc cloud, Linux và networking theo hướng rõ ràng, kiểm soát được và dễ mở rộng.',
+						'about.service.1.title': 'Triển khai và tự động hóa',
+						'about.service.1.body': 'Tổ chức CI/CD, container và quy trình release để việc triển khai ổn định, lặp lại được và ít rủi ro.',
+						'about.service.2.title': 'Bảo mật hệ thống',
+						'about.service.2.body': 'Giảm bề mặt tấn công bằng default an toàn, quản lý secret tốt hơn và phân quyền rõ ràng.',
+						'about.service.3.title': 'Vận hành và quan sát',
+						'about.service.3.body': 'Theo dõi log, metrics và trace để phát hiện vấn đề sớm và hỗ trợ điều tra sự cố nhanh hơn.',
+						'resume.education.title': 'Học vấn',
+						'resume.education.0.title': 'Đại học Giao thông Vận tải',
+						'resume.education.0.time': '2023 - 2027 (dự kiến)',
+						'resume.education.0.body': 'Ngành Công nghệ thông tin, tập trung vào backend, hệ thống và tư duy triển khai thực tế.',
+						'resume.education.1.title': 'Tự học Cloud, Linux và System Operations',
+						'resume.education.1.time': '2024 - hiện tại',
+						'resume.education.1.body': 'Thực hành qua các dự án cá nhân, tự thiết kế môi trường chạy, đóng gói, monitor và tối ưu quy trình vận hành.',
+						'resume.experience.title': 'Kinh nghiệm',
+						'resume.experience.0.title': 'System & Infrastructure Engineer',
+						'resume.experience.0.time': '2024 - hiện tại',
+						'resume.experience.0.body': 'Xây dựng backend, công cụ automation và các thành phần hạ tầng nhỏ gọn nhưng có khả năng vận hành ổn định.',
+						'resume.experience.1.title': 'Systems Automation & Deployment Projects',
+						'resume.experience.1.time': '2024 - hiện tại',
+						'resume.experience.1.body': 'Tập trung vào container, deploy pipeline, monitoring, observability và cách giảm rủi ro khi thay đổi hệ thống.',
+						'resume.skills.title': 'Kỹ năng chính',
+						'resume.skill.0.title': 'Linux',
+						'resume.skill.0.note': 'Môi trường vận hành và tooling hằng ngày',
+						'resume.skill.1.title': 'Docker',
+						'resume.skill.1.note': 'Đóng gói ứng dụng và chuẩn hóa môi trường chạy',
+						'resume.skill.2.title': 'Cloud',
+						'resume.skill.2.note': 'Tư duy hạ tầng, dịch vụ và khả năng mở rộng',
+						'resume.skill.3.title': 'Nginx',
+						'resume.skill.3.note': 'Reverse proxy, routing và phục vụ ứng dụng',
+						'resume.skill.4.title': 'TypeScript',
+						'resume.skill.4.note': 'Ứng dụng web, backend và automation script',
+						'resume.skill.5.title': 'Python',
+						'resume.skill.5.note': 'Tooling, script hệ thống và xử lý tác vụ',
+						'resume.skill.6.title': 'CI/CD',
+						'resume.skill.6.note': 'Quy trình build, test và release lặp lại được',
+						'resume.skill.7.title': 'Security',
+						'resume.skill.7.note': 'Default an toàn, secret và phân quyền',
+						'portfolio.filter.all': 'All',
+						'portfolio.filter.app': 'App',
+						'portfolio.filter.tools': 'Tools',
+						'portfolio.filter.other': 'Other',
+						'portfolio.project.0.label': 'Tools',
+						'portfolio.project.0.description': 'Bộ cấu hình shell, terminal và workflow cá nhân để đồng bộ môi trường làm việc.',
+						'portfolio.project.1.label': 'Other',
+						'portfolio.project.1.description': 'Mô phỏng hành vi mạng và các thành phần internet để thử nghiệm ý tưởng hệ thống.',
+						'portfolio.project.2.label': 'Tools',
+						'portfolio.project.2.description': 'Công cụ ghi chú cá nhân tập trung vào tốc độ truy cập, quản lý nội dung và thói quen làm việc.',
+						'portfolio.project.3.label': 'App',
+						'portfolio.project.3.description': 'Dự án game với logic thi đấu gọn, rõ ràng và có thể tiếp tục mở rộng thêm luật chơi.',
+						'portfolio.project.4.label': 'App',
+						'portfolio.project.4.description': 'Ứng dụng quản lý chi tiêu cá nhân với mục tiêu theo dõi dòng tiền đơn giản và dễ dùng.',
+						'portfolio.project.5.label': 'App',
+						'portfolio.project.5.description': 'Game chiến thuật theo lượt có tích hợp bot và cơ chế xử lý trạng thái ván chơi.',
+						'contact.hero.title': 'Sẵn sàng trao đổi về system, infrastructure và triển khai thực tế',
+						'contact.hero.body': 'Nếu anh muốn trao đổi về thiết kế hạ tầng, tối ưu quy trình deploy, khả năng vận hành hay bảo mật hệ thống, có thể liên hệ trực tiếp qua email hoặc gửi form bên dưới.',
+						'contact.card.email': 'Email',
+						'contact.card.phone': 'Điện thoại',
+						'contact.card.location': 'Địa điểm',
+						'contact.form.name': 'Họ và tên',
+						'contact.form.name.placeholder': 'Nguyễn Văn A',
+						'contact.form.email': 'Email',
+						'contact.form.email.placeholder': 'tenban@example.com',
+						'contact.form.message': 'Nội dung',
+						'contact.form.message.placeholder': 'Viết nội dung cần trao đổi...',
+						'contact.form.submit': 'Gửi tin nhắn',
+						'gallery.item.0.title': 'Khoảnh khắc 01',
+						'gallery.item.0.caption': 'Event',
+						'gallery.item.1.title': 'Khoảnh khắc 02',
+						'gallery.item.1.caption': 'Event',
+						'gallery.item.2.title': 'Khoảnh khắc 03',
+						'gallery.item.2.caption': 'Event',
+						'gallery.item.3.title': 'Khoảnh khắc 04',
+						'gallery.item.3.caption': 'Event',
+						'gallery.item.4.title': 'Khoảnh khắc 05',
+						'gallery.item.4.caption': 'Event',
+						'gallery.item.5.title': 'Khoảnh khắc 06',
+						'gallery.item.5.caption': 'Event',
+						'cv.open': 'Mở ở tab mới',
+						'cv.download': 'Tải xuống',
+						'blog.read': 'Đọc bài viết',
 					},
 					en: {
 						'nav.about': 'About Me',
@@ -350,6 +443,94 @@ const { headTitle, description, activeNav } = Astro.props;
 						'profile.birthday': 'Birthday',
 						'profile.location': 'Location',
 						'role.main': 'System & Infrastructure Engineer',
+						'about.lead': 'I want to design, build, and maintain systems or infrastructure with clear standards: maintainable, reliable, secure by default, and ready to scale as the problem grows.',
+						'about.body': 'My approach to a system does not stop at “it works”. I care about the structure after handoff, how it behaves in production, how observable it is during failure, and the cost of change as the product evolves.',
+						'about.highlight.0': 'Design systems that stay maintainable from the first structural decision.',
+						'about.highlight.1': 'Prioritize reliability, recovery paths, and operational visibility.',
+						'about.highlight.2': 'Treat security and scalability as baseline standards, not late additions.',
+						'about.focus.title': 'What I am focusing on',
+						'about.service.0.title': 'Infrastructure Design',
+						'about.service.0.body': 'Build cloud, Linux, and networking architecture with clear boundaries, control, and room to grow.',
+						'about.service.1.title': 'Deployment and Automation',
+						'about.service.1.body': 'Organize CI/CD, containers, and release workflows so deployment stays stable, repeatable, and low risk.',
+						'about.service.2.title': 'System Security',
+						'about.service.2.body': 'Reduce attack surface with secure defaults, better secret handling, and clearer permission boundaries.',
+						'about.service.3.title': 'Operations and Observability',
+						'about.service.3.body': 'Use logs, metrics, and traces to detect issues early and investigate incidents faster.',
+						'resume.education.title': 'Education',
+						'resume.education.0.title': 'University of Transport and Communications',
+						'resume.education.0.time': '2023 - 2027 (expected)',
+						'resume.education.0.body': 'Information Technology major, focused on backend systems and practical deployment thinking.',
+						'resume.education.1.title': 'Self-study in Cloud, Linux, and System Operations',
+						'resume.education.1.time': '2024 - present',
+						'resume.education.1.body': 'Hands-on practice through personal projects, designing runtime environments, packaging, monitoring, and operational workflows.',
+						'resume.experience.title': 'Experience',
+						'resume.experience.0.title': 'System & Infrastructure Engineer',
+						'resume.experience.0.time': '2024 - present',
+						'resume.experience.0.body': 'Build backend systems, automation tools, and compact infrastructure components with stable operational behavior.',
+						'resume.experience.1.title': 'Systems Automation & Deployment Projects',
+						'resume.experience.1.time': '2024 - present',
+						'resume.experience.1.body': 'Focused on containers, deployment pipelines, monitoring, observability, and reducing risk when systems change.',
+						'resume.skills.title': 'Core Skills',
+						'resume.skill.0.title': 'Linux',
+						'resume.skill.0.note': 'Daily operating environment and tooling',
+						'resume.skill.1.title': 'Docker',
+						'resume.skill.1.note': 'Application packaging and runtime consistency',
+						'resume.skill.2.title': 'Cloud',
+						'resume.skill.2.note': 'Infrastructure thinking, services, and scalability',
+						'resume.skill.3.title': 'Nginx',
+						'resume.skill.3.note': 'Reverse proxy, routing, and application serving',
+						'resume.skill.4.title': 'TypeScript',
+						'resume.skill.4.note': 'Web apps, backend services, and automation scripts',
+						'resume.skill.5.title': 'Python',
+						'resume.skill.5.note': 'Tooling, system scripting, and task processing',
+						'resume.skill.6.title': 'CI/CD',
+						'resume.skill.6.note': 'Repeatable build, test, and release workflows',
+						'resume.skill.7.title': 'Security',
+						'resume.skill.7.note': 'Secure defaults, secrets, and access control',
+						'portfolio.filter.all': 'All',
+						'portfolio.filter.app': 'App',
+						'portfolio.filter.tools': 'Tools',
+						'portfolio.filter.other': 'Other',
+						'portfolio.project.0.label': 'Tools',
+						'portfolio.project.0.description': 'Personal shell, terminal, and workflow configuration for a consistent working environment.',
+						'portfolio.project.1.label': 'Other',
+						'portfolio.project.1.description': 'A simulator for network and internet behavior to test system ideas.',
+						'portfolio.project.2.label': 'Tools',
+						'portfolio.project.2.description': 'A personal note-taking tool focused on speed, content organization, and daily workflow.',
+						'portfolio.project.3.label': 'App',
+						'portfolio.project.3.description': 'A game project with clear match logic and room for future rule expansion.',
+						'portfolio.project.4.label': 'App',
+						'portfolio.project.4.description': 'A personal finance app focused on simple and usable money tracking.',
+						'portfolio.project.5.label': 'App',
+						'portfolio.project.5.description': 'A turn-based strategy game with bot support and game state handling.',
+						'contact.hero.title': 'Open to discuss systems, infrastructure, and practical deployment work',
+						'contact.hero.body': 'If you want to discuss infrastructure design, deployment workflow optimization, operations, or system security, you can contact me directly by email or use the form below.',
+						'contact.card.email': 'Email',
+						'contact.card.phone': 'Phone',
+						'contact.card.location': 'Location',
+						'contact.form.name': 'Full name',
+						'contact.form.name.placeholder': 'Nguyen Van A',
+						'contact.form.email': 'Email',
+						'contact.form.email.placeholder': 'yourname@example.com',
+						'contact.form.message': 'Message',
+						'contact.form.message.placeholder': 'Write what you want to discuss...',
+						'contact.form.submit': 'Send message',
+						'gallery.item.0.title': 'Moment 01',
+						'gallery.item.0.caption': 'Event',
+						'gallery.item.1.title': 'Moment 02',
+						'gallery.item.1.caption': 'Event',
+						'gallery.item.2.title': 'Moment 03',
+						'gallery.item.2.caption': 'Event',
+						'gallery.item.3.title': 'Moment 04',
+						'gallery.item.3.caption': 'Event',
+						'gallery.item.4.title': 'Moment 05',
+						'gallery.item.4.caption': 'Event',
+						'gallery.item.5.title': 'Moment 06',
+						'gallery.item.5.caption': 'Event',
+						'cv.open': 'Open in new tab',
+						'cv.download': 'Download',
+						'blog.read': 'Read article',
 					},
 				};
 				const button = document.getElementById('lang-float');
@@ -359,6 +540,12 @@ const { headTitle, description, activeNav } = Astro.props;
 						const key = element.getAttribute('data-i18n');
 						if (key && translations[lang] && translations[lang][key]) {
 							element.textContent = translations[lang][key];
+						}
+					});
+					document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+						const key = element.getAttribute('data-i18n-placeholder');
+						if (key && translations[lang] && translations[lang][key]) {
+							element.setAttribute('placeholder', translations[lang][key]);
 						}
 					});
 					document.querySelectorAll('[data-i18n-role]').forEach((element) => {
@@ -378,6 +565,60 @@ const { headTitle, description, activeNav } = Astro.props;
 					});
 				}
 			})();
+		</script>
+		<script type="module" define:vars={{ entranceSong, goodbyeSong }}>
+			const audioState = {
+				entrancePlayed: false,
+				goodbyePlayed: false,
+				activated: false,
+			};
+
+			const entranceAudio = new Audio(entranceSong);
+			const goodbyeAudio = new Audio(goodbyeSong);
+			entranceAudio.preload = 'auto';
+			goodbyeAudio.preload = 'auto';
+			entranceAudio.volume = 0.12;
+			goodbyeAudio.volume = 0.1;
+
+			const tryPlay = (audio) => {
+				audio.currentTime = 0;
+				audio.play().catch(() => {});
+			};
+
+			const playEntrance = () => {
+				if (audioState.entrancePlayed) return;
+				audioState.entrancePlayed = true;
+				tryPlay(entranceAudio);
+			};
+
+			const playGoodbye = () => {
+				if (audioState.goodbyePlayed || !audioState.activated) return;
+				audioState.goodbyePlayed = true;
+				tryPlay(goodbyeAudio);
+			};
+
+			const activateAudio = () => {
+				if (audioState.activated) return;
+				audioState.activated = true;
+				playEntrance();
+			};
+
+			window.addEventListener('pointerdown', activateAudio, { once: true });
+			window.addEventListener('keydown', activateAudio, { once: true });
+			window.addEventListener('touchstart', activateAudio, { once: true });
+			window.addEventListener('focus', activateAudio, { once: true });
+
+			document.addEventListener('visibilitychange', () => {
+				if (document.visibilityState === 'visible') {
+					activateAudio();
+				}
+				if (document.visibilityState === 'hidden') {
+					playGoodbye();
+				}
+			});
+
+			window.addEventListener('pagehide', playGoodbye, { capture: true });
+			window.addEventListener('beforeunload', playGoodbye, { capture: true });
 		</script>
 	</body>
 </html>

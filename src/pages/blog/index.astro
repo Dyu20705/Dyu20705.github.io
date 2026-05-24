@@ -30,7 +30,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 						</div>
 						<h3>{post.data.title}</h3>
 						<p>{post.data.description}</p>
-						<strong>Đọc bài viết</strong>
+						<strong data-i18n="blog.read">Đọc bài viết</strong>
 					</div>
 				</a>
 			);
