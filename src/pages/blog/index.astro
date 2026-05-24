@@ -13,7 +13,7 @@ const posts = (await getCollection('blog')).sort(
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
@@ -78,16 +78,16 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<section class="hero-archive">
-				<p class="eyebrow">Writing archive</p>
-				<h1>Notes on systems, delivery discipline, and maintainable product engineering.</h1>
+				<p class="eyebrow">Blog</p>
+				<h1>Ghi chú về system, infrastructure và cách giảm rủi ro vận hành.</h1>
 				<p class="section-lead">
-					This archive exists to show how I think: what I notice, what I optimize for, and how I reduce
-					risk when engineering work has to survive contact with production.
+					Các bài viết tập trung vào vận hành hệ thống, tổ chức hạ tầng và các vấn đề bảo mật cần xử lý từ sớm
+					để sản phẩm chịu được áp lực production.
 				</p>
 				{posts[0] && (
 					<a class="archive-card featured-post" href={`/blog/${posts[0].id}/`}>
 						<div>
-							<p class="meta">Featured note</p>
+							<p class="meta">Bài nổi bật</p>
 							<h3>{posts[0].data.title}</h3>
 							<p>{posts[0].data.description}</p>
 							<footer>
@@ -101,8 +101,8 @@ const posts = (await getCollection('blog')).sort(
 
 			<section class="section">
 				<div class="section-heading">
-					<p class="eyebrow">All posts</p>
-					<h2>Recent writing</h2>
+					<p class="eyebrow">Tất cả bài viết</p>
+					<h2>Bài viết gần đây</h2>
 				</div>
 				<ul class="archive-list">
 					{

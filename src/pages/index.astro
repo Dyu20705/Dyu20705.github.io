@@ -18,20 +18,24 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 
 const serviceCards = [
 	{
+		icon: 'cloud',
 		title: 'Cloud & Core Infrastructure',
-		body: 'Thiet ke ha tang cloud on dinh, toi uu luong trien khai va de van hanh o moi truong production.',
+		body: 'Thiết kế hạ tầng cloud ổn định, tối ưu luồng triển khai và dễ vận hành ở môi trường production.',
 	},
 	{
+		icon: 'container',
 		title: 'Containerization & Orchestration',
-		body: 'Dong goi he thong bang container va to chuc workload theo huong mo rong, nhat quan, co kha nang rollback ro rang.',
+		body: 'Đóng gói hệ thống bằng container và tổ chức workload theo hướng mở rộng, nhất quán, có khả năng rollback rõ ràng.',
 	},
 	{
+		icon: 'network',
 		title: 'High-Performance Backbones',
-		body: 'Xay dung backend va cac thanh phan cot loi huong toi do ben, toc do va kha nang phuc hoi khi co su co.',
+		body: 'Xây dựng backend và các thành phần cốt lõi hướng tới độ bền, tốc độ và khả năng phục hồi khi có sự cố.',
 	},
 	{
+		icon: 'devops',
 		title: 'DevOps, GitOps & Observability',
-		body: 'Ung dung quy trinh CI/CD, tu dong hoa, giam sat va truy vet de giam rui ro va giup release van hanh em hon.',
+		body: 'Ứng dụng quy trình CI/CD, tự động hóa, giám sát và truy vết để giảm rủi ro và giúp release vận hành êm hơn.',
 	},
 ];
 
@@ -42,74 +46,65 @@ const education = [
 		body: 'Nganh Cong nghe thong tin, tap trung vao ky thuat phan mem, he thong backend va du lieu.',
 	},
 	{
-		title: 'Tu hoc chuyen sau ve Cloud va MLOps',
+		title: 'Tu hoc chuyen sau ve Cloud, Linux va System Operations',
 		time: '2024 - hien tai',
-		body: 'Thuc hanh tren cac du an ca nhan: tu dong hoa deployment, monitor he thong va toi uu pipeline.',
+		body: 'Thuc hanh tren cac du an ca nhan: tu dong hoa deployment, monitor he thong va toi uu pipeline van hanh.',
 	},
 ];
 
 const experience = [
 	{
-		title: 'Software Engineer (Freelance / Personal Projects)',
+		title: 'System & Infrastructure Engineer',
 		time: '2024 - hien tai',
-		body: 'Xay dung ung dung web, cong cu automation va he thong backend nho gon de giai quyet bai toan thuc te.',
+		body: 'Xay dung he thong backend, cong cu automation va ha tang nho gon de giai quyet bai toan van hanh thuc te.',
 	},
 	{
-		title: 'MLOps & AI Engineering Projects',
+		title: 'Systems Automation & Deployment Projects',
 		time: '2024 - hien tai',
-		body: 'Thiet lap flow train/evaluate/deploy cho model nho, ket hop monitor va quan tri phien ban mo hinh.',
+		body: 'Tap trung vao deployment, monitoring, observability va cac quy trinh giam rui ro khi thay doi he thong.',
 	},
 ];
 
 const skillGroups = [
-	{ title: 'Programming', items: ['TypeScript', 'Python', 'JavaScript', 'C#'] },
-	{ title: 'Backend & Infra', items: ['Node.js', 'REST API', 'Docker', 'Nginx', 'Linux'] },
-	{ title: 'Dev Tools', items: ['GitHub Actions', 'CI/CD', 'Testing', 'Observability basics'] },
+	{
+		title: 'Programming',
+		items: [
+			{ name: 'TypeScript', value: 85 },
+			{ name: 'Python', value: 80 },
+			{ name: 'JavaScript', value: 80 },
+			{ name: 'C#', value: 60 },
+		],
+	},
+	{
+		title: 'Backend & Infra',
+		items: [
+			{ name: 'Node.js', value: 80 },
+			{ name: 'REST API', value: 75 },
+			{ name: 'Docker', value: 70 },
+			{ name: 'Nginx', value: 70 },
+			{ name: 'Linux', value: 85 },
+		],
+	},
+	{
+		title: 'Dev Tools',
+		items: [
+			{ name: 'GitHub Actions', value: 75 },
+			{ name: 'CI/CD', value: 80 },
+			{ name: 'Testing', value: 70 },
+			{ name: 'Observability', value: 65 },
+		],
+	},
 ];
 
+const sharedProjectImage = gallery01;
+
 const featuredProjects = [
-	{
-		title: 'Understand-Anything',
-		tag: 'TypeScript',
-		description: 'He thong graph tu code de tim hieu cau truc va hoi dap kien thuc theo huong interactive.',
-		url: 'https://github.com/Dyu20705/Understand-Anything',
-		image: gallery01,
-	},
-	{
-		title: 'processing-sentiment-with-ml-model',
-		tag: 'Machine Learning',
-		description: 'Thu nghiem cac mo hinh ML cho bai toan sentiment analysis va danh gia hieu nang.',
-		url: 'https://github.com/Dyu20705/processing-sentiment-with-ml-model',
-		image: gallery02,
-	},
-	{
-		title: 'myClipboard',
-		tag: 'Python App',
-		description: 'Clipboard manager local-first tren Windows voi huong toi trai nghiem nhe va nhanh.',
-		url: 'https://github.com/Dyu20705/myClipboard',
-		image: gallery03,
-	},
-	{
-		title: 'color-wars',
-		tag: 'Game + AI',
-		description: 'Game turn-based ket hop AI bot, toi uu hoa logic va luong xu ly nuoc di.',
-		url: 'https://github.com/Dyu20705/color-wars',
-		image: gallery04,
-	},
-	{
-		title: 'key-value-store',
-		tag: 'Systems',
-		description: 'Mot key-value store toi gian viet bang Zig de nghien cuu he thong va data layout.',
-		url: 'https://github.com/Dyu20705/key-value-store',
-		image: gallery05,
-	},
-	{
-		title: 'Dyu20705.github.io',
-		tag: 'Astro',
-		description: 'Trang portfolio ca nhan, tap trung vao giao dien chuyen nghiep va trinh bay noi dung ro rang.',
-		url: 'https://github.com/Dyu20705/Dyu20705.github.io',
-		image: gallery06,
-	},
+	{ title: 'dotfiles', tag: 'Config', description: 'Personal dotfiles and shell configuration.', url: 'https://github.com/Dyu20705/dotfiles', image: sharedProjectImage },
+	{ title: 'Personal-Internet-Simulator', tag: 'Simulator', description: 'Network / internet behavior simulator.', url: 'https://github.com/Dyu20705/Personal-Internet-Simulator', image: sharedProjectImage },
+	{ title: 'myNote', tag: 'Tooling', description: 'Personal note taking and organization tool.', url: 'https://github.com/Dyu20705/myNote', image: sharedProjectImage },
+	{ title: 'SQUAREXO', tag: 'Game', description: 'Game project SQUAREXO.', url: 'https://github.com/Dyu20705/SQUAREXO', image: sharedProjectImage },
+	{ title: 'SmartSpender', tag: 'App', description: 'Personal finance manager SmartSpender.', url: 'https://github.com/Dyu20705/SmartSpender', image: sharedProjectImage },
+	{ title: 'color-wars', tag: 'Game + AI', description: 'Game turn-based ket hop AI bot.', url: 'https://github.com/Dyu20705/color-wars', image: sharedProjectImage },
 ];
 
 const galleryItems = [
@@ -123,31 +118,31 @@ const galleryItems = [
 
 const profile = {
 	name: 'Nguyen Van Duy',
-	roleA: 'Software Engineer',
-	roleB: 'MLOps Engineer',
+	roleA: 'System & Infrastructure Engineer',
+	roleB: '',
 	email: 'nguyenvanduy20072005@gmail.com',
-	phone: '0869 639 908',
+	phone: '0869630908',
 	birthday: '20/07/2005',
 	location: 'Ha Noi, Viet Nam',
 };
 
 const socialLinks = [
-	{ label: 'GitHub', href: 'https://github.com/Dyu20705' },
-	{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/duynguyenvan05/' },
-	{ label: 'LeetCode', href: 'https://leetcode.com/u/Qiskit2030/' },
+	{ id: 'github', label: 'GitHub', href: 'https://github.com/Dyu20705' },
+	{ id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/duynguyenvan05/' },
+	{ id: 'leetcode', label: 'LeetCode', href: 'https://leetcode.com/u/Qiskit2030/' },
 ];
 
 const navItems = [
-	{ label: 'About Me', href: '#about' },
-	{ label: 'Resume', href: '#resume' },
-	{ label: 'Portfolio', href: '#portfolio' },
-	{ label: 'Blog', href: '#blog' },
-	{ label: 'Contact', href: '#contact' },
-	{ label: 'Gallery', href: '#gallery' },
-	{ label: 'CV', href: '#cv' },
+	{ label: 'About Me', href: '/about' },
+	{ label: 'Resume', href: '/resume' },
+	{ label: 'Portfolio', href: '/portfolio' },
+	{ label: 'Blog', href: '/blog' },
+	{ label: 'Contact', href: '/contact' },
+	{ label: 'Gallery', href: '/gallery' },
+	{ label: 'CV', href: '/cv' },
 ];
 
-const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, gallery06];
+const postCovers = [sharedProjectImage];
 ---
 
 <!doctype html>
@@ -242,31 +237,53 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 				color: #e7f5ff;
 			}
 
-			.social-row {
-				display: flex;
-				gap: 0.5rem;
-				margin-top: 1rem;
-				padding-top: 1rem;
-				border-top: 1px solid rgba(157, 212, 255, 0.16);
-			}
+					.social-row {
+						display: flex;
+						gap: 0.5rem;
+						margin-top: 1rem;
+						padding-top: 1rem;
+						border-top: 1px solid rgba(157, 212, 255, 0.16);
+					}
 
-			.social-row a {
-				flex: 1;
-				text-align: center;
-				padding: 0.5rem 0.6rem;
-				font-size: 0.85rem;
-				border-radius: 0.6rem;
-				text-decoration: none;
-				border: 1px solid rgba(120, 189, 235, 0.24);
-				background: rgba(12, 29, 46, 0.95);
-				transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
-			}
+					.social-row a {
+						flex: 1 1 auto;
+						display: inline-flex;
+						align-items: center;
+						justify-content: center;
+						gap: 0.5rem;
+						padding: 0.5rem 0.6rem;
+						font-size: 0.85rem;
+						border-radius: 0.6rem;
+						text-decoration: none;
+						border: 1px solid rgba(120, 189, 235, 0.24);
+						background: rgba(12, 29, 46, 0.95);
+						transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+					}
 
-			.social-row a:hover {
-				transform: translateY(-1px);
-				border-color: rgba(97, 213, 255, 0.4);
-				background: rgba(15, 37, 58, 0.96);
-			}
+					.social-row a:hover {
+						transform: translateY(-1px);
+						border-color: rgba(97, 213, 255, 0.4);
+						background: rgba(15, 37, 58, 0.96);
+					}
+
+					.social-row svg {
+						width: 20px;
+						height: 20px;
+						display: block;
+						fill: currentColor;
+					}
+
+					.sr-only {
+						position: absolute !important;
+						width: 1px;
+						height: 1px;
+						padding: 0;
+						margin: -1px;
+						overflow: hidden;
+						clip: rect(0, 0, 0, 0);
+						white-space: nowrap;
+						border: 0;
+					}
 
 			.workspace {
 				overflow: hidden;
@@ -644,20 +661,21 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 		</style>
 	</head>
 	<body>
+		<button id="lang-float" aria-label="Toggle language" title="Toggle language" style="position:fixed;right:18px;bottom:18px;z-index:60;min-width:44px;padding:0.5rem 0.8rem;border-radius:999px;border:1px solid rgba(120,169,255,0.18);background:linear-gradient(180deg,rgba(10,18,30,0.9),rgba(10,18,30,0.6));color:var(--text-strong);box-shadow:0 6px 18px rgba(0,0,0,0.45);">VI</button>
 		<main class="portfolio-page">
 			<div class="layout">
 				<aside class="sidebar-card">
 					<img class="profile-photo" src={profilePhoto.src} alt="Nguyen Van Duy profile" loading="lazy" />
 					<h1 class="profile-name">{profile.name}</h1>
 					<div class="role-badges">
-						<span>{profile.roleA}</span>
-						<span>{profile.roleB}</span>
+						<span data-i18n-role>{profile.roleA}</span>
 					</div>
 
 					<div class="info-list">
 						<div class="info-item">
 							<small>Email</small>
 							<a href={`mailto:${profile.email}`}>{profile.email}</a>
+
 						</div>
 						<div class="info-item">
 							<small>Phone</small>
@@ -675,13 +693,26 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 
 					<div class="social-row">
 						{socialLinks.map((item) => (
-							<a href={item.href} target="_blank" rel="noreferrer">{item.label}</a>
+							<a href={item.href} target="_blank" rel="noreferrer" aria-label={item.label} title={item.label}>
+								{item.id === 'github' ? (
+									<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+										<path d="M12 0.297c-6.627 0-12 5.373-12 12 0 5.302 3.438 9.8 8.205 11.387.6.111.82-.261.82-.58 0-.285-.01-1.04-.016-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.089-.744.084-.729.084-.729 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.809 1.305 3.495.998.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.332-5.466-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.527.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.649.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.805 5.62-5.476 5.92.43.371.814 1.102.814 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+									</svg>
+								) : item.id === 'linkedin' ? (
+									<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+										<path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8.98h4.53V24H.22zM8.98 8.98h4.34v2.06h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.53v-6.84c0-1.63-.03-3.74-2.28-3.74-2.28 0-2.63 1.78-2.63 3.62V24H8.98V8.98z"/>
+									</svg>
+								) : (
+									<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+										<path d="M3 12l8-8 8 8-8 8-8-8zm8-6.4L5.4 12 11 17.6 16.6 12 11 5.6z"/>
+									</svg>
+								)}
+								<span class="sr-only">{item.label}</span>
+							</a>
 						))}
 					</div>
 
-					<div style="margin-top: 0.9rem; display: flex; justify-content: center;">
-						<button class="speaker-toggle" type="button" data-active="false" id="audio-toggle">Audio</button>
-					</div>
+					<!-- Audio is triggered on enter/leave (see script at end) -->
 				</aside>
 
 				<div class="workspace">
@@ -693,25 +724,32 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 
 					<div class="content">
 						<section id="about" class="section-panel">
-							<h2 class="section-title">About Me</h2>
-							<p class="section-subline">
-								Toi la ky su phan mem tap trung vao su on dinh, kha nang mo rong va kha nang van hanh lau dai cho
-								san pham. Cac huong cong viec chinh duoc trinh bay ro trong phan What&apos;m doing ben duoi.
-							</p>
+							<h2 class="section-title" data-i18n="section.about.title">About Me</h2>
 							<div class="grid-2" style="margin-top: 1rem;">
 								{serviceCards.map((card) => (
-									<article class="glass-card">
-										<h3>{card.title}</h3>
-										<p>{card.body}</p>
+									<article class="glass-card" style="display:flex;gap:0.8rem;align-items:flex-start;">
+										<div style="width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(15,30,45,0.6);border:1px solid rgba(120,189,235,0.12);">
+											{card.icon === 'cloud' ? (
+												<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 18H6a4 4 0 010-8c.21 0 .42.02.63.06A6 6 0 1119 18z"/></svg>
+											) : card.icon === 'container' ? (
+												<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7L12 3 3 7z"/></svg>
+											) : card.icon === 'network' ? (
+												<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h4v-2H3v2zm6 6h4v-2h-4v2zm6-12v2h4V7h-4zM9 7h6v10H9V7z"/></svg>
+											) : (
+												<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v4H4zM4 12h16v8H4z"/></svg>
+											)}
+										</div>
+										<div>
+											<h3>{card.title}</h3>
+											<p>{card.body}</p>
+										</div>
 									</article>
 								))}
 							</div>
 						</section>
 
 						<section id="resume" class="section-panel">
-							<h2 class="section-title">Resume</h2>
-							<p class="section-subline">Tong quan hoc van, kinh nghiem va ky nang chinh.</p>
-
+							<h2 class="section-title" data-i18n="section.resume.title">Resume</h2>
 							<div class="grid-2" style="margin-top: 1rem;">
 								<div class="glass-card">
 									<h3>Education</h3>
@@ -743,9 +781,16 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 								{skillGroups.map((group) => (
 									<div class="glass-card">
 										<h3>{group.title}</h3>
-										<div class="skill-tags">
-											{group.items.map((item) => (
-												<span>{item}</span>
+										<div style="margin-top:0.6rem;display:grid;gap:0.45rem;">
+											{group.items.map((it) => (
+												<div style="display:flex;align-items:center;gap:0.6rem;">
+													<div style="flex:1;">
+														<div style="height:10px;background:rgba(255,255,255,0.07);border-radius:6px;overflow:hidden;">
+															<div style={`width:${it.value}% ;height:100%;background:linear-gradient(90deg,#61d3ff,#2b8cff);transition:width:420ms ease;`}></div>
+														</div>
+													</div>
+													<strong style="width:120px;text-align:right;color:#cde8ff;font-size:0.85rem;">{it.value}%</strong>
+												</div>
 											))}
 										</div>
 									</div>
@@ -754,8 +799,8 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 						</section>
 
 						<section id="portfolio" class="section-panel">
-							<h2 class="section-title">Portfolio</h2>
-							<p class="section-subline">6 du an noi bat duoc lay tu GitHub repositories cua ban.</p>
+							<h2 class="section-title" data-i18n="section.portfolio.title">Portfolio</h2>
+							
 							<div class="grid-3" style="margin-top: 1rem;">
 								{featuredProjects.map((project) => (
 									<a class="portfolio-card" href={project.url} target="_blank" rel="noreferrer">
@@ -774,8 +819,7 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 						</section>
 
 						<section id="blog" class="section-panel">
-							<h2 class="section-title">Blog</h2>
-							<p class="section-subline">Cac bai viet gan day ve ky thuat va trai nghiem xay dung san pham.</p>
+							<h2 class="section-title" data-i18n="section.blog.title">Blog</h2>
 							<div class="grid-3 blog-grid" style="margin-top: 1rem;">
 								{posts.map((post, index) => (
 									<a class="blog-card" href={`/blog/${post.id}/`}>
@@ -801,8 +845,7 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 						</section>
 
 						<section id="contact" class="section-panel">
-							<h2 class="section-title">Contact</h2>
-							<p class="section-subline">Thong tin lien he duoc map truc tiep tu tai nguyen ban gui trong assets/link.</p>
+							<h2 class="section-title" data-i18n="section.contact.title">Contact</h2>
 							<div class="contact-grid">
 								<div class="contact-card">
 									<small>Email</small>
@@ -828,8 +871,7 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 						</section>
 
 						<section id="gallery" class="section-panel">
-							<h2 class="section-title">Gallery</h2>
-							<p class="section-subline">Bo suu tap hinh anh duoc trinh bay theo layout card gon gang.</p>
+							<h2 class="section-title" data-i18n="section.gallery.title">Gallery</h2>
 							<div class="grid-3" style="margin-top: 1rem;">
 								{galleryItems.map((item) => (
 									<article class="gallery-card">
@@ -844,8 +886,7 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 						</section>
 
 						<section id="cv" class="section-panel">
-							<h2 class="section-title">CV</h2>
-							<p class="section-subline">File CV goc duoc nap truc tiep tu assets/cv de xem nhanh va tai xuong.</p>
+							<h2 class="section-title" data-i18n="section.cv.title">CV</h2>
 							<iframe class="cv-frame" src={cvFile} title="Nguyen Van Duy CV"></iframe>
 							<div class="cv-actions">
 								<a href={cvFile} target="_blank" rel="noreferrer">Mo CV tab moi</a>
@@ -856,6 +897,50 @@ const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, galle
 				</div>
 			</div>
 		</main>
+		<script is:inline>
+			(function () {
+				const btn = document.getElementById('lang-float');
+				const translations = {
+					en: {
+						'section.about.title': 'About Me',
+						'section.resume.title': 'Resume',
+						'section.portfolio.title': 'Portfolio',
+						'section.blog.title': 'Blog',
+						'section.contact.title': 'Contact',
+						'section.gallery.title': 'Gallery',
+						'section.cv.title': 'CV',
+						'role.main': 'System & Infrastructure Engineer',
+					},
+					vi: {
+						'section.about.title': 'Về tôi',
+						'section.resume.title': 'Hồ sơ',
+						'section.portfolio.title': 'Dự án',
+						'section.blog.title': 'Blog',
+						'section.contact.title': 'Liên hệ',
+						'section.gallery.title': 'Thư viện',
+						'section.cv.title': 'CV',
+						'role.main': 'System & Infrastructure Engineer',
+					},
+				};
+
+				function applyLang(lang) {
+					document.querySelectorAll('[data-i18n]').forEach((el) => {
+						const key = el.getAttribute('data-i18n');
+						if (key && translations[lang]?.[key]) el.innerText = translations[lang][key];
+					});
+					document.querySelectorAll('[data-i18n-role]').forEach((el) => {
+						el.innerText = translations[lang]['role.main'];
+					});
+					document.documentElement.lang = lang;
+					if (btn) btn.textContent = lang === 'vi' ? 'EN' : 'VI';
+					localStorage.setItem('siteLang', lang);
+				}
+
+				const current = localStorage.getItem('siteLang') || 'vi';
+				applyLang(current);
+				if (btn) btn.addEventListener('click', () => applyLang(localStorage.getItem('siteLang') === 'vi' ? 'en' : 'vi'));
+			})();
+		</script>
 		<script type="module" define:vars={{ entranceSong, goodbyeSong }}>
 			const toggle = document.getElementById('audio-toggle');
 			const revealTargets = document.querySelectorAll(

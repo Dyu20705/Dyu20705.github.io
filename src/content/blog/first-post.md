@@ -1,12 +1,12 @@
 ---
-title: 'Systems Over Screens'
-description: 'Why I start with architecture, constraints, and failure modes before polishing the interface.'
-pubDate: 'Jul 08 2022'
+title: 'Thiết kế từ failure mode trước khi scale'
+description: 'Cách tôi nhìn hệ thống từ điểm lỗi, giới hạn tài nguyên và hành vi khi dependency không ổn định.'
+pubDate: 'May 08 2026'
 heroImage: '../../assets/blog-placeholder-3.jpg'
 ---
 
-When a product is serious about reliability, the interesting work usually happens before the visual polish. I want the data flow, error handling, and deployment shape to be obvious before the first pixel is refined.
+Khi một hệ thống bắt đầu phục vụ người dùng thật, phần quan trọng không còn là giao diện đẹp hay không mà là nó hỏng như thế nào khi chịu tải hoặc khi dependency bên dưới gặp sự cố.
 
-That usually means asking a few unglamorous questions: what happens when a request is slow, where does permission state live, which pieces can be safely cached, and how does the UI behave when a dependency is partially unavailable?
+Tôi thường bắt đầu từ một số câu hỏi rất cơ bản: request chậm thì timeout ra sao, service chết một phần thì người dùng còn làm được gì, dữ liệu nào có thể cache an toàn, và chỗ nào cần degrade thay vì fail cứng.
 
-The better the system boundary, the easier everything downstream becomes. Interfaces feel simpler, reviews get faster, and the team can keep shipping without turning every change into a risk spike.
+Khi boundary của hệ thống được vẽ rõ, mọi thứ phía sau dễ quản hơn: rollout an toàn hơn, debug nhanh hơn và mỗi lần thay đổi không biến thành một đợt tăng rủi ro.

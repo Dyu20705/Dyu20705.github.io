@@ -1,0 +1,38 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import gallery01 from '../assets/img/IMG_20240927_082039_070.jpg';
+import gallery02 from '../assets/img/IMG_20241111_143050_109.jpg';
+import gallery03 from '../assets/img/IMG_20241123_142808_598.jpg';
+
+const galleryItems = [
+	{ title: 'Gallery 01', caption: 'Photo set 01', image: gallery01 },
+	{ title: 'Gallery 02', caption: 'Photo set 02', image: gallery02 },
+	{ title: 'Gallery 03', caption: 'Photo set 03', image: gallery03 },
+];
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <BaseHead title="Gallery — Duy" />
+  </head>
+  <body>
+    <Header />
+    <main style="width:min(1100px,calc(100% - 2rem));margin:2rem auto;">
+      <section class="section-panel">
+        <h2 class="section-title" data-i18n="section.gallery.title">Gallery</h2>
+        <div class="grid-3" style="margin-top:1rem;">
+          {galleryItems.map((item) => (
+            <article class="gallery-card">
+              <img src={item.image.src} alt={item.title} loading="lazy" />
+              <div class="card-body">
+                <h3>{item.title}</h3>
+                <p>{item.caption}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

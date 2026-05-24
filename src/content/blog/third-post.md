@@ -1,12 +1,12 @@
 ---
-title: 'Security Is a UX Constraint'
-description: 'How trust boundaries, safe defaults, and failure states shape the quality of a product surface.'
-pubDate: 'Jul 22 2022'
+title: 'Bảo mật hệ thống bắt đầu từ default an toàn'
+description: 'Một vài nguyên tắc đơn giản giúp giảm bề mặt tấn công trước cả khi thêm lớp phòng thủ phức tạp.'
+pubDate: 'May 20 2026'
 heroImage: '../../assets/blog-placeholder-2.jpg'
 ---
 
-Good security design does not hide complexity. It makes the safe path obvious, the risky path difficult, and the consequences of a mistake understandable to the person using the product.
+Với hệ thống nhỏ, cách cải thiện bảo mật hiệu quả nhất thường không phải là thêm thật nhiều công cụ mà là đặt default đúng ngay từ đầu.
 
-That is especially important in frontend systems that manage roles, data visibility, or privileged actions. Empty states, disabled controls, and confirmation flows are part of the security model.
+Ví dụ đơn giản là tắt public access mặc định, tách quyền ghi và quyền đọc, không để secret nằm rải rác trong source, và luôn biết log nào đang chứa dữ liệu nhạy cảm.
 
-I want the interface to earn trust by being explicit. Users should know what is happening, why it matters, and what happens next when something fails.
+Khi trust boundary rõ ràng và privilege được giới hạn hợp lý, hệ thống dễ kiểm soát hơn nhiều. Những nguyên tắc này không thay thế security review, nhưng chúng giảm đáng kể số lỗi cơ bản có thể lọt vào production.

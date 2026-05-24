@@ -1,30 +1,26 @@
 ---
-title: 'When MDX Earns Its Place'
-description: 'A practical note on using components inside writing without turning content into a maintenance burden.'
-pubDate: 'Jun 01 2024'
+title: 'Quản lý secret và config không được làm cho có'
+description: 'Cách nhìn thực dụng để tách config, giới hạn secret sprawl và giảm lỗi triển khai.'
+pubDate: 'May 22 2026'
 heroImage: '../../assets/blog-placeholder-5.jpg'
 ---
 
-This portfolio keeps MDX enabled because it is useful when a note needs a component, a live example, or a more structured way to explain a technical idea. The key is to use it intentionally, not because the tool exists.
+Một lỗi rất phổ biến ở dự án cá nhân lẫn dự án nhỏ là secret nằm khắp nơi: trong file `.env`, trong script deploy, trong CI variables và đôi khi cả trong source code cũ chưa bị xóa sạch.
 
-## Why MDX?
+## Vấn đề chính
 
-MDX works best when it helps the reader understand something faster. A small embedded component can clarify a workflow, show a state transition, or demonstrate a pattern that plain Markdown would struggle to express cleanly.
+Khi config và secret không được phân lớp rõ, việc rotate key, kiểm soát quyền truy cập và kiểm tra thay đổi trở nên rất tốn công. Đó là lúc lỗi triển khai bắt đầu xuất hiện.
 
-If the content does not benefit from interactivity or composition, plain Markdown is usually the simpler, better-maintained choice.
+## Cách tôi ưu tiên
 
-## Example
+Tôi tách ba thứ riêng nhau:
 
-Here is how you import and use a UI component inside of MDX. When a component improves clarity, the extra structure is worth it.
+- config công khai theo môi trường
+- secret thật sự cần được bảo vệ
+- runtime override dùng cho release hoặc incident response
 
-import HeaderLink from '../../components/HeaderLink.astro';
+Mỗi nhóm có vòng đời khác nhau nên không nên trộn vào một chỗ. Càng ít nơi chứa secret, xác suất rò rỉ càng thấp và việc audit càng dễ.
 
-<HeaderLink href="#" onclick="alert('clicked!')">
-	Embedded component in MDX
-</HeaderLink>
+## Kết luận
 
-## More Links
-
-- [MDX Syntax Documentation](https://mdxjs.com/docs/what-is-mdx)
-- [Astro Usage Documentation](https://docs.astro.build/en/basics/astro-pages/#markdownmdx-pages)
-- **Note:** client directives are still required for interactive behavior. Otherwise, the MDX output remains static HTML.
+Quản lý config tốt không làm hệ thống an toàn tuyệt đối, nhưng nó loại bỏ một lớp lỗi vận hành rất phổ biến và giúp đội ngũ phản ứng tốt hơn khi cần thay đổi nhanh.

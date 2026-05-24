@@ -7,13 +7,89 @@ import HeaderLink from './HeaderLink.astro';
 	<nav class="site-nav" aria-label="Primary">
 		<a class="site-brand" href="/">{SITE_TITLE}</a>
 		<div class="site-nav-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/#work">Work</HeaderLink>
-			<HeaderLink href="/blog">Writing</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href="/"><span data-i18n="nav.home">Home</span></HeaderLink>
+			<HeaderLink href="/about"><span data-i18n="nav.about">About</span></HeaderLink>
+			<HeaderLink href="/resume"><span data-i18n="nav.resume">Resume</span></HeaderLink>
+			<HeaderLink href="/portfolio"><span data-i18n="nav.portfolio">Portfolio</span></HeaderLink>
+			<HeaderLink href="/blog"><span data-i18n="nav.blog">Blog</span></HeaderLink>
+			<HeaderLink href="/gallery"><span data-i18n="nav.gallery">Gallery</span></HeaderLink>
+			<HeaderLink href="/cv"><span data-i18n="nav.cv">CV</span></HeaderLink>
 		</div>
-		<a class="site-nav-cta" href="/#contact">Contact</a>
+		<div style="display:flex;align-items:center;gap:0.5rem;">
+			<a class="site-nav-cta" href="/contact" data-i18n="nav.contact">Contact</a>
+		</div>
 	</nav>
+
+	<button id="lang-float" aria-label="Toggle language" title="Toggle language" style="position:fixed;right:18px;bottom:18px;z-index:60;min-width:44px;padding:0.5rem 0.8rem;border-radius:999px;border:1px solid rgba(120,169,255,0.18);background:linear-gradient(180deg,rgba(10,18,30,0.9),rgba(10,18,30,0.6));color:var(--text-strong);box-shadow:0 6px 18px rgba(0,0,0,0.45);">EN</button>
+
+	<script>
+		(function () {
+			const btn = document.getElementById('lang-float');
+			const translations = {
+				'en': {
+					'nav.home': 'Home',
+					'nav.about': 'About',
+					'nav.resume': 'Resume',
+					'nav.portfolio': 'Portfolio',
+					'nav.blog': 'Blog',
+					'nav.contact': 'Contact',
+					'nav.gallery': 'Gallery',
+					'nav.cv': 'CV',
+					'role.main': 'System & Infrastructure Engineer',
+					'section.about.title': 'About Me',
+					'section.resume.title': 'Resume',
+					'section.portfolio.title': 'Portfolio',
+					'section.blog.title': 'Blog',
+					'section.contact.title': 'Contact',
+					'section.gallery.title': 'Gallery',
+					'section.cv.title': 'CV',
+				},
+				'vi': {
+					'nav.home': 'Trang chủ',
+					'nav.about': 'Giới thiệu',
+					'nav.resume': 'Hồ sơ',
+					'nav.portfolio': 'Dự án',
+					'nav.blog': 'Blog',
+					'nav.contact': 'Liên hệ',
+					'nav.gallery': 'Thư viện',
+					'nav.cv': 'CV',
+					'role.main': 'System & Infrastructure Engineer',
+					'section.about.title': 'Về tôi',
+					'section.resume.title': 'Hồ sơ',
+					'section.portfolio.title': 'Dự án',
+					'section.blog.title': 'Blog',
+					'section.contact.title': 'Liên hệ',
+					'section.gallery.title': 'Thư viện',
+					'section.cv.title': 'CV',
+				},
+			};
+
+			function applyLang(lang) {
+				const els = document.querySelectorAll('[data-i18n]');
+				els.forEach((el) => {
+					const key = el.getAttribute('data-i18n');
+					if (translations[lang] && translations[lang][key]) {
+						el.innerText = translations[lang][key];
+					}
+				});
+				const roleEls = document.querySelectorAll('[data-i18n-role]');
+				roleEls.forEach((el) => {
+					if (translations[lang] && translations[lang]['role.main']) el.innerText = translations[lang]['role.main'];
+				});
+				if (btn) btn.textContent = lang === 'vi' ? 'EN' : 'VI';
+				localStorage.setItem('siteLang', lang);
+			}
+
+			function init() {
+				const cur = localStorage.getItem('siteLang') || 'en';
+				applyLang(cur);
+				if (btn) btn.addEventListener('click', () => applyLang(localStorage.getItem('siteLang') === 'vi' ? 'en' : 'vi'));
+			}
+
+			if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+			else init();
+		})();
+</script>
 </header>
 <style>
 	.site-header {

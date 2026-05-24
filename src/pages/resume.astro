@@ -1,0 +1,79 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+
+const education = [
+  { title: 'University of Transport and Communications', time: '2023 - 2027 (Dự kiến)', body: 'Ngành Công nghệ thông tin, tập trung vào kỹ thuật phần mềm, hệ thống backend và dữ liệu.' },
+	{ title: 'Tự học chuyên sâu Cloud, Linux và System Operations', time: '2024 - hiện tại', body: 'Thực hành trên các dự án cá nhân: tự động hóa deployment, monitor hệ thống và tối ưu pipeline vận hành.' },
+];
+
+const experience = [
+  { title: 'System & Infrastructure Engineer', time: '2024 - hiện tại', body: 'Xây dựng hệ thống backend, công cụ automation và hạ tầng nhỏ gọn phục vụ nhu cầu thực tế.' },
+	{ title: 'Systems Automation & Deployment Projects', time: '2024 - hiện tại', body: 'Thiết lập quy trình deploy, monitor và quan sát hệ thống để giảm rủi ro vận hành.' },
+];
+
+const skillGroups = [
+	{ title: 'Programming', items: [{ name: 'TypeScript', value: 85 }, { name: 'Python', value: 80 }, { name: 'JavaScript', value: 80 }, { name: 'C#', value: 60 }] },
+	{ title: 'Backend & Infra', items: [{ name: 'Node.js', value: 80 }, { name: 'REST API', value: 75 }, { name: 'Docker', value: 70 }, { name: 'Nginx', value: 70 }, { name: 'Linux', value: 85 }] },
+];
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <BaseHead title="Resume — Nguyen Van Duy" />
+  </head>
+  <body>
+    <Header />
+    <main style="width:min(980px,calc(100% - 2rem));margin:2rem auto;">
+      <section class="section-panel">
+        <h2 class="section-title" data-i18n="section.resume.title">Resume</h2>
+        <div class="grid-2" style="margin-top:1rem;">
+          <div class="glass-card">
+            <h3>Education</h3>
+            <div class="timeline">
+              {education.map((item) => (
+                <div class="timeline-item">
+                  <strong>{item.title}</strong>
+                  <small>{item.time}</small>
+                  <p>{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="glass-card">
+            <h3>Experience</h3>
+            <div class="timeline">
+              {experience.map((item) => (
+                <div class="timeline-item">
+                  <strong>{item.title}</strong>
+                  <small>{item.time}</small>
+                  <p>{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1rem;">
+          {skillGroups.map((group) => (
+            <div class="glass-card" style="margin-bottom:0.6rem;">
+              <h3>{group.title}</h3>
+              <div style="margin-top:0.6rem;display:grid;gap:0.45rem;">
+                {group.items.map((it) => (
+                  <div style="display:flex;align-items:center;gap:0.6rem;">
+                    <div style="flex:1;">
+                      <div style="height:10px;background:rgba(255,255,255,0.07);border-radius:6px;overflow:hidden;">
+                        <div style={`width:${it.value}% ;height:100%;background:linear-gradient(90deg,#61d3ff,#2b8cff);transition:width:420ms ease;`}></div>
+                      </div>
+                    </div>
+                    <strong style="width:120px;text-align:right;color:#cde8ff;font-size:0.85rem;">{it.value}%</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
