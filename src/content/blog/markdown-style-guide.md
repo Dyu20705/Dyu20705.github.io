@@ -1,15 +1,15 @@
 ---
-title: 'Markdown Style Guide'
-description: 'Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.'
+title: 'Writing Notes That Scale'
+description: 'A lightweight guide for keeping engineering writing structured, useful, and easy to maintain.'
 pubDate: 'Jun 19 2024'
 heroImage: '../../assets/blog-placeholder-1.jpg'
 ---
 
-Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
+Good technical writing is part of the engineering system. It should help the next person make the right decision quickly, especially when the codebase gets bigger than one person can hold in their head.
 
 ## Headings
 
-The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
+Use headings to surface structure, not decoration. If a section title does not help a reader scan the page, it probably does not need to be a heading.
 
 # H1
 
@@ -25,9 +25,7 @@ The following HTML `<h1>`—`<h6>` elements represent six levels of section head
 
 ## Paragraph
 
-Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
-
-Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
+Write for implementation, not theater. If a paragraph does not improve a decision, clarify a tradeoff, or reduce uncertainty, it is probably noise.
 
 ## Images
 
@@ -41,17 +39,19 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 ![blog placeholder](../../assets/blog-placeholder-about.jpg)
 
+Images should be explanatory. In engineering writing, a diagram that does not reduce ambiguity is just decoration.
+
 ## Blockquotes
 
-The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
+Use blockquotes for decisions, constraints, or rules of thumb that should stand out from the body copy.
 
 ### Blockquote without attribution
 
 #### Syntax
 
 ```markdown
-> Tiam, ad mint andaepu dandae nostion secatur sequo quae.  
-> **Note** that you can use _Markdown syntax_ within a blockquote.
+> A system becomes easier to trust when it is easier to explain.
+> **Note** that clarity is often a stronger design goal than density.
 ```
 
 #### Output
@@ -83,6 +83,8 @@ The blockquote element represents content that is quoted from another source, op
 | Italics   | Bold     | Code   |
 | --------- | -------- | ------ |
 | _italics_ | **bold** | `code` |
+
+Tables are useful when comparing decisions, but they should stay small enough to read at a glance.
 ```
 
 ### Output
@@ -95,7 +97,7 @@ The blockquote element represents content that is quoted from another source, op
 
 ### Syntax
 
-we can use 3 backticks ``` in new line and write snippet and close with 3 backticks on new line and to highlight language specific syntax, write one word of language name after first 3 backticks, for eg. html, javascript, css, markdown, typescript, txt, bash
+Use fenced code blocks when the exact formatting matters, such as configuration examples, API payloads, or shell commands.
 
 ````markdown
 ```html
@@ -137,6 +139,8 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 1. First item
 2. Second item
 3. Third item
+
+Ordered lists work well for procedures, incident notes, and decision histories.
 ```
 
 #### Output
@@ -153,6 +157,8 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 - List item
 - Another item
 - And another item
+
+Unordered lists are better for sets of concerns, especially when there is no meaningful sequence.
 ```
 
 #### Output

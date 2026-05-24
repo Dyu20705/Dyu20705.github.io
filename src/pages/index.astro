@@ -1,49 +1,941 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import profilePhoto from '../assets/selfie/IMG_20240828_123241_307.jpg';
+import gallery01 from '../assets/img/IMG_20240927_082039_070.jpg';
+import gallery02 from '../assets/img/IMG_20241111_143050_109.jpg';
+import gallery03 from '../assets/img/IMG_20241123_142808_598.jpg';
+import gallery04 from '../assets/img/IMG_20241203_090358_092.jpg';
+import gallery05 from '../assets/img/IMG_20241203_093918_015.jpg';
+import gallery06 from '../assets/img/IMG_20241203_103715_582.jpg';
+import entranceSong from '../assets/theme-song/entrance.mp3?url';
+import goodbyeSong from '../assets/theme-song/goodbye.mp3?url';
+
+const cvFile = '/cv/NguyenVanDuy_CV.pdf';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const serviceCards = [
+	{
+		title: 'Cloud & Core Infrastructure',
+		body: 'Thiet ke ha tang cloud on dinh, toi uu luong trien khai va de van hanh o moi truong production.',
+	},
+	{
+		title: 'Containerization & Orchestration',
+		body: 'Dong goi he thong bang container va to chuc workload theo huong mo rong, nhat quan, co kha nang rollback ro rang.',
+	},
+	{
+		title: 'High-Performance Backbones',
+		body: 'Xay dung backend va cac thanh phan cot loi huong toi do ben, toc do va kha nang phuc hoi khi co su co.',
+	},
+	{
+		title: 'DevOps, GitOps & Observability',
+		body: 'Ung dung quy trinh CI/CD, tu dong hoa, giam sat va truy vet de giam rui ro va giup release van hanh em hon.',
+	},
+];
+
+const education = [
+	{
+		title: 'University of Transport and Communications',
+		time: '2023 - 2027 (Du kien)',
+		body: 'Nganh Cong nghe thong tin, tap trung vao ky thuat phan mem, he thong backend va du lieu.',
+	},
+	{
+		title: 'Tu hoc chuyen sau ve Cloud va MLOps',
+		time: '2024 - hien tai',
+		body: 'Thuc hanh tren cac du an ca nhan: tu dong hoa deployment, monitor he thong va toi uu pipeline.',
+	},
+];
+
+const experience = [
+	{
+		title: 'Software Engineer (Freelance / Personal Projects)',
+		time: '2024 - hien tai',
+		body: 'Xay dung ung dung web, cong cu automation va he thong backend nho gon de giai quyet bai toan thuc te.',
+	},
+	{
+		title: 'MLOps & AI Engineering Projects',
+		time: '2024 - hien tai',
+		body: 'Thiet lap flow train/evaluate/deploy cho model nho, ket hop monitor va quan tri phien ban mo hinh.',
+	},
+];
+
+const skillGroups = [
+	{ title: 'Programming', items: ['TypeScript', 'Python', 'JavaScript', 'C#'] },
+	{ title: 'Backend & Infra', items: ['Node.js', 'REST API', 'Docker', 'Nginx', 'Linux'] },
+	{ title: 'Dev Tools', items: ['GitHub Actions', 'CI/CD', 'Testing', 'Observability basics'] },
+];
+
+const featuredProjects = [
+	{
+		title: 'Understand-Anything',
+		tag: 'TypeScript',
+		description: 'He thong graph tu code de tim hieu cau truc va hoi dap kien thuc theo huong interactive.',
+		url: 'https://github.com/Dyu20705/Understand-Anything',
+		image: gallery01,
+	},
+	{
+		title: 'processing-sentiment-with-ml-model',
+		tag: 'Machine Learning',
+		description: 'Thu nghiem cac mo hinh ML cho bai toan sentiment analysis va danh gia hieu nang.',
+		url: 'https://github.com/Dyu20705/processing-sentiment-with-ml-model',
+		image: gallery02,
+	},
+	{
+		title: 'myClipboard',
+		tag: 'Python App',
+		description: 'Clipboard manager local-first tren Windows voi huong toi trai nghiem nhe va nhanh.',
+		url: 'https://github.com/Dyu20705/myClipboard',
+		image: gallery03,
+	},
+	{
+		title: 'color-wars',
+		tag: 'Game + AI',
+		description: 'Game turn-based ket hop AI bot, toi uu hoa logic va luong xu ly nuoc di.',
+		url: 'https://github.com/Dyu20705/color-wars',
+		image: gallery04,
+	},
+	{
+		title: 'key-value-store',
+		tag: 'Systems',
+		description: 'Mot key-value store toi gian viet bang Zig de nghien cuu he thong va data layout.',
+		url: 'https://github.com/Dyu20705/key-value-store',
+		image: gallery05,
+	},
+	{
+		title: 'Dyu20705.github.io',
+		tag: 'Astro',
+		description: 'Trang portfolio ca nhan, tap trung vao giao dien chuyen nghiep va trinh bay noi dung ro rang.',
+		url: 'https://github.com/Dyu20705/Dyu20705.github.io',
+		image: gallery06,
+	},
+];
+
+const galleryItems = [
+	{ title: 'Gallery 01', caption: 'Photo set 01', image: gallery01 },
+	{ title: 'Gallery 02', caption: 'Photo set 02', image: gallery02 },
+	{ title: 'Gallery 03', caption: 'Photo set 03', image: gallery03 },
+	{ title: 'Gallery 04', caption: 'Photo set 04', image: gallery04 },
+	{ title: 'Gallery 05', caption: 'Photo set 05', image: gallery05 },
+	{ title: 'Gallery 06', caption: 'Photo set 06', image: gallery06 },
+];
+
+const profile = {
+	name: 'Nguyen Van Duy',
+	roleA: 'Software Engineer',
+	roleB: 'MLOps Engineer',
+	email: 'nguyenvanduy20072005@gmail.com',
+	phone: '0869 639 908',
+	birthday: '20/07/2005',
+	location: 'Ha Noi, Viet Nam',
+};
+
+const socialLinks = [
+	{ label: 'GitHub', href: 'https://github.com/Dyu20705' },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/duynguyenvan05/' },
+	{ label: 'LeetCode', href: 'https://leetcode.com/u/Qiskit2030/' },
+];
+
+const navItems = [
+	{ label: 'About Me', href: '#about' },
+	{ label: 'Resume', href: '#resume' },
+	{ label: 'Portfolio', href: '#portfolio' },
+	{ label: 'Blog', href: '#blog' },
+	{ label: 'Contact', href: '#contact' },
+	{ label: 'Gallery', href: '#gallery' },
+	{ label: 'CV', href: '#cv' },
+];
+
+const postCovers = [gallery01, gallery02, gallery03, gallery04, gallery05, gallery06];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main.portfolio-page {
+				width: min(1320px, calc(100% - 2rem));
+				padding-top: 1rem;
+			}
+
+			.layout {
+				display: grid;
+				grid-template-columns: 320px minmax(0, 1fr);
+				gap: 1.25rem;
+				align-items: start;
+			}
+
+			.sidebar-card,
+			.workspace {
+				border: 1px solid var(--line);
+				border-radius: var(--radius-lg);
+				background: rgba(10, 18, 30, 0.9);
+				box-shadow: 0 24px 46px rgba(0, 0, 0, 0.32);
+			}
+
+			.sidebar-card {
+				position: sticky;
+				top: 1rem;
+				padding: 1.25rem;
+			}
+
+			.profile-photo {
+				display: block;
+				width: 122px;
+				height: 122px;
+				object-fit: cover;
+				object-position: center top;
+				margin: 0 auto;
+				border-radius: 1rem;
+				border: 1px solid rgba(157, 212, 255, 0.35);
+			}
+
+			.profile-name {
+				margin-top: 0.9rem;
+				font-size: 1.9rem;
+				text-align: center;
+			}
+
+			.role-badges {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 0.45rem;
+				margin-top: 0.5rem;
+			}
+
+			.role-badges span {
+				padding: 0.26rem 0.68rem;
+				font-size: 0.75rem;
+				border-radius: 999px;
+				background: rgba(17, 36, 57, 0.95);
+				border: 1px solid rgba(159, 215, 255, 0.2);
+				color: #cde8ff;
+			}
+
+			.info-list {
+				margin-top: 1.1rem;
+				padding-top: 1rem;
+				border-top: 1px solid rgba(157, 212, 255, 0.16);
+				display: grid;
+				gap: 0.72rem;
+			}
+
+			.info-item {
+				display: grid;
+				gap: 0.15rem;
+			}
+
+			.info-item small {
+				font-size: 0.72rem;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: #77a0bf;
+			}
+
+			.info-item a,
+			.info-item span {
+				font-size: 0.95rem;
+				text-decoration: none;
+				color: #e7f5ff;
+			}
+
+			.social-row {
+				display: flex;
+				gap: 0.5rem;
+				margin-top: 1rem;
+				padding-top: 1rem;
+				border-top: 1px solid rgba(157, 212, 255, 0.16);
+			}
+
+			.social-row a {
+				flex: 1;
+				text-align: center;
+				padding: 0.5rem 0.6rem;
+				font-size: 0.85rem;
+				border-radius: 0.6rem;
+				text-decoration: none;
+				border: 1px solid rgba(120, 189, 235, 0.24);
+				background: rgba(12, 29, 46, 0.95);
+				transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+			}
+
+			.social-row a:hover {
+				transform: translateY(-1px);
+				border-color: rgba(97, 213, 255, 0.4);
+				background: rgba(15, 37, 58, 0.96);
+			}
+
+			.workspace {
+				overflow: hidden;
+			}
+
+			.tab-nav {
+				display: flex;
+				gap: 0.45rem;
+				flex-wrap: wrap;
+				padding: 0.85rem 1rem;
+				border-bottom: 1px solid rgba(157, 212, 255, 0.16);
+				background: rgba(6, 12, 22, 0.72);
+			}
+
+			.tab-nav a {
+				padding: 0.38rem 0.72rem;
+				border-radius: 0.65rem;
+				font-size: 0.85rem;
+				text-decoration: none;
+				color: #a9c7df;
+				border: 1px solid transparent;
+				transition: all 180ms ease;
+			}
+
+			.tab-nav a:hover {
+				color: #f2fbff;
+				border-color: rgba(118, 197, 245, 0.32);
+				background: rgba(13, 39, 58, 0.8);
+			}
+
+			.content {
+				padding: 1.15rem;
+				display: grid;
+				gap: 1rem;
+			}
+
+			.section-panel {
+				padding: 1.15rem;
+				border: 1px solid rgba(157, 212, 255, 0.14);
+				border-radius: 1rem;
+				background:
+					radial-gradient(circle at top right, rgba(106, 190, 234, 0.08), transparent 44%),
+					rgba(8, 16, 28, 0.88);
+				scroll-margin-top: 1rem;
+				transition:
+					transform 220ms ease,
+					border-color 220ms ease,
+					box-shadow 220ms ease;
+			}
+
+			.section-panel:hover {
+				transform: translateY(-1px);
+				border-color: rgba(97, 213, 255, 0.22);
+				box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18);
+			}
+
+			[data-reveal] {
+				opacity: 0;
+				transform: translateY(14px);
+				transition:
+					opacity 500ms ease,
+					transform 500ms ease;
+			}
+
+			[data-reveal].is-visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			.section-title {
+				font-size: clamp(1.7rem, 3vw, 2.2rem);
+			}
+
+			.section-subline {
+				margin-top: 0.65rem;
+				color: #9ec1da;
+				line-height: 1.75;
+			}
+
+			.grid-2,
+			.grid-3 {
+				display: grid;
+				gap: 0.85rem;
+			}
+
+			.grid-2 {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+
+			.grid-3 {
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+			}
+
+			.glass-card {
+				padding: 0.95rem;
+				border-radius: 0.85rem;
+				border: 1px solid rgba(157, 212, 255, 0.16);
+				background: rgba(10, 24, 38, 0.72);
+				transition:
+					transform 220ms ease,
+					border-color 220ms ease,
+					box-shadow 220ms ease;
+			}
+
+			.glass-card:hover {
+				transform: translateY(-2px);
+				border-color: rgba(97, 213, 255, 0.22);
+				box-shadow: 0 16px 32px rgba(0, 0, 0, 0.16);
+			}
+
+			.glass-card h3 {
+				font-size: 1.1rem;
+			}
+
+			.glass-card p,
+			.glass-card li {
+				margin-top: 0.45rem;
+				color: #a4c2d9;
+				line-height: 1.72;
+				font-size: 0.95rem;
+			}
+
+			.timeline {
+				margin-top: 0.8rem;
+				display: grid;
+				gap: 0.9rem;
+			}
+
+			.timeline-item {
+				padding-left: 1rem;
+				border-left: 2px solid rgba(95, 196, 255, 0.85);
+			}
+
+			.timeline-item strong {
+				display: block;
+				font-size: 1.03rem;
+				color: #eff9ff;
+			}
+
+			.timeline-item small {
+				display: block;
+				margin-top: 0.2rem;
+				color: #62c8ff;
+			}
+
+			.skill-tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.45rem;
+				margin-top: 0.55rem;
+			}
+
+			.skill-tags span,
+			.pill {
+				padding: 0.2rem 0.55rem;
+				border-radius: 999px;
+				font-size: 0.78rem;
+				border: 1px solid rgba(114, 201, 245, 0.24);
+				background: rgba(17, 37, 55, 0.95);
+				color: #9ddbff;
+			}
+
+			.portfolio-card,
+			.blog-card,
+			.gallery-card {
+				display: grid;
+				overflow: hidden;
+				text-decoration: none;
+				border-radius: 0.95rem;
+				border: 1px solid rgba(157, 212, 255, 0.2);
+				background: rgba(7, 15, 26, 0.92);
+				transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+			}
+
+			.portfolio-card:hover,
+			.blog-card:hover,
+			.gallery-card:hover {
+				transform: translateY(-4px) scale(1.01);
+				border-color: rgba(97, 207, 253, 0.45);
+				box-shadow: 0 18px 34px rgba(0, 0, 0, 0.26);
+			}
+
+			.portfolio-card img,
+			.blog-card img,
+			.gallery-card img {
+				width: 100%;
+				height: 170px;
+				object-fit: cover;
+				object-position: center;
+				border-radius: 0;
+			}
+
+			.card-body {
+				padding: 0.9rem;
+			}
+
+			.card-body h3 {
+				font-size: 1.12rem;
+			}
+
+			.card-body p {
+				margin-top: 0.45rem;
+				font-size: 0.92rem;
+				color: #9bbad2;
+			}
+
+			.card-meta {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 0.5rem;
+				margin-top: 0.7rem;
+			}
+
+			.card-meta strong {
+				font-size: 0.88rem;
+				color: #63d3ff;
+			}
+
+			.blog-grid .card-body {
+				padding-top: 0.75rem;
+			}
+
+			.contact-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 0.8rem;
+				margin-top: 1rem;
+			}
+
+			.contact-card {
+				padding: 0.78rem 0.85rem;
+				border-radius: 0.75rem;
+				border: 1px solid rgba(157, 212, 255, 0.18);
+				background: rgba(13, 33, 50, 0.78);
+			}
+
+			.contact-card small {
+				display: block;
+				font-size: 0.72rem;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: #77a2c1;
+			}
+
+			.contact-card span,
+			.contact-card a {
+				display: block;
+				margin-top: 0.24rem;
+				color: #e8f7ff;
+				text-decoration: none;
+			}
+
+			.contact-form {
+				margin-top: 1rem;
+				display: grid;
+				gap: 0.72rem;
+			}
+
+			.contact-form .row {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 0.72rem;
+			}
+
+			input,
+			textarea {
+				width: 100%;
+				padding: 0.72rem 0.85rem;
+				border-radius: 0.75rem;
+				border: 1px solid rgba(157, 212, 255, 0.2);
+				background: rgba(5, 12, 21, 0.9);
+				color: #e6f5ff;
+				font: inherit;
+			}
+
+			textarea {
+				min-height: 130px;
+				resize: vertical;
+			}
+
+			button {
+				width: fit-content;
+				padding: 0.62rem 1.25rem;
+				border-radius: 0.8rem;
+				border: 1px solid rgba(69, 194, 244, 0.3);
+				background: linear-gradient(120deg, #2eb7ff 0%, #46d4cf 100%);
+				color: #062334;
+				font-weight: 700;
+				cursor: pointer;
+			}
+
+			.cv-frame {
+				width: 100%;
+				height: 600px;
+				border-radius: 0.95rem;
+				border: 1px solid rgba(157, 212, 255, 0.26);
+				background: #ffffff;
+			}
+
+			.cv-actions {
+				display: flex;
+				gap: 0.65rem;
+				margin-top: 0.85rem;
+				flex-wrap: wrap;
+			}
+
+			.cv-actions a {
+				padding: 0.5rem 0.8rem;
+				border-radius: 0.7rem;
+				font-size: 0.86rem;
+				text-decoration: none;
+				border: 1px solid rgba(157, 212, 255, 0.22);
+				background: rgba(12, 30, 46, 0.82);
+				transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+			}
+
+			.cv-actions a:hover {
+				transform: translateY(-1px);
+				border-color: rgba(97, 213, 255, 0.34);
+				background: rgba(15, 37, 58, 0.95);
+			}
+
+			.speaker-toggle {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.4rem;
+				min-width: 2.7rem;
+				padding: 0.42rem 0.75rem;
+				border-radius: 999px;
+				border: 1px solid rgba(157, 212, 255, 0.2);
+				background: rgba(8, 18, 29, 0.9);
+				color: #dff4ff;
+				font-size: 0.8rem;
+				cursor: pointer;
+			}
+
+			.speaker-toggle[data-active='true'] {
+				border-color: rgba(108, 216, 255, 0.55);
+				box-shadow: 0 0 0 1px rgba(108, 216, 255, 0.16) inset;
+			}
+
+			.speaker-toggle:hover {
+				transform: translateY(-1px);
+			}
+
+			@media (max-width: 1120px) {
+				.layout {
+					grid-template-columns: 1fr;
+				}
+
+				.sidebar-card {
+					position: static;
+				}
+			}
+
+			@media (max-width: 900px) {
+				.grid-3,
+				.grid-2,
+				.contact-grid {
+					grid-template-columns: 1fr;
+				}
+
+				.contact-form .row {
+					grid-template-columns: 1fr;
+				}
+
+				.portfolio-card img,
+				.blog-card img,
+				.gallery-card img {
+					height: 190px;
+				}
+			}
+		</style>
 	</head>
 	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="portfolio-page">
+			<div class="layout">
+				<aside class="sidebar-card">
+					<img class="profile-photo" src={profilePhoto.src} alt="Nguyen Van Duy profile" loading="lazy" />
+					<h1 class="profile-name">{profile.name}</h1>
+					<div class="role-badges">
+						<span>{profile.roleA}</span>
+						<span>{profile.roleB}</span>
+					</div>
+
+					<div class="info-list">
+						<div class="info-item">
+							<small>Email</small>
+							<a href={`mailto:${profile.email}`}>{profile.email}</a>
+						</div>
+						<div class="info-item">
+							<small>Phone</small>
+							<a href="tel:+848696390908">{profile.phone}</a>
+						</div>
+						<div class="info-item">
+							<small>Birthday</small>
+							<span>{profile.birthday}</span>
+						</div>
+						<div class="info-item">
+							<small>Location</small>
+							<span>{profile.location}</span>
+						</div>
+					</div>
+
+					<div class="social-row">
+						{socialLinks.map((item) => (
+							<a href={item.href} target="_blank" rel="noreferrer">{item.label}</a>
+						))}
+					</div>
+
+					<div style="margin-top: 0.9rem; display: flex; justify-content: center;">
+						<button class="speaker-toggle" type="button" data-active="false" id="audio-toggle">Audio</button>
+					</div>
+				</aside>
+
+				<div class="workspace">
+					<nav class="tab-nav" aria-label="Section navigation">
+						{navItems.map((item) => (
+							<a href={item.href}>{item.label}</a>
+						))}
+					</nav>
+
+					<div class="content">
+						<section id="about" class="section-panel">
+							<h2 class="section-title">About Me</h2>
+							<p class="section-subline">
+								Toi la ky su phan mem tap trung vao su on dinh, kha nang mo rong va kha nang van hanh lau dai cho
+								san pham. Cac huong cong viec chinh duoc trinh bay ro trong phan What&apos;m doing ben duoi.
+							</p>
+							<div class="grid-2" style="margin-top: 1rem;">
+								{serviceCards.map((card) => (
+									<article class="glass-card">
+										<h3>{card.title}</h3>
+										<p>{card.body}</p>
+									</article>
+								))}
+							</div>
+						</section>
+
+						<section id="resume" class="section-panel">
+							<h2 class="section-title">Resume</h2>
+							<p class="section-subline">Tong quan hoc van, kinh nghiem va ky nang chinh.</p>
+
+							<div class="grid-2" style="margin-top: 1rem;">
+								<div class="glass-card">
+									<h3>Education</h3>
+									<div class="timeline">
+										{education.map((item) => (
+											<div class="timeline-item">
+												<strong>{item.title}</strong>
+												<small>{item.time}</small>
+												<p>{item.body}</p>
+											</div>
+										))}
+									</div>
+								</div>
+								<div class="glass-card">
+									<h3>Experience</h3>
+									<div class="timeline">
+										{experience.map((item) => (
+											<div class="timeline-item">
+												<strong>{item.title}</strong>
+												<small>{item.time}</small>
+												<p>{item.body}</p>
+											</div>
+										))}
+									</div>
+								</div>
+							</div>
+
+							<div class="grid-3" style="margin-top: 0.85rem;">
+								{skillGroups.map((group) => (
+									<div class="glass-card">
+										<h3>{group.title}</h3>
+										<div class="skill-tags">
+											{group.items.map((item) => (
+												<span>{item}</span>
+											))}
+										</div>
+									</div>
+								))}
+							</div>
+						</section>
+
+						<section id="portfolio" class="section-panel">
+							<h2 class="section-title">Portfolio</h2>
+							<p class="section-subline">6 du an noi bat duoc lay tu GitHub repositories cua ban.</p>
+							<div class="grid-3" style="margin-top: 1rem;">
+								{featuredProjects.map((project) => (
+									<a class="portfolio-card" href={project.url} target="_blank" rel="noreferrer">
+										<img src={project.image.src} alt={project.title} loading="lazy" />
+										<div class="card-body">
+											<h3>{project.title}</h3>
+											<p>{project.description}</p>
+											<div class="card-meta">
+												<span class="pill">{project.tag}</span>
+												<strong>Xem repo</strong>
+											</div>
+										</div>
+									</a>
+								))}
+							</div>
+						</section>
+
+						<section id="blog" class="section-panel">
+							<h2 class="section-title">Blog</h2>
+							<p class="section-subline">Cac bai viet gan day ve ky thuat va trai nghiem xay dung san pham.</p>
+							<div class="grid-3 blog-grid" style="margin-top: 1rem;">
+								{posts.map((post, index) => (
+									<a class="blog-card" href={`/blog/${post.id}/`}>
+										<img src={postCovers[index % postCovers.length].src} alt={post.data.title} loading="lazy" />
+										<div class="card-body">
+											<span class="pill">
+												{post.data.pubDate.toLocaleDateString('vi-VN', {
+													year: 'numeric',
+													month: '2-digit',
+													day: '2-digit',
+												})}
+											</span>
+											<h3>{post.data.title}</h3>
+											<p>{post.data.description}</p>
+											<div class="card-meta">
+												<span class="pill">Blog</span>
+												<strong>Doc bai viet</strong>
+											</div>
+										</div>
+									</a>
+								))}
+							</div>
+						</section>
+
+						<section id="contact" class="section-panel">
+							<h2 class="section-title">Contact</h2>
+							<p class="section-subline">Thong tin lien he duoc map truc tiep tu tai nguyen ban gui trong assets/link.</p>
+							<div class="contact-grid">
+								<div class="contact-card">
+									<small>Email</small>
+									<a href={`mailto:${profile.email}`}>{profile.email}</a>
+								</div>
+								<div class="contact-card">
+									<small>Phone</small>
+									<a href="tel:+848696390908">{profile.phone}</a>
+								</div>
+								<div class="contact-card">
+									<small>Location</small>
+									<span>{profile.location}</span>
+								</div>
+							</div>
+							<form class="contact-form" action={`mailto:${profile.email}`} method="post" enctype="text/plain">
+								<div class="row">
+									<input type="text" name="name" placeholder="Full Name" required />
+									<input type="email" name="email" placeholder="Email Address" required />
+								</div>
+								<textarea name="message" placeholder="Your Message" required></textarea>
+								<button type="submit">Send Message</button>
+							</form>
+						</section>
+
+						<section id="gallery" class="section-panel">
+							<h2 class="section-title">Gallery</h2>
+							<p class="section-subline">Bo suu tap hinh anh duoc trinh bay theo layout card gon gang.</p>
+							<div class="grid-3" style="margin-top: 1rem;">
+								{galleryItems.map((item) => (
+									<article class="gallery-card">
+										<img src={item.image.src} alt={item.title} loading="lazy" />
+										<div class="card-body">
+											<h3>{item.title}</h3>
+											<p>{item.caption}</p>
+										</div>
+									</article>
+								))}
+							</div>
+						</section>
+
+						<section id="cv" class="section-panel">
+							<h2 class="section-title">CV</h2>
+							<p class="section-subline">File CV goc duoc nap truc tiep tu assets/cv de xem nhanh va tai xuong.</p>
+							<iframe class="cv-frame" src={cvFile} title="Nguyen Van Duy CV"></iframe>
+							<div class="cv-actions">
+								<a href={cvFile} target="_blank" rel="noreferrer">Mo CV tab moi</a>
+								<a href={cvFile} download="NguyenVanDuy_CV.pdf">Tai CV</a>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
 		</main>
-		<Footer />
+		<script type="module" define:vars={{ entranceSong, goodbyeSong }}>
+			const toggle = document.getElementById('audio-toggle');
+			const revealTargets = document.querySelectorAll(
+				'.section-panel, .glass-card, .portfolio-card, .blog-card, .gallery-card, .contact-card, .cv-frame, .cv-actions, .profile-photo, .role-badges, .info-list, .social-row, .tab-nav',
+			);
+
+			let enabled = false;
+			let entrancePlayed = false;
+			let goodbyePlayed = false;
+			let fadeTimer = null;
+
+			const fadeAudio = (audio, from, to, duration) => {
+				if (!audio) return;
+				if (fadeTimer) window.clearInterval(fadeTimer);
+				const start = performance.now();
+				fadeTimer = window.setInterval(() => {
+					const elapsed = performance.now() - start;
+					const progress = Math.min(elapsed / duration, 1);
+					audio.volume = from + (to - from) * progress;
+					if (progress >= 1) {
+						window.clearInterval(fadeTimer);
+						fadeTimer = null;
+					}
+				}, 32);
+			};
+
+			const playClip = (source, startVolume, targetVolume, duration) => {
+				const audio = new Audio(source);
+				audio.volume = startVolume;
+				audio.play().catch(() => {});
+				fadeAudio(audio, startVolume, targetVolume, duration);
+				return audio;
+			};
+
+			const playEntrance = () => {
+				if (!enabled || entrancePlayed) return;
+				entrancePlayed = true;
+				playClip(entranceSong, 0.01, 0.1, 900);
+			};
+
+			const playGoodbye = () => {
+				if (!enabled || goodbyePlayed) return;
+				goodbyePlayed = true;
+				playClip(goodbyeSong, 0.01, 0.08, 700);
+			};
+
+			const activateAudio = () => {
+				enabled = true;
+				if (toggle) toggle.setAttribute('data-active', 'true');
+				playEntrance();
+			};
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-visible');
+							observer.unobserve(entry.target);
+						}
+					});
+				},
+				{ threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+			);
+
+			revealTargets.forEach((target, index) => {
+				target.setAttribute('data-reveal', '');
+				target.style.transitionDelay = `${Math.min(index * 40, 280)}ms`;
+				observer.observe(target);
+			});
+
+			if (toggle) {
+				toggle.addEventListener('click', activateAudio, { once: true });
+			}
+
+			window.addEventListener('pointerdown', activateAudio, { once: true });
+			window.addEventListener('focus', activateAudio, { once: true });
+			window.addEventListener('visibilitychange', () => {
+				if (document.visibilityState === 'hidden') playGoodbye();
+			});
+			window.addEventListener('pagehide', playGoodbye, { capture: true });
+		</script>
 	</body>
 </html>

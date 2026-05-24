@@ -1,22 +1,21 @@
 ---
-title: 'Using MDX'
-description: 'Lorem ipsum dolor sit amet'
+title: 'When MDX Earns Its Place'
+description: 'A practical note on using components inside writing without turning content into a maintenance burden.'
 pubDate: 'Jun 01 2024'
 heroImage: '../../assets/blog-placeholder-5.jpg'
 ---
 
-This theme comes with the [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) integration installed and configured in your `astro.config.mjs` config file. If you prefer not to use MDX, you can disable support by removing the integration from your config file.
+This portfolio keeps MDX enabled because it is useful when a note needs a component, a live example, or a more structured way to explain a technical idea. The key is to use it intentionally, not because the tool exists.
 
 ## Why MDX?
 
-MDX is a special flavor of Markdown that supports embedded JavaScript & JSX syntax. This unlocks the ability to [mix JavaScript and UI Components into your Markdown content](https://docs.astro.build/en/guides/integrations-guide/mdx/#mdx-in-astro) for things like interactive charts or alerts.
+MDX works best when it helps the reader understand something faster. A small embedded component can clarify a workflow, show a state transition, or demonstrate a pattern that plain Markdown would struggle to express cleanly.
 
-If you have existing content authored in MDX, this integration will hopefully make migrating to Astro a breeze.
+If the content does not benefit from interactivity or composition, plain Markdown is usually the simpler, better-maintained choice.
 
 ## Example
 
-Here is how you import and use a UI component inside of MDX.  
-When you open this page in the browser, you should see the clickable button below.
+Here is how you import and use a UI component inside of MDX. When a component improves clarity, the extra structure is worth it.
 
 import HeaderLink from '../../components/HeaderLink.astro';
 
@@ -28,4 +27,4 @@ import HeaderLink from '../../components/HeaderLink.astro';
 
 - [MDX Syntax Documentation](https://mdxjs.com/docs/what-is-mdx)
 - [Astro Usage Documentation](https://docs.astro.build/en/basics/astro-pages/#markdownmdx-pages)
-- **Note:** [Client Directives](https://docs.astro.build/en/reference/directives-reference/#client-directives) are still required to create interactive components. Otherwise, all components in your MDX will render as static HTML (no JavaScript) by default.
+- **Note:** client directives are still required for interactive behavior. Otherwise, the MDX output remains static HTML.

@@ -1,0 +1,23 @@
+About me
+(Mô tả ngắn)
+What'm doing:
+--Cloud & Core Infrastructure
+--Containerization & Orchestration
+--High-Performance Backbones
+--DevOps, GitOps & Observability
+
+Resume
+Education
+Experience
+Myskills
+
+Portfolio 
+(Lấy dự án ở repo này nhé, tầm 6 dự án nổi bật: https://github.com/Dyu20705?tab=repositories)
+
+Một chút blog
+
+Contact
+
+Gallery
+
+CV

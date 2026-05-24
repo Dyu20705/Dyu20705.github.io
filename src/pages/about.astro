@@ -1,63 +1,182 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			.about-hero {
+				display: grid;
+				grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+				gap: 1rem;
+				align-items: start;
+			}
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+			.about-panel,
+			.about-story,
+			.about-principles,
+			.about-stack {
+				padding: 1.4rem;
+				border: 1px solid var(--line);
+				border-radius: var(--radius-lg);
+				background: var(--bg-elevated);
+				box-shadow: var(--shadow-xl);
+			}
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+			.about-story,
+			.about-principles,
+			.about-stack {
+				margin-top: 1rem;
+			}
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+			.about-panel p,
+			.about-story p,
+			.about-principles p,
+			.about-stack p {
+				margin-top: 0.85rem;
+				line-height: 1.85;
+				color: var(--text-body);
+			}
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+			.about-list {
+				display: grid;
+				gap: 0.75rem;
+				list-style: none;
+				padding: 0;
+				margin: 1rem 0 0;
+			}
+
+			.about-list li {
+				padding: 0.95rem 1rem;
+				border-radius: var(--radius-sm);
+				border: 1px solid rgba(180, 208, 255, 0.08);
+				background: rgba(255, 255, 255, 0.03);
+			}
+
+			.about-list strong {
+				display: block;
+				margin-bottom: 0.25rem;
+			}
+
+			.about-list span {
+				color: var(--text-muted);
+			}
+
+			.about-signals {
+				display: grid;
+				gap: 0.75rem;
+			}
+
+			.about-signal {
+				padding: 0.95rem 1rem;
+				border-radius: var(--radius-sm);
+				border: 1px solid rgba(180, 208, 255, 0.08);
+				background: rgba(255, 255, 255, 0.03);
+			}
+
+			.about-signal strong {
+				display: block;
+				margin-bottom: 0.25rem;
+			}
+
+			@media (max-width: 1024px) {
+				.about-hero {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="about-hero">
+				<div class="about-panel">
+					<p class="eyebrow">About</p>
+					<h1>Engineering with a systems view, not a feature checklist.</h1>
+					<p>
+						This portfolio is built to signal how I work: I care about maintainable architecture, clear
+						operating behavior, and the ability to ship confidently without creating future cleanup.
+					</p>
+					<ul class="about-list">
+						<li>
+							<strong>Strong systems thinking</strong>
+							<span>Understand the boundaries before styling the screens.</span>
+						</li>
+						<li>
+							<strong>Security-conscious delivery</strong>
+							<span>Treat permissions, trust, and failure states as first-class UX.</span>
+						</li>
+						<li>
+							<strong>Scalability awareness</strong>
+							<span>Prefer patterns that support growth without turning the codebase brittle.</span>
+						</li>
+					</ul>
+				</div>
+				<aside class="about-stack">
+					<p class="panel-label">What this site demonstrates</p>
+					<div class="about-signals">
+						<div class="about-signal">
+							<strong>Intentional UI</strong>
+							<span>Premium presentation without sacrificing clarity or performance.</span>
+						</div>
+						<div class="about-signal">
+							<strong>Operational maturity</strong>
+							<span>Content, metadata, and routing are arranged to stay easy to maintain.</span>
+						</div>
+						<div class="about-signal">
+							<strong>Deployment-ready</strong>
+							<span>Configured for GitHub Pages with clean static output.</span>
+						</div>
+					</div>
+				</aside>
+			</section>
+
+			<section class="about-story">
+				<div class="section-heading">
+					<p class="eyebrow">Approach</p>
+					<h2>How I think about frontend ownership</h2>
+				</div>
+				<p>
+					The strongest frontend teams behave like platform teams. They reduce ambiguity, publish stable
+					interfaces for other engineers, and make the path to safe change obvious. That is the standard I
+					try to bring into every surface I touch.
+				</p>
+				<p>
+					I tend to favor small abstractions with clear purpose, documentation that helps future maintainers,
+					and visual systems that feel deliberate rather than decorative. A good experience should be calm,
+					fast, and easy to reason about under pressure.
+				</p>
+			</section>
+
+			<section class="about-principles">
+				<div class="section-heading">
+					<p class="eyebrow">Principles</p>
+					<h2>What I optimize for</h2>
+				</div>
+				<div class="card-grid">
+					<div class="card">
+						<p class="meta">System design</p>
+						<h3>Clear boundaries</h3>
+						<p>State, data flow, and responsibility should be visible in the code and understandable in review.</p>
+					</div>
+					<div class="card">
+						<p class="meta">Delivery</p>
+						<h3>Predictable release behavior</h3>
+						<p>When the product changes, operational risk should stay low and rollback paths should stay obvious.</p>
+					</div>
+					<div class="card">
+						<p class="meta">Maintainability</p>
+						<h3>Future-friendly code</h3>
+						<p>Good interfaces lower the cost of the next feature, the next incident, and the next teammate.</p>
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

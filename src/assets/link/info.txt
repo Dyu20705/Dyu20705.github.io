@@ -1,0 +1,4 @@
+email: nguyenvanduy20072005@gmail.com
+phone: 0869630908
+location: Ha Noi, Viet Nam
+birthday: 20/07/2005
