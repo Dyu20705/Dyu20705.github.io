@@ -1,0 +1,383 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { profile, navItems, socialLinks } from '../data/site';
+
+interface Props {
+	headTitle: string;
+	description: string;
+	activeNav: string;
+}
+
+const { headTitle, description, activeNav } = Astro.props;
+---
+
+<!doctype html>
+<html lang="vi">
+	<head>
+		<BaseHead title={headTitle} description={description} />
+		<style>
+			.shell {
+				width: min(1360px, calc(100% - 2rem));
+				margin: 0 auto;
+				padding: 1.9rem 0 3rem;
+				display: grid;
+				grid-template-columns: 270px minmax(0, 1fr);
+				gap: 1.2rem;
+				align-items: start;
+			}
+
+			.sidebar,
+			.content-panel {
+				border: 1px solid var(--line);
+				border-radius: 1.5rem;
+				background: rgba(12, 16, 24, 0.94);
+				box-shadow: 0 24px 44px rgba(0, 0, 0, 0.22);
+			}
+
+			.sidebar {
+				position: sticky;
+				top: 1.3rem;
+				padding: 1.25rem;
+			}
+
+			.profile-photo {
+				display: block;
+				width: 112px;
+				height: 112px;
+				margin: 0 auto;
+				border-radius: 1.5rem;
+				object-fit: cover;
+				object-position: center top;
+				border: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.profile-name {
+				margin-top: 1rem;
+				font-size: 2rem;
+				text-align: center;
+			}
+
+			.profile-role {
+				display: inline-flex;
+				justify-content: center;
+				margin: 0.7rem auto 0;
+				padding: 0.38rem 0.9rem;
+				border-radius: 999px;
+				background: rgba(255, 255, 255, 0.05);
+				color: #d7e6f6;
+				font-size: 0.82rem;
+			}
+
+			.profile-role-wrap {
+				display: flex;
+				justify-content: center;
+			}
+
+			.sidebar-line {
+				height: 1px;
+				margin: 1.25rem 0;
+				background: rgba(255, 255, 255, 0.08);
+			}
+
+			.contact-list {
+				display: grid;
+				gap: 0.9rem;
+			}
+
+			.contact-item {
+				display: grid;
+				grid-template-columns: 44px minmax(0, 1fr);
+				gap: 0.75rem;
+				align-items: center;
+			}
+
+			.contact-icon {
+				width: 44px;
+				height: 44px;
+				border-radius: 0.95rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: rgba(255, 255, 255, 0.04);
+				color: #19c9ff;
+			}
+
+			.contact-copy small {
+				display: block;
+				margin-bottom: 0.18rem;
+				font-size: 0.68rem;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: var(--text-muted);
+			}
+
+			.contact-copy a,
+			.contact-copy span {
+				color: var(--text-strong);
+				text-decoration: none;
+				font-size: 0.96rem;
+			}
+
+			.sidebar-socials {
+				display: flex;
+				justify-content: center;
+				gap: 0.75rem;
+			}
+
+			.sidebar-socials a {
+				width: 42px;
+				height: 42px;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 0.9rem;
+				background: rgba(255, 255, 255, 0.04);
+				border: 1px solid transparent;
+				color: var(--text-strong);
+			}
+
+			.sidebar-socials a:hover {
+				border-color: rgba(25, 201, 255, 0.28);
+				background: rgba(255, 255, 255, 0.06);
+			}
+
+			.content-panel {
+				overflow: hidden;
+			}
+
+			.top-nav {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.55rem;
+				padding: 1rem 1.25rem;
+				border-bottom: 1px solid var(--line);
+			}
+
+			.top-nav a {
+				padding: 0.72rem 1rem;
+				border-radius: 0.9rem;
+				color: #d0b694;
+				text-decoration: none;
+				font-size: 0.9rem;
+				transition: background-color 180ms ease, color 180ms ease;
+			}
+
+			.top-nav a.is-active {
+				background: rgba(18, 62, 104, 0.72);
+				color: #ffffff;
+				font-weight: 700;
+			}
+
+			.page-body {
+				padding: 1.5rem;
+			}
+
+			.lang-float {
+				position: fixed;
+				top: 16px;
+				right: 18px;
+				z-index: 80;
+				min-width: 58px;
+				padding: 0.42rem 0.8rem;
+				border-radius: 999px;
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				background: rgba(14, 18, 26, 0.94);
+				color: var(--text-strong);
+				font-weight: 700;
+				cursor: pointer;
+			}
+
+			@media (max-width: 1080px) {
+				.shell {
+					grid-template-columns: 1fr;
+				}
+
+				.sidebar {
+					position: static;
+				}
+			}
+
+			@media (max-width: 720px) {
+				.shell {
+					width: calc(100% - 1rem);
+					padding-top: 1rem;
+				}
+
+				.page-body {
+					padding: 1rem;
+				}
+
+				.top-nav {
+					padding: 0.85rem;
+				}
+
+				.top-nav a {
+					padding: 0.6rem 0.82rem;
+					font-size: 0.86rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<button class="lang-float" id="lang-float" type="button">EN</button>
+		<main class="shell">
+			<aside class="sidebar">
+				<img class="profile-photo" src={profile.photo.src} alt={profile.name} />
+				<h1 class="profile-name">{profile.name}</h1>
+				<div class="profile-role-wrap">
+					<span class="profile-role" data-i18n-role>{profile.role}</span>
+				</div>
+
+				<div class="sidebar-line"></div>
+
+				<div class="contact-list">
+					<div class="contact-item">
+						<div class="contact-icon">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Zm2.2-.5 5.8 5.1L17.8 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</div>
+						<div class="contact-copy">
+							<small data-i18n="profile.email">Email</small>
+							<a href={`mailto:${profile.email}`}>{profile.email}</a>
+						</div>
+					</div>
+					<div class="contact-item">
+						<div class="contact-icon">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.9c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2L9.9 10.2c.8 1.5 2 2.8 3.4 3.6l1.3-1.3c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2l-1.1 1.1c-.9.9-2.2 1.2-3.4.8-5-1.7-9-5.7-10.7-10.7-.4-1.2-.1-2.5.8-3.4L7.2 4.9Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</div>
+						<div class="contact-copy">
+							<small data-i18n="profile.phone">Điện thoại</small>
+							<a href="tel:0869630908">{profile.phone}</a>
+						</div>
+					</div>
+					<div class="contact-item">
+						<div class="contact-icon">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4.5V3m8 1.5V3M5 8h14M6.5 5h11A1.5 1.5 0 0 1 19 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 17.5v-11A1.5 1.5 0 0 1 6.5 5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</div>
+						<div class="contact-copy">
+							<small data-i18n="profile.birthday">Ngày sinh</small>
+							<span>{profile.birthday}</span>
+						</div>
+					</div>
+					<div class="contact-item">
+						<div class="contact-icon">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20s6-5.6 6-10a6 6 0 1 0-12 0c0 4.4 6 10 6 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.7"/></svg>
+						</div>
+						<div class="contact-copy">
+							<small data-i18n="profile.location">Địa điểm</small>
+							<span>{profile.location}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="sidebar-line"></div>
+
+				<div class="sidebar-socials">
+					{socialLinks.map((item) => (
+						<a href={item.href} target="_blank" rel="noreferrer" aria-label={item.label} title={item.label}>
+							{
+								item.id === 'github' ? (
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.9 1.4 3.5 1 .1-.7.4-1.1.7-1.3-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.4.1-3 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.8-.4s1.9.1 2.8.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.7.1 3 .7.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.3.8 1 .8 2v2.9c0 .4.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>
+								) : item.id === 'linkedin' ? (
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.49 2.49 0 1 1 0 3.5a2.49 2.49 0 0 1 4.98 0ZM.5 8.5h4.9V24H.5V8.5Zm7.4 0H12v2.1h.1c.6-1.1 2-2.3 4.2-2.3 4.5 0 5.3 2.9 5.3 6.8V24h-4.9v-6.1c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V24H7.9V8.5Z"/></svg>
+								) : (
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.2 13.8c-.8 1.5-1.8 2.2-3.2 2.2-1.2 0-2.2-.5-2.9-1.4-.8-.9-1.2-2-1.2-3.2 0-1.5.5-2.7 1.4-3.8.9-1 2.2-1.6 3.7-1.6 1.4 0 2.6.4 3.6 1.1l-.9 1.5c-.8-.5-1.7-.8-2.7-.8s-1.8.4-2.4 1.1c-.6.8-.9 1.6-.9 2.6 0 .9.3 1.7.8 2.3.5.6 1.2 1 2 1 .9 0 1.7-.4 2.2-1.3l1.5 1.3ZM20.5 3H24l-5.8 6.6 6.4 11.4H21l-4.8-8.7-1.6 1.8V21H11V3h3.6v7l5.9-7Z"/></svg>
+								)
+							}
+						</a>
+					))}
+				</div>
+			</aside>
+
+			<section class="content-panel">
+				<nav class="top-nav">
+					{navItems.map((item) => (
+						<a
+							href={item.href}
+							class={item.id === activeNav ? 'is-active' : ''}
+							data-i18n={`nav.${item.id}`}
+						>
+							{item.vi}
+						</a>
+					))}
+				</nav>
+				<div class="page-body">
+					<slot />
+				</div>
+			</section>
+		</main>
+
+		<script is:inline>
+			(function () {
+				const translations = {
+					vi: {
+						'nav.about': 'Về tôi',
+						'nav.resume': 'Hồ sơ',
+						'nav.portfolio': 'Dự án',
+						'nav.blog': 'Blog',
+						'nav.contact': 'Liên hệ',
+						'nav.gallery': 'Thư viện',
+						'nav.cv': 'CV',
+						'page.about.title': 'Về tôi',
+						'page.resume.title': 'Hồ sơ',
+						'page.portfolio.title': 'Dự án',
+						'page.blog.title': 'Blog',
+						'page.contact.title': 'Liên hệ',
+						'page.gallery.title': 'Thư viện',
+						'page.cv.title': 'CV',
+						'profile.email': 'Email',
+						'profile.phone': 'Điện thoại',
+						'profile.birthday': 'Ngày sinh',
+						'profile.location': 'Địa điểm',
+						'role.main': 'System & Infrastructure Engineer',
+					},
+					en: {
+						'nav.about': 'About Me',
+						'nav.resume': 'Resume',
+						'nav.portfolio': 'Portfolio',
+						'nav.blog': 'Blog',
+						'nav.contact': 'Contact',
+						'nav.gallery': 'Gallery',
+						'nav.cv': 'CV',
+						'page.about.title': 'About Me',
+						'page.resume.title': 'Resume',
+						'page.portfolio.title': 'Portfolio',
+						'page.blog.title': 'Blog',
+						'page.contact.title': 'Contact',
+						'page.gallery.title': 'Gallery',
+						'page.cv.title': 'CV',
+						'profile.email': 'Email',
+						'profile.phone': 'Phone',
+						'profile.birthday': 'Birthday',
+						'profile.location': 'Location',
+						'role.main': 'System & Infrastructure Engineer',
+					},
+				};
+				const button = document.getElementById('lang-float');
+
+				function applyLang(lang) {
+					document.querySelectorAll('[data-i18n]').forEach((element) => {
+						const key = element.getAttribute('data-i18n');
+						if (key && translations[lang] && translations[lang][key]) {
+							element.textContent = translations[lang][key];
+						}
+					});
+					document.querySelectorAll('[data-i18n-role]').forEach((element) => {
+						element.textContent = translations[lang]['role.main'];
+					});
+					document.documentElement.lang = lang;
+					if (button) button.textContent = lang === 'vi' ? 'EN' : 'VI';
+					localStorage.setItem('siteLang', lang);
+				}
+
+				const currentLang = localStorage.getItem('siteLang') || 'vi';
+				applyLang(currentLang);
+				if (button) {
+					button.addEventListener('click', () => {
+						const nextLang = localStorage.getItem('siteLang') === 'vi' ? 'en' : 'vi';
+						applyLang(nextLang);
+					});
+				}
+			})();
+		</script>
+	</body>
+</html>

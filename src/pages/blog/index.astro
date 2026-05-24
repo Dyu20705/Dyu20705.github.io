@@ -1,127 +1,123 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import ProfileShell from '../../layouts/ProfileShell.astro';
+import { blogCardMeta, sharedCover } from '../../data/site';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<!doctype html>
-<html lang="vi">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			.hero-archive {
-				display: grid;
-				gap: 1rem;
-				margin-bottom: 1.25rem;
-				padding: 1.5rem;
-				border: 1px solid var(--line);
-				border-radius: var(--radius-lg);
-				background: var(--bg-elevated);
-				box-shadow: var(--shadow-xl);
-			}
+<ProfileShell
+	headTitle="Blog | Nguyễn Văn Duy"
+	description="Các bài viết về system, infrastructure, security và vận hành thực tế."
+	activeNav="blog"
+>
+	<section>
+		<h2 class="page-title" data-i18n="page.blog.title">Blog</h2>
+		<div class="page-accent"></div>
+	</section>
 
-			.featured-post {
-				display: grid;
-				grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
-				gap: 1rem;
-				align-items: center;
-				padding-top: 1rem;
-				border-top: 1px solid var(--line);
-			}
-
-			.featured-post img {
-				width: 100%;
-				aspect-ratio: 16 / 9;
-				object-fit: cover;
-				border: 1px solid var(--line);
-				box-shadow: var(--shadow-lg);
-			}
-
-			.archive-list {
-				display: grid;
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 1rem;
-				list-style: none;
-				margin: 0;
-				padding: 0;
-			}
-
-			.archive-card img {
-				width: 100%;
-				aspect-ratio: 16 / 9;
-				object-fit: cover;
-				margin-bottom: 0.85rem;
-				border: 1px solid var(--line);
-			}
-
-			.archive-card h3 {
-				font-size: 1.25rem;
-			}
-
-			@media (max-width: 1024px) {
-				.featured-post,
-				.archive-list {
-					grid-template-columns: 1fr;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section class="hero-archive">
-				<p class="eyebrow">Blog</p>
-				<h1>Ghi chú về system, infrastructure và cách giảm rủi ro vận hành.</h1>
-				<p class="section-lead">
-					Các bài viết tập trung vào vận hành hệ thống, tổ chức hạ tầng và các vấn đề bảo mật cần xử lý từ sớm
-					để sản phẩm chịu được áp lực production.
-				</p>
-				{posts[0] && (
-					<a class="archive-card featured-post" href={`/blog/${posts[0].id}/`}>
-						<div>
-							<p class="meta">Bài nổi bật</p>
-							<h3>{posts[0].data.title}</h3>
-							<p>{posts[0].data.description}</p>
-							<footer>
-								<FormattedDate date={posts[0].data.pubDate} />
-							</footer>
+	<section class="blog-grid">
+		{posts.map((post) => {
+			const meta = blogCardMeta[post.id] ?? { tag: 'System', readTime: '3 phút' };
+			return (
+				<a class="blog-card" href={`/blog/${post.id}/`}>
+					<img src={sharedCover.src} alt={post.data.title} loading="lazy" />
+					<div class="blog-copy">
+						<div class="blog-meta">
+							<span class="blog-tag">{meta.tag}</span>
+							<span>{post.data.pubDate.toLocaleDateString('vi-VN')}</span>
+							<span>{meta.readTime}</span>
 						</div>
-						{posts[0].data.heroImage && <Image width={960} height={540} src={posts[0].data.heroImage} alt="" />}
-					</a>
-				)}
-			</section>
+						<h3>{post.data.title}</h3>
+						<p>{post.data.description}</p>
+						<strong>Đọc bài viết</strong>
+					</div>
+				</a>
+			);
+		})}
+	</section>
 
-			<section class="section">
-				<div class="section-heading">
-					<p class="eyebrow">Tất cả bài viết</p>
-					<h2>Bài viết gần đây</h2>
-				</div>
-				<ul class="archive-list">
-					{
-						posts.map((post) => (
-							<li>
-								<a class="archive-card" href={`/blog/${post.id}/`}>
-									{post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
-									<p class="meta">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-									<h3>{post.data.title}</h3>
-									<p>{post.data.description}</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+	<style>
+		.page-title {
+			font-size: clamp(2.2rem, 4vw, 3.4rem);
+		}
+
+		.page-accent {
+			width: 58px;
+			height: 4px;
+			margin-top: 0.9rem;
+			border-radius: 999px;
+			background: #17b8ff;
+		}
+
+		.blog-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+			margin-top: 1.5rem;
+		}
+
+		.blog-card {
+			overflow: hidden;
+			text-decoration: none;
+			border-radius: 1.2rem;
+			border: 1px solid rgba(216, 190, 154, 0.35);
+			background: rgba(255, 255, 255, 0.03);
+		}
+
+		.blog-card img {
+			width: 100%;
+			height: 220px;
+			object-fit: cover;
+			border-radius: 0;
+		}
+
+		.blog-copy {
+			padding: 1rem;
+		}
+
+		.blog-meta {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.6rem;
+			margin-bottom: 0.75rem;
+			font-size: 0.86rem;
+			color: #98a8b8;
+		}
+
+		.blog-tag {
+			padding: 0.18rem 0.55rem;
+			border-radius: 999px;
+			background: rgba(12, 187, 255, 0.12);
+			color: #19c9ff;
+			font-weight: 700;
+		}
+
+		.blog-copy h3 {
+			font-size: 1.35rem;
+			margin-bottom: 0.55rem;
+		}
+
+		.blog-copy p {
+			color: #b8c5d2;
+			line-height: 1.78;
+			margin-bottom: 0.85rem;
+		}
+
+		.blog-copy strong {
+			color: #18c6ff;
+		}
+
+		@media (max-width: 1100px) {
+			.blog-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		@media (max-width: 900px) {
+			.blog-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</ProfileShell>

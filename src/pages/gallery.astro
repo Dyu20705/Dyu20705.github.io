@@ -1,38 +1,87 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import gallery01 from '../assets/img/IMG_20240927_082039_070.jpg';
-import gallery02 from '../assets/img/IMG_20241111_143050_109.jpg';
-import gallery03 from '../assets/img/IMG_20241123_142808_598.jpg';
-
-const galleryItems = [
-	{ title: 'Gallery 01', caption: 'Photo set 01', image: gallery01 },
-	{ title: 'Gallery 02', caption: 'Photo set 02', image: gallery02 },
-	{ title: 'Gallery 03', caption: 'Photo set 03', image: gallery03 },
-];
+import ProfileShell from '../layouts/ProfileShell.astro';
+import { galleryItems } from '../data/site';
 ---
-<!doctype html>
-<html lang="vi">
-  <head>
-    <BaseHead title="Gallery — Duy" />
-  </head>
-  <body>
-    <Header />
-    <main style="width:min(1100px,calc(100% - 2rem));margin:2rem auto;">
-      <section class="section-panel">
-        <h2 class="section-title" data-i18n="section.gallery.title">Gallery</h2>
-        <div class="grid-3" style="margin-top:1rem;">
-          {galleryItems.map((item) => (
-            <article class="gallery-card">
-              <img src={item.image.src} alt={item.title} loading="lazy" />
-              <div class="card-body">
-                <h3>{item.title}</h3>
-                <p>{item.caption}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    </main>
-  </body>
-</html>
+
+<ProfileShell
+	headTitle="Thư viện | Nguyễn Văn Duy"
+	description="Bộ sưu tập hình ảnh cá nhân của Nguyễn Văn Duy."
+	activeNav="gallery"
+>
+	<section>
+		<h2 class="page-title" data-i18n="page.gallery.title">Thư viện</h2>
+		<div class="page-accent"></div>
+	</section>
+
+	<section class="gallery-grid">
+		{galleryItems.map((item) => (
+			<article class="gallery-card">
+				<img src={item.image.src} alt={item.title} loading="lazy" />
+				<div class="gallery-copy">
+					<h3>{item.title}</h3>
+					<p>{item.caption}</p>
+				</div>
+			</article>
+		))}
+	</section>
+
+	<style>
+		.page-title {
+			font-size: clamp(2.2rem, 4vw, 3.4rem);
+		}
+
+		.page-accent {
+			width: 58px;
+			height: 4px;
+			margin-top: 0.9rem;
+			border-radius: 999px;
+			background: #17b8ff;
+		}
+
+		.gallery-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+			margin-top: 1.5rem;
+		}
+
+		.gallery-card {
+			overflow: hidden;
+			border-radius: 1.2rem;
+			border: 1px solid rgba(216, 190, 154, 0.35);
+			background: rgba(255, 255, 255, 0.03);
+		}
+
+		.gallery-card img {
+			width: 100%;
+			height: 240px;
+			object-fit: cover;
+			border-radius: 0;
+		}
+
+		.gallery-copy {
+			padding: 0.95rem;
+		}
+
+		.gallery-copy h3 {
+			font-size: 1.2rem;
+			margin-bottom: 0.35rem;
+		}
+
+		.gallery-copy p {
+			color: #b8c5d2;
+		}
+
+		@media (max-width: 980px) {
+			.gallery-grid {
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+
+		@media (max-width: 720px) {
+			.gallery-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</ProfileShell>

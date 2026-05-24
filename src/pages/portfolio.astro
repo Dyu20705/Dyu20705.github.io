@@ -1,44 +1,168 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import gallery01 from '../assets/img/IMG_20240927_082039_070.jpg';
-
-const sharedProjectImage = gallery01;
-const featuredProjects = [
-	{ title: 'dotfiles', tag: 'Config', description: 'Bộ cấu hình môi trường làm việc cá nhân cho shell, terminal và workflow hằng ngày.', url: 'https://github.com/Dyu20705/dotfiles', image: sharedProjectImage },
-	{ title: 'Personal-Internet-Simulator', tag: 'Simulator', description: 'Mô phỏng hành vi mạng và các thành phần internet ở quy mô cá nhân để thử nghiệm ý tưởng hệ thống.', url: 'https://github.com/Dyu20705/Personal-Internet-Simulator', image: sharedProjectImage },
-	{ title: 'myNote', tag: 'Tooling', description: 'Công cụ ghi chú cá nhân tập trung vào tốc độ truy cập và tổ chức nội dung.', url: 'https://github.com/Dyu20705/myNote', image: sharedProjectImage },
-	{ title: 'SQUAREXO', tag: 'Game', description: 'Dự án game với logic thi đấu gọn, rõ và có thể mở rộng thêm luật chơi.', url: 'https://github.com/Dyu20705/SQUAREXO', image: sharedProjectImage },
-	{ title: 'SmartSpender', tag: 'App', description: 'Ứng dụng quản lý chi tiêu cá nhân với mục tiêu theo dõi dòng tiền đơn giản.', url: 'https://github.com/Dyu20705/SmartSpender', image: sharedProjectImage },
-	{ title: 'color-wars', tag: 'Game + AI', description: 'Game chiến thuật theo lượt có tích hợp bot và logic xử lý trạng thái ván chơi.', url: 'https://github.com/Dyu20705/color-wars', image: sharedProjectImage },
-];
+import ProfileShell from '../layouts/ProfileShell.astro';
+import { portfolioProjects } from '../data/site';
 ---
-<!doctype html>
-<html lang="vi">
-  <head>
-    <BaseHead title="Portfolio — Duy" />
-  </head>
-  <body>
-    <Header />
-    <main style="width:min(1100px,calc(100% - 2rem));margin:2rem auto;">
-      <section class="section-panel">
-        <h2 class="section-title" data-i18n="section.portfolio.title">Portfolio</h2>
-        <div class="grid-3" style="margin-top:1rem;">
-          {featuredProjects.map((project) => (
-            <a class="portfolio-card" href={project.url} target="_blank" rel="noreferrer">
-              <img src={project.image.src} alt={project.title} loading="lazy" />
-              <div class="card-body">
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div class="card-meta">
-                  <span class="pill">{project.tag}</span>
-                  <strong>Xem repo</strong>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    </main>
-  </body>
-</html>
+
+<ProfileShell
+	headTitle="Dự án | Nguyễn Văn Duy"
+	description="Danh sách dự án cá nhân tập trung vào app, tools và các thử nghiệm hệ thống."
+	activeNav="portfolio"
+>
+	<section>
+		<h2 class="page-title" data-i18n="page.portfolio.title">Dự án</h2>
+		<div class="page-accent"></div>
+	</section>
+
+	<section class="portfolio-filters" aria-label="Portfolio filters">
+		<button class="filter-button is-active" type="button" data-filter="all">All</button>
+		<button class="filter-button" type="button" data-filter="app">App</button>
+		<button class="filter-button" type="button" data-filter="tools">Tools</button>
+		<button class="filter-button" type="button" data-filter="other">Other</button>
+	</section>
+
+	<section class="portfolio-grid" id="portfolio-grid">
+		{portfolioProjects.map((project) => (
+			<a
+				class="portfolio-card"
+				href={project.url}
+				target="_blank"
+				rel="noreferrer"
+				data-category={project.category}
+			>
+				<img src={project.image.src} alt={project.title} loading="lazy" />
+				<div class="portfolio-copy">
+					<div class="portfolio-top">
+						<h3>{project.title}</h3>
+						<span class="portfolio-tag">{project.label}</span>
+					</div>
+					<p>{project.description}</p>
+				</div>
+			</a>
+		))}
+	</section>
+
+	<script is:inline>
+		(function () {
+			const buttons = document.querySelectorAll('.filter-button');
+			const cards = document.querySelectorAll('.portfolio-card');
+
+			buttons.forEach((button) => {
+				button.addEventListener('click', () => {
+					const filter = button.getAttribute('data-filter');
+					buttons.forEach((item) => item.classList.remove('is-active'));
+					button.classList.add('is-active');
+					cards.forEach((card) => {
+						const category = card.getAttribute('data-category');
+						card.toggleAttribute('hidden', !(filter === 'all' || category === filter));
+					});
+				});
+			});
+		})();
+	</script>
+
+	<style>
+		.page-title {
+			font-size: clamp(2.2rem, 4vw, 3.4rem);
+		}
+
+		.page-accent {
+			width: 58px;
+			height: 4px;
+			margin-top: 0.9rem;
+			border-radius: 999px;
+			background: #17b8ff;
+		}
+
+		.portfolio-filters {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+			margin-top: 1.5rem;
+		}
+
+		.filter-button {
+			padding: 0.82rem 1.15rem;
+			border: none;
+			border-radius: 0.95rem;
+			background: rgba(255, 255, 255, 0.05);
+			color: #c4af91;
+			font: inherit;
+			cursor: pointer;
+		}
+
+		.filter-button.is-active {
+			background: #179dff;
+			color: #ffffff;
+			font-weight: 700;
+		}
+
+		.portfolio-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+			margin-top: 1.25rem;
+		}
+
+		.portfolio-card {
+			display: grid;
+			overflow: hidden;
+			text-decoration: none;
+			border-radius: 1.2rem;
+			border: 1px solid rgba(216, 190, 154, 0.38);
+			background: rgba(255, 255, 255, 0.03);
+		}
+
+		.portfolio-card[hidden] {
+			display: none;
+		}
+
+		.portfolio-card img {
+			width: 100%;
+			height: 220px;
+			object-fit: cover;
+			border-radius: 0;
+		}
+
+		.portfolio-copy {
+			padding: 1rem;
+		}
+
+		.portfolio-top {
+			display: flex;
+			justify-content: space-between;
+			gap: 0.8rem;
+			align-items: flex-start;
+			margin-bottom: 0.7rem;
+		}
+
+		.portfolio-top h3 {
+			font-size: 1.35rem;
+		}
+
+		.portfolio-tag {
+			padding: 0.28rem 0.7rem;
+			border-radius: 999px;
+			background: rgba(10, 187, 255, 0.12);
+			color: #19c9ff;
+			font-size: 0.78rem;
+			font-weight: 700;
+		}
+
+		.portfolio-copy p {
+			color: #b8c5d2;
+			line-height: 1.78;
+		}
+
+		@media (max-width: 1100px) {
+			.portfolio-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		@media (max-width: 900px) {
+			.portfolio-grid {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</ProfileShell>

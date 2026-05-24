@@ -1,23 +1,207 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
+import ProfileShell from '../layouts/ProfileShell.astro';
+import { profile } from '../data/site';
 ---
-<!doctype html>
-<html lang="vi">
-  <head>
-    <BaseHead title="Contact — Duy" />
-  </head>
-  <body>
-    <Header />
-    <main style="width:min(900px,calc(100% - 2rem));margin:2rem auto;">
-      <section class="section-panel">
-        <h2 class="section-title" data-i18n="section.contact.title">Contact</h2>
-        
-        <div class="glass-card">
-          <p>Email: nguyenvanduy20072005@gmail.com</p>
-          <p>Phone: 0869630908</p>
-        </div>
-      </section>
-    </main>
-  </body>
-</html>
+
+<ProfileShell
+	headTitle="Liên hệ | Nguyễn Văn Duy"
+	description="Thông tin liên hệ và biểu mẫu gửi tin nhắn cho Nguyễn Văn Duy."
+	activeNav="contact"
+>
+	<section>
+		<h2 class="page-title" data-i18n="page.contact.title">Liên hệ</h2>
+		<div class="page-accent"></div>
+	</section>
+
+	<section class="contact-hero">
+		<div>
+			<h3>Sẵn sàng trao đổi về system, infrastructure và triển khai thực tế</h3>
+			<p>
+				Nếu anh muốn trao đổi về thiết kế hạ tầng, tối ưu quy trình deploy, khả năng vận hành hay bảo mật hệ
+				thống, có thể liên hệ trực tiếp qua email hoặc gửi form bên dưới.
+			</p>
+		</div>
+	</section>
+
+	<section class="contact-grid">
+		<article class="contact-card">
+			<div class="contact-card-icon">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Zm2.2-.5 5.8 5.1L17.8 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+			</div>
+			<div>
+				<small>Email</small>
+				<a href={`mailto:${profile.email}`}>{profile.email}</a>
+			</div>
+		</article>
+		<article class="contact-card">
+			<div class="contact-card-icon">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.9c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2L9.9 10.2c.8 1.5 2 2.8 3.4 3.6l1.3-1.3c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2l-1.1 1.1c-.9.9-2.2 1.2-3.4.8-5-1.7-9-5.7-10.7-10.7-.4-1.2-.1-2.5.8-3.4L7.2 4.9Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+			</div>
+			<div>
+				<small>Điện thoại</small>
+				<a href="tel:0869630908">{profile.phone}</a>
+			</div>
+		</article>
+		<article class="contact-card">
+			<div class="contact-card-icon">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20s6-5.6 6-10a6 6 0 1 0-12 0c0 4.4 6 10 6 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.7"/></svg>
+			</div>
+			<div>
+				<small>Địa điểm</small>
+				<span>{profile.location}</span>
+			</div>
+		</article>
+	</section>
+
+	<form class="contact-form" action={`mailto:${profile.email}`} method="post" enctype="text/plain">
+		<div class="form-row">
+			<label>
+				<span>Họ và tên</span>
+				<input type="text" name="name" placeholder="Nguyễn Văn A" required />
+			</label>
+			<label>
+				<span>Email</span>
+				<input type="email" name="email" placeholder="tenban@example.com" required />
+			</label>
+		</div>
+		<label>
+			<span>Nội dung</span>
+			<textarea name="message" placeholder="Viết nội dung cần trao đổi..." required></textarea>
+		</label>
+		<button class="submit-button" type="submit">Gửi tin nhắn</button>
+	</form>
+
+	<style>
+		.page-title {
+			font-size: clamp(2.2rem, 4vw, 3.4rem);
+		}
+
+		.page-accent {
+			width: 58px;
+			height: 4px;
+			margin-top: 0.9rem;
+			border-radius: 999px;
+			background: #17b8ff;
+		}
+
+		.contact-hero {
+			margin-top: 1.5rem;
+			padding: 1.5rem;
+			border-radius: 1.3rem;
+			border: 1px solid rgba(216, 190, 154, 0.35);
+			background:
+				radial-gradient(circle at top right, rgba(24, 189, 255, 0.16), transparent 30%),
+				rgba(255, 255, 255, 0.03);
+		}
+
+		.contact-hero h3 {
+			font-size: 1.5rem;
+			margin-bottom: 0.7rem;
+		}
+
+		.contact-hero p {
+			color: #b8c5d2;
+			line-height: 1.82;
+			max-width: 56rem;
+		}
+
+		.contact-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+			margin-top: 1.2rem;
+		}
+
+		.contact-card {
+			display: grid;
+			grid-template-columns: 52px minmax(0, 1fr);
+			gap: 0.85rem;
+			padding: 1rem;
+			border-radius: 1.2rem;
+			border: 1px solid rgba(216, 190, 154, 0.35);
+			background: rgba(255, 255, 255, 0.03);
+		}
+
+		.contact-card-icon {
+			width: 52px;
+			height: 52px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 1rem;
+			color: #19c9ff;
+			background: rgba(17, 161, 255, 0.12);
+		}
+
+		.contact-card small {
+			display: block;
+			margin-bottom: 0.22rem;
+			font-size: 0.74rem;
+			color: #a9b9c9;
+		}
+
+		.contact-card a,
+		.contact-card span {
+			color: #ffffff;
+			text-decoration: none;
+			font-weight: 700;
+		}
+
+		.contact-form {
+			display: grid;
+			gap: 1rem;
+			margin-top: 1.3rem;
+		}
+
+		.form-row {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 1rem;
+		}
+
+		.contact-form label {
+			display: grid;
+			gap: 0.55rem;
+		}
+
+		.contact-form span {
+			font-weight: 700;
+			color: #ffffff;
+		}
+
+		.contact-form input,
+		.contact-form textarea {
+			width: 100%;
+			padding: 1rem 1rem;
+			border-radius: 1rem;
+			border: 1px solid rgba(216, 190, 154, 0.35);
+			background: rgba(255, 255, 255, 0.04);
+			color: #f2f7fb;
+			font: inherit;
+		}
+
+		.contact-form textarea {
+			min-height: 180px;
+			resize: vertical;
+		}
+
+		.submit-button {
+			width: fit-content;
+			padding: 0.95rem 1.4rem;
+			border: none;
+			border-radius: 1rem;
+			background: linear-gradient(135deg, #149cff, #11c4ff);
+			color: #ffffff;
+			font: inherit;
+			font-weight: 700;
+			cursor: pointer;
+		}
+
+		@media (max-width: 900px) {
+			.contact-grid,
+			.form-row {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</ProfileShell>

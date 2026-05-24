@@ -1,0 +1,165 @@
+---
+import { aboutHighlights, serviceCards } from '../data/site';
+---
+
+<section class="page-section">
+	<h2 class="page-title" data-i18n="page.about.title">Về tôi</h2>
+	<div class="page-accent"></div>
+	<div class="about-copy">
+		<p class="about-lead">
+			Tôi muốn thiết kế, xây dựng và bảo trì những system hoặc hạ tầng có tiêu chuẩn rõ ràng: dễ bảo trì,
+			đủ tin cậy, an toàn ngay từ mặc định và sẵn sàng mở rộng khi bài toán lớn dần lên.
+		</p>
+		<p>
+			Cách tôi tiếp cận một hệ thống không dừng ở việc “chạy được”. Tôi quan tâm tới cấu trúc sau khi bàn
+			giao, cách nó được vận hành trong production, mức độ dễ quan sát khi có lỗi và chi phí thay đổi khi sản
+			phẩm tiếp tục phát triển.
+		</p>
+	</div>
+
+	<div class="highlight-list">
+		{aboutHighlights.map((item) => (
+			<div class="highlight-item">
+				<span class="highlight-dot"></span>
+				<p>{item}</p>
+			</div>
+		))}
+	</div>
+</section>
+
+<section class="page-section">
+	<h3 class="section-heading">Tôi đang tập trung vào</h3>
+	<div class="service-grid">
+		{serviceCards.map((card) => (
+			<article class="service-card">
+				<div class="service-icon">
+					{
+						card.icon === 'infra' ? (
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M7 4v4M12 10v4M17 16v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+						) : card.icon === 'deploy' ? (
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M5 10l7-7 7 7M5 14l7 7 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						) : card.icon === 'security' ? (
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5.5 6v5.5c0 4.2 2.8 8 6.5 9.5 3.7-1.5 6.5-5.3 6.5-9.5V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.5 12.5 11 14l3.5-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						) : (
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h4m8 0h4M12 4v4m0 8v4M7 7l2.5 2.5M14.5 14.5 17 17M17 7l-2.5 2.5M9.5 14.5 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+						)
+					}
+				</div>
+				<div>
+					<h4>{card.title}</h4>
+					<p>{card.body}</p>
+				</div>
+			</article>
+		))}
+	</div>
+</section>
+
+<style>
+	.page-section + .page-section {
+		margin-top: 2rem;
+	}
+
+	.page-title {
+		font-size: clamp(2.5rem, 4vw, 4rem);
+	}
+
+	.page-accent {
+		width: 60px;
+		height: 4px;
+		margin: 1rem 0 1.6rem;
+		border-radius: 999px;
+		background: #17b8ff;
+	}
+
+	.about-copy {
+		display: grid;
+		gap: 1rem;
+		max-width: 58rem;
+	}
+
+	.about-lead {
+		font-size: 1.34rem;
+		line-height: 1.65;
+		color: #d8c0a1;
+	}
+
+	.about-copy p {
+		color: #b6c3d1;
+		line-height: 1.9;
+		font-size: 1.04rem;
+	}
+
+	.highlight-list {
+		display: grid;
+		gap: 0.8rem;
+		margin-top: 1.6rem;
+	}
+
+	.highlight-item {
+		display: flex;
+		gap: 0.75rem;
+		align-items: flex-start;
+		padding: 0.95rem 1rem;
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.06);
+	}
+
+	.highlight-dot {
+		width: 10px;
+		height: 10px;
+		flex: 0 0 auto;
+		margin-top: 0.48rem;
+		border-radius: 999px;
+		background: #17b8ff;
+	}
+
+	.highlight-item p {
+		color: #d9e5f1;
+	}
+
+	.section-heading {
+		font-size: 2rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.service-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.service-card {
+		display: grid;
+		grid-template-columns: 58px minmax(0, 1fr);
+		gap: 1rem;
+		padding: 1.25rem;
+		border-radius: 1.25rem;
+		border: 1px solid rgba(216, 190, 154, 0.42);
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	.service-icon {
+		color: #19c9ff;
+	}
+
+	.service-card h4 {
+		font-size: 1.3rem;
+		margin-bottom: 0.45rem;
+	}
+
+	.service-card p {
+		color: #b9c6d4;
+		line-height: 1.8;
+	}
+
+	@media (max-width: 900px) {
+		.service-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.page-title {
+			font-size: 2.5rem;
+		}
+	}
+</style>
