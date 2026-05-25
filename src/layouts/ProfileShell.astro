@@ -3,6 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import { profile, navItems, socialLinks } from '../data/site';
 import entranceSong from '../assets/theme-song/entrance.mp3?url';
 import goodbyeSong from '../assets/theme-song/goodbye.mp3?url';
+import { Image } from 'astro:assets';
 
 interface Props {
 	headTitle: string;
@@ -221,10 +222,11 @@ const { headTitle, description, activeNav } = Astro.props;
 		</style>
 	</head>
 	<body>
-		<button class="lang-float" id="lang-float" type="button">EN</button>
-		<main class="shell">
+		<a class="skip-link" href="#page-content" data-i18n="skip.content">Skip to content</a>
+		<button class="lang-float" id="lang-float" type="button" aria-label="Toggle language">EN</button>
+		<main class="shell" id="page-content">
 			<aside class="sidebar">
-				<img class="profile-photo" src={profile.photo.src} alt={profile.name} />
+				<Image class="profile-photo" src={profile.photo} alt={profile.name} width={112} height={112} loading="eager" decoding="async" />
 				<h1 class="profile-name">{profile.name}</h1>
 				<div class="profile-role-wrap">
 					<span class="profile-role" data-i18n-role>{profile.role}</span>
@@ -294,13 +296,9 @@ const { headTitle, description, activeNav } = Astro.props;
 			</aside>
 
 			<section class="content-panel">
-				<nav class="top-nav">
+				<nav class="top-nav" aria-label="Primary page sections">
 					{navItems.map((item) => (
-						<a
-							href={item.href}
-							class={item.id === activeNav ? 'is-active' : ''}
-							data-i18n={`nav.${item.id}`}
-						>
+						<a href={item.href} class={item.id === activeNav ? 'is-active' : ''} aria-current={item.id === activeNav ? 'page' : undefined} data-i18n={`nav.${item.id}`}>
 							{item.vi}
 						</a>
 					))}
@@ -322,6 +320,7 @@ const { headTitle, description, activeNav } = Astro.props;
 						'nav.contact': 'Liên hệ',
 						'nav.gallery': 'Thư viện',
 						'nav.cv': 'CV',
+						'skip.content': 'Bỏ qua đến nội dung',
 						'page.about.title': 'Về tôi',
 						'page.resume.title': 'Hồ sơ',
 						'page.portfolio.title': 'Dự án',
@@ -431,6 +430,7 @@ const { headTitle, description, activeNav } = Astro.props;
 						'nav.contact': 'Contact',
 						'nav.gallery': 'Gallery',
 						'nav.cv': 'CV',
+						'skip.content': 'Skip to content',
 						'page.about.title': 'About Me',
 						'page.resume.title': 'Resume',
 						'page.portfolio.title': 'Portfolio',
@@ -533,6 +533,7 @@ const { headTitle, description, activeNav } = Astro.props;
 						'blog.read': 'Read article',
 					},
 				};
+
 				const button = document.getElementById('lang-float');
 
 				function applyLang(lang) {
@@ -558,6 +559,7 @@ const { headTitle, description, activeNav } = Astro.props;
 
 				const currentLang = localStorage.getItem('siteLang') || 'vi';
 				applyLang(currentLang);
+
 				if (button) {
 					button.addEventListener('click', () => {
 						const nextLang = localStorage.getItem('siteLang') === 'vi' ? 'en' : 'vi';
@@ -573,52 +575,66 @@ const { headTitle, description, activeNav } = Astro.props;
 				activated: false,
 			};
 
-			const entranceAudio = new Audio(entranceSong);
-			const goodbyeAudio = new Audio(goodbyeSong);
-			entranceAudio.preload = 'auto';
-			goodbyeAudio.preload = 'auto';
-			entranceAudio.volume = 0.12;
-			goodbyeAudio.volume = 0.1;
+			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			let entranceAudio;
+			let goodbyeAudio;
+
+			const ensureAudio = () => {
+				if (reducedMotion) return false;
+				if (!entranceAudio) {
+					entranceAudio = new Audio(entranceSong);
+					entranceAudio.preload = 'none';
+					entranceAudio.volume = 0.12;
+				}
+				if (!goodbyeAudio) {
+					goodbyeAudio = new Audio(goodbyeSong);
+					goodbyeAudio.preload = 'none';
+					goodbyeAudio.volume = 0.1;
+				}
+				return true;
+			};
 
 			const tryPlay = (audio) => {
+				if (!audio) return;
 				audio.currentTime = 0;
 				audio.play().catch(() => {});
 			};
 
 			const playEntrance = () => {
-				if (audioState.entrancePlayed) return;
+				if (audioState.entrancePlayed || !ensureAudio()) return;
 				audioState.entrancePlayed = true;
 				tryPlay(entranceAudio);
 			};
 
 			const playGoodbye = () => {
-				if (audioState.goodbyePlayed || !audioState.activated) return;
+				if (audioState.goodbyePlayed || !audioState.activated || !ensureAudio()) return;
 				audioState.goodbyePlayed = true;
 				tryPlay(goodbyeAudio);
 			};
 
 			const activateAudio = () => {
-				if (audioState.activated) return;
+				if (audioState.activated || reducedMotion) return;
 				audioState.activated = true;
 				playEntrance();
 			};
 
-			window.addEventListener('pointerdown', activateAudio, { once: true });
-			window.addEventListener('keydown', activateAudio, { once: true });
-			window.addEventListener('touchstart', activateAudio, { once: true });
-			window.addEventListener('focus', activateAudio, { once: true });
+			if (!reducedMotion) {
+				window.addEventListener('pointerdown', activateAudio, { once: true });
+				window.addEventListener('keydown', activateAudio, { once: true });
+				window.addEventListener('touchstart', activateAudio, { once: true });
+				window.addEventListener('focus', activateAudio, { once: true });
 
-			document.addEventListener('visibilitychange', () => {
-				if (document.visibilityState === 'visible') {
-					activateAudio();
-				}
-				if (document.visibilityState === 'hidden') {
-					playGoodbye();
-				}
-			});
+				document.addEventListener('visibilitychange', () => {
+					if (document.visibilityState === 'visible') {
+						activateAudio();
+					}
+					if (document.visibilityState === 'hidden') {
+						playGoodbye();
+					}
+				});
 
-			window.addEventListener('pagehide', playGoodbye, { capture: true });
-			window.addEventListener('beforeunload', playGoodbye, { capture: true });
+				window.addEventListener('pagehide', playGoodbye, { capture: true });
+			}
 		</script>
 	</body>
 </html>

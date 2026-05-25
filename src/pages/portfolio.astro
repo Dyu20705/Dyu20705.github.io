@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import ProfileShell from '../layouts/ProfileShell.astro';
 import { portfolioProjects } from '../data/site';
 ---
@@ -29,7 +30,7 @@ import { portfolioProjects } from '../data/site';
 				rel="noreferrer"
 				data-category={project.category}
 			>
-				<img src={project.image.src} alt={project.title} loading="lazy" />
+				<Image src={project.image} alt={project.title} loading="lazy" decoding="async" sizes="(max-width: 900px) 100vw, 33vw" />
 				<div class="portfolio-copy">
 					<div class="portfolio-top">
 						<h3>{project.title}</h3>
@@ -46,11 +47,19 @@ import { portfolioProjects } from '../data/site';
 			const buttons = document.querySelectorAll('.filter-button');
 			const cards = document.querySelectorAll('.portfolio-card');
 
+			const setPressedState = (activeButton) => {
+				buttons.forEach((item) => {
+					item.setAttribute('aria-pressed', String(item === activeButton));
+				});
+			};
+
 			buttons.forEach((button) => {
+				button.setAttribute('aria-pressed', button.classList.contains('is-active') ? 'true' : 'false');
 				button.addEventListener('click', () => {
 					const filter = button.getAttribute('data-filter');
 					buttons.forEach((item) => item.classList.remove('is-active'));
 					button.classList.add('is-active');
+					setPressedState(button);
 					cards.forEach((card) => {
 						const category = card.getAttribute('data-category');
 						card.toggleAttribute('hidden', !(filter === 'all' || category === filter));
@@ -89,6 +98,11 @@ import { portfolioProjects } from '../data/site';
 			font: inherit;
 			cursor: pointer;
 		}
+
+			.filter-button:focus-visible {
+				outline: none;
+				box-shadow: 0 0 0 3px rgba(23, 184, 255, 0.24);
+			}
 
 		.filter-button.is-active {
 			background: #179dff;
