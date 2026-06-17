@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="src/assets/selfie/toi.png" alt="Nguyễn Văn Duy portrait" width="140" />
+  <img src="public/readme-preview.svg" alt="Dyu20705.github.io MLOps Control Room preview" width="820" />
 
   # Dyu20705.github.io
 

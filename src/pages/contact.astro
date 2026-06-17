@@ -69,7 +69,34 @@ import { profile } from '../data/site';
 			<textarea name="message" placeholder="Viết nội dung cần trao đổi..." data-i18n-placeholder="contact.form.message.placeholder" required></textarea>
 		</label>
 		<button class="submit-button" type="submit" data-i18n="contact.form.submit">Gửi tin nhắn</button>
+		<p class="form-status" id="contact-form-status" data-i18n="contact.form.mailto" hidden>
+			Ứng dụng email sẽ mở bằng mailto. Nếu không mở, hãy gửi trực tiếp tới email ở trên.
+		</p>
 	</form>
+
+	<script is:inline>
+		(() => {
+			const form = document.querySelector('.contact-form');
+			const status = document.getElementById('contact-form-status');
+			const button = form?.querySelector('.submit-button');
+			const t = (key) => {
+				const lang = localStorage.getItem('siteLang') || 'vi';
+				return window.controlRoomTranslations?.[lang]?.[key] || key;
+			};
+			form?.addEventListener('submit', () => {
+				if (status) {
+					status.hidden = false;
+					status.textContent = t('contact.form.mailto');
+				}
+				if (button) {
+					button.textContent = t('contact.form.preparing');
+					window.setTimeout(() => {
+						button.textContent = t('contact.form.submit');
+					}, 2200);
+				}
+			});
+		})();
+	</script>
 
 	<style>
 		.page-title {
@@ -195,6 +222,21 @@ import { profile } from '../data/site';
 			font: inherit;
 			font-weight: 700;
 			cursor: pointer;
+		}
+
+		.form-status {
+			width: min(100%, 36rem);
+			margin: 0;
+			padding: 0.85rem 1rem;
+			border: 1px solid rgba(97, 213, 255, 0.22);
+			border-radius: 1rem;
+			background: rgba(97, 213, 255, 0.08);
+			color: #d7e6f6;
+			line-height: 1.6;
+		}
+
+		.form-status[hidden] {
+			display: none;
 		}
 
 		@media (max-width: 900px) {

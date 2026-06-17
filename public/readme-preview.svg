@@ -1,0 +1,44 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="40" fill="#050912"/>
+  <path d="M0 0h1200v675H0z" fill="url(#bg)"/>
+  <path d="M90 110h1020v505H90z" fill="#08111D" stroke="#27415E" stroke-width="2"/>
+  <path d="M90 110h1020v62H90z" fill="#101B2A"/>
+  <circle cx="126" cy="141" r="9" fill="#FF6B6B"/>
+  <circle cx="156" cy="141" r="9" fill="#FFD166"/>
+  <circle cx="186" cy="141" r="9" fill="#5FE3A1"/>
+  <rect x="242" y="126" width="374" height="30" rx="15" fill="#06101B" stroke="#284861"/>
+  <text x="272" y="147" fill="#9DDFF7" font-family="Consolas, monospace" font-size="18">https://dyu20705.github.io</text>
+  <text x="126" y="238" fill="#61D5FF" font-family="Consolas, monospace" font-size="22" letter-spacing="4">GITHUB PAGES DEPLOY</text>
+  <text x="126" y="309" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800">MLOps Control Room</text>
+  <text x="126" y="354" fill="#B8C5D2" font-family="Arial, Helvetica, sans-serif" font-size="25">Static-first portfolio for projects, resume, writing, and contact.</text>
+  <g transform="translate(126 414)">
+    <rect width="150" height="42" rx="21" fill="#149CFF"/>
+    <text x="26" y="28" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Portfolio</text>
+    <rect x="168" width="122" height="42" rx="21" fill="#141F2F" stroke="#34556C"/>
+    <text x="198" y="28" fill="#D7E6F6" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Resume</text>
+    <rect x="308" width="118" height="42" rx="21" fill="#141F2F" stroke="#34556C"/>
+    <text x="340" y="28" fill="#D7E6F6" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Contact</text>
+  </g>
+  <g transform="translate(690 230)">
+    <rect x="0" y="0" width="300" height="92" rx="14" fill="#101B2A" stroke="#2B4E68"/>
+    <text x="24" y="36" fill="#61D5FF" font-family="Consolas, monospace" font-size="17">pipeline.status</text>
+    <text x="24" y="66" fill="#FFFFFF" font-family="Consolas, monospace" font-size="22" font-weight="700">ACTIVE</text>
+    <rect x="48" y="156" width="300" height="92" rx="14" fill="#101B2A" stroke="#2B4E68"/>
+    <text x="72" y="192" fill="#61D5FF" font-family="Consolas, monospace" font-size="17">projects.ready</text>
+    <text x="72" y="222" fill="#FFFFFF" font-family="Consolas, monospace" font-size="22" font-weight="700">SELECTED DOSSIERS</text>
+    <path d="M150 92v42M150 134h48v22" stroke="#61D5FF" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="150" cy="92" r="7" fill="#F7C66B"/>
+    <circle cx="198" cy="156" r="7" fill="#F7C66B"/>
+  </g>
+  <g opacity=".42">
+    <path d="M95 507h480M95 543h370M95 579h525" stroke="#24435D" stroke-width="2"/>
+    <path d="M878 154h192M878 184h144M878 214h170" stroke="#24435D" stroke-width="2"/>
+  </g>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(922 116) rotate(134) scale(650 520)">
+      <stop stop-color="#124F77"/>
+      <stop offset=".55" stop-color="#071322"/>
+      <stop offset="1" stop-color="#050912"/>
+    </radialGradient>
+  </defs>
+</svg>

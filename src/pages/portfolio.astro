@@ -23,11 +23,8 @@ import { portfolioProjects } from '../data/site';
 
 	<section class="portfolio-grid" id="portfolio-grid">
 		{portfolioProjects.map((project, index) => (
-			<a
+			<article
 				class="portfolio-card"
-				href={project.url}
-				target="_blank"
-				rel="noopener noreferrer"
 				data-category={project.category}
 			>
 				<div class="architecture-preview" aria-hidden="true">
@@ -58,19 +55,20 @@ import { portfolioProjects } from '../data/site';
 							<dt data-i18n="portfolio.problem">Vấn đề</dt>
 							<dd data-i18n={`portfolio.project.${index}.problem`}>{project.problem}</dd>
 						</div>
-						<div>
-							<dt data-i18n="portfolio.role">Vai trò</dt>
-							<dd data-i18n={`portfolio.project.${index}.role`}>{project.role}</dd>
-						</div>
 					</dl>
+					<details class="project-details">
+						<summary data-i18n="portfolio.details">What I built / learned</summary>
+						<p data-i18n={`portfolio.project.${index}.role`}>{project.role}</p>
+					</details>
 					<div class="project-footer">
 						<span class="portfolio-status" data-i18n={`portfolio.project.${index}.status`}>{project.status}</span>
 						<div class="tech-tags" aria-label="Tech stack">
 							{project.stack.map((tech) => <span>{tech}</span>)}
 						</div>
+						<a class="project-link" href={project.url} target="_blank" rel="noopener noreferrer" data-i18n="portfolio.repo">Mở repository</a>
 					</div>
 				</div>
-			</a>
+			</article>
 		))}
 	</section>
 
@@ -153,7 +151,6 @@ import { portfolioProjects } from '../data/site';
 			position: relative;
 			display: grid;
 			overflow: hidden;
-			text-decoration: none;
 			border-radius: 0.95rem;
 			border: 1px solid rgba(97, 213, 255, 0.16);
 			background:
@@ -311,6 +308,32 @@ import { portfolioProjects } from '../data/site';
 			font-size: 0.95rem;
 		}
 
+		.project-details {
+			margin-top: 0.9rem;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 0.75rem;
+			background: rgba(255, 255, 255, 0.025);
+		}
+
+		.project-details summary {
+			min-height: 42px;
+			padding: 0.55rem 0.7rem;
+			color: #d8c0a1;
+			cursor: pointer;
+			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+			font-size: 0.78rem;
+		}
+
+		.project-details summary:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 3px rgba(97, 213, 255, 0.22);
+		}
+
+		.project-details p {
+			padding: 0 0.7rem 0.75rem;
+			font-size: 0.94rem;
+		}
+
 		.project-footer {
 			display: grid;
 			gap: 0.75rem;
@@ -339,6 +362,29 @@ import { portfolioProjects } from '../data/site';
 			background: rgba(255, 255, 255, 0.05);
 			color: #d9e5f1;
 			font-size: 0.78rem;
+		}
+
+		.project-link {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: fit-content;
+			min-height: 42px;
+			padding: 0.58rem 0.82rem;
+			border: 1px solid rgba(97, 213, 255, 0.28);
+			border-radius: 999px;
+			background: rgba(97, 213, 255, 0.08);
+			color: #f3f7fb;
+			text-decoration: none;
+			font-weight: 700;
+			transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
+		}
+
+		.project-link:hover,
+		.project-link:focus-visible {
+			transform: translateY(-1px);
+			border-color: rgba(97, 213, 255, 0.46);
+			background: rgba(97, 213, 255, 0.14);
 		}
 
 		@media (max-width: 1100px) {

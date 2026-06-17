@@ -10,6 +10,16 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 		<p class="hero-role" data-i18n="hero.role">MLOps Engineer</p>
 		<p class="hero-subtitle" data-i18n="hero.subtitle">Building the systems behind machine learning.</p>
 		<p class="hero-track" data-i18n="hero.track">AI Systems · Cloud Infrastructure · Automation · Research Engineering</p>
+		<div class="hero-actions" aria-label="Primary actions">
+			<a class="hero-action hero-action-primary" href="/portfolio" data-i18n="hero.cta.projects">View Selected Projects</a>
+			<a class="hero-action" href="/resume" data-i18n="hero.cta.resume">View Resume</a>
+			<a class="hero-action" href="/contact" data-i18n="hero.cta.contact">Contact Me</a>
+		</div>
+		<div class="hero-shortcuts" aria-label="Quick links">
+			<a href="https://github.com/Dyu20705" target="_blank" rel="noopener noreferrer">GitHub</a>
+			<a href="/cv" data-i18n="hero.shortcut.cv">CV PDF</a>
+			<a href="/blog" data-i18n="hero.shortcut.log">Engineering Log</a>
+		</div>
 	</div>
 
 	<div class="hero-visual" aria-label="MLOps pipeline visual">
@@ -186,6 +196,63 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 		font-size: 0.88rem;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
+	}
+
+	.hero-actions,
+	.hero-shortcuts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.72rem;
+		align-items: center;
+	}
+
+	.hero-actions {
+		margin-top: 0.35rem;
+	}
+
+	.hero-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 46px;
+		padding: 0.72rem 1rem;
+		border: 1px solid rgba(97, 213, 255, 0.24);
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.04);
+		color: #f3f7fb;
+		text-decoration: none;
+		font-weight: 700;
+		transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+	}
+
+	.hero-action:hover,
+	.hero-action:focus-visible {
+		transform: translateY(-1px);
+		border-color: rgba(97, 213, 255, 0.46);
+		background: rgba(97, 213, 255, 0.1);
+	}
+
+	.hero-action-primary {
+		border-color: transparent;
+		background: linear-gradient(135deg, #61d5ff, #2d83ff);
+		color: #05101b;
+		box-shadow: 0 16px 34px rgba(45, 131, 255, 0.26);
+	}
+
+	.hero-shortcuts {
+		gap: 0.55rem;
+	}
+
+	.hero-shortcuts a {
+		color: #d8c0a1;
+		font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+		font-size: 0.78rem;
+		text-decoration: none;
+	}
+
+	.hero-shortcuts a:hover,
+	.hero-shortcuts a:focus-visible {
+		color: #ffffff;
 	}
 
 	.hero-visual {
@@ -483,6 +550,15 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 
 		.pipeline-node text {
 			display: none;
+		}
+
+		.hero-actions {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
+
+		.hero-action {
+			width: 100%;
 		}
 
 		.system-status dl {

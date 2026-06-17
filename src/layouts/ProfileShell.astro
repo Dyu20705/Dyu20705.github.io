@@ -233,6 +233,15 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease;
 			}
 
+			.social-icon {
+				display: block;
+				flex: 0 0 auto;
+			}
+
+			.social-icon-leetcode {
+				transform: translateX(1px);
+			}
+
 			.sidebar-socials a:hover,
 			.sidebar-socials a:focus-visible {
 				transform: translateY(-2px);
@@ -404,6 +413,25 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				max-height: min(58vh, 520px);
 				overflow-y: auto;
 				padding: 0.8rem;
+			}
+
+			.command-group {
+				margin: 0.35rem 0 0.05rem;
+				color: #61d5ff;
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				font-size: 0.68rem;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+			}
+
+			.command-empty[hidden] {
+				display: none;
+			}
+
+			.command-empty {
+				padding: 1rem;
+				color: var(--text-muted);
+				font-size: 0.94rem;
 			}
 
 			.command-item {
@@ -644,14 +672,14 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						<a href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label} title={item.label}>
 							{
 								item.id === 'github' ? (
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.9 1.4 3.5 1 .1-.7.4-1.1.7-1.3-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.4.1-3 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.8-.4s1.9.1 2.8.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.7.1 3 .7.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.3.8 1 .8 2v2.9c0 .4.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>
+									<svg class="social-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.9 1.4 3.5 1 .1-.7.4-1.1.7-1.3-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.4.1-3 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.8-.4s1.9.1 2.8.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.7.1 3 .7.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.3.8 1 .8 2v2.9c0 .4.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>
 								) : item.id === 'linkedin' ? (
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.49 2.49 0 1 1 0 3.5a2.49 2.49 0 0 1 4.98 0ZM.5 8.5h4.9V24H.5V8.5Zm7.4 0H12v2.1h.1c.6-1.1 2-2.3 4.2-2.3 4.5 0 5.3 2.9 5.3 6.8V24h-4.9v-6.1c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V24H7.9V8.5Z"/></svg>
+									<svg class="social-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.49 2.49 0 1 1 0 3.5a2.49 2.49 0 0 1 4.98 0ZM.5 8.5h4.9V24H.5V8.5Zm7.4 0H12v2.1h.1c.6-1.1 2-2.3 4.2-2.3 4.5 0 5.3 2.9 5.3 6.8V24h-4.9v-6.1c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V24H7.9V8.5Z"/></svg>
 								) : (
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-										<path d="M16.1 4.2 8.4 12l7.7 7.8" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"/>
-										<path d="M8.4 12h9.2" stroke="currentColor" stroke-width="2.15" stroke-linecap="round"/>
-										<path d="M14.8 4.2h3.1M14.8 19.8h3.1" stroke="currentColor" stroke-width="2.15" stroke-linecap="round"/>
+									<svg class="social-icon social-icon-leetcode" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+										<path d="M15.8 4.4 8.6 11.7a1 1 0 0 0 0 1.4l7.2 6.5" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M10 12h8.2" stroke="currentColor" stroke-width="2.15" stroke-linecap="round"/>
+										<path d="M15.2 5h3M15.2 19h3" stroke="currentColor" stroke-width="2.15" stroke-linecap="round"/>
 									</svg>
 								)
 							}
@@ -683,6 +711,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 					<input class="command-input" id="command-input" type="search" autocomplete="off" data-i18n-placeholder="command.placeholder" placeholder="Type a command or status..." />
 				</div>
 				<div class="command-list" id="command-list">
+					<p class="command-group" data-i18n="command.group.navigation">Navigation</p>
 					<button class="command-item" type="button" data-command="goto:/about" data-keywords="about identity profile">
 						<span><strong data-i18n="command.about">Go to About</strong><small data-i18n="command.about.desc">Identity and MLOps direction</small></span>
 						<span class="command-shortcut">01</span>
@@ -699,6 +728,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						<span><strong data-i18n="command.resume">Open Resume</strong><small data-i18n="command.resume.desc">Education and skill evidence</small></span>
 						<span class="command-shortcut">02</span>
 					</button>
+					<p class="command-group" data-i18n="command.group.external">External Links</p>
 					<button class="command-item" type="button" data-command="external:github" data-keywords="github source repository">
 						<span><strong data-i18n="command.github">Open GitHub</strong><small>github.com/Dyu20705</small></span>
 						<span class="command-shortcut">GH</span>
@@ -707,6 +737,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						<span><strong data-i18n="command.linkedin">Open LinkedIn</strong><small>linkedin.com/in/duynguyenvan05</small></span>
 						<span class="command-shortcut">IN</span>
 					</button>
+					<p class="command-group" data-i18n="command.group.preferences">Preferences</p>
 					<button class="command-item" type="button" data-command="toggle:language" data-keywords="language vietnamese english">
 						<span><strong data-i18n="command.language">Toggle language</strong><small data-i18n="command.language.desc">Switch VI / EN</small></span>
 						<span class="command-shortcut">VI/EN</span>
@@ -719,10 +750,12 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						<span><strong data-i18n="command.sound">Toggle sound</strong><small data-i18n="command.sound.desc">Opt-in soft interface tones</small></span>
 						<span class="command-shortcut">SOUND</span>
 					</button>
+					<p class="command-group" data-i18n="command.group.system">System</p>
 					<button class="command-item" type="button" data-command="status" data-keywords="status aegis aura help">
 						<span><strong data-i18n="command.status">Show system status</strong><small data-i18n="command.status.desc">Current learning track</small></span>
 						<span class="command-shortcut">STATUS</span>
 					</button>
+					<p class="command-empty" id="command-empty" data-i18n="command.empty" hidden>No matching command found.</p>
 				</div>
 				<pre class="command-status" id="command-status" aria-live="polite"></pre>
 			</div>
@@ -768,6 +801,11 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'hero.role': 'MLOps Engineer',
 						'hero.subtitle': 'Xây dựng hệ thống đứng sau machine learning.',
 						'hero.track': 'AI Systems · Cloud Infrastructure · Automation · Research Engineering',
+						'hero.cta.projects': 'Xem dự án nổi bật',
+						'hero.cta.resume': 'Xem hồ sơ',
+						'hero.cta.contact': 'Liên hệ với tôi',
+						'hero.shortcut.cv': 'CV PDF',
+						'hero.shortcut.log': 'Engineering Log',
 						'hero.status.title': 'SYSTEM STATUS',
 						'hero.status.online': 'ONLINE',
 						'hero.status.focus.label': 'CURRENT FOCUS',
@@ -830,6 +868,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'portfolio.meta.domain': 'DOMAIN',
 						'portfolio.problem': 'Vấn đề',
 						'portfolio.role': 'Vai trò',
+						'portfolio.details': 'Tôi đã xây dựng / học được gì',
+						'portfolio.repo': 'Mở repository',
 						'portfolio.project.0.label': 'Systems',
 						'portfolio.project.0.description': 'Mô phỏng hành vi mạng và các thành phần internet để thử nghiệm cách hệ thống giao tiếp, định tuyến và chịu thay đổi.',
 						'portfolio.project.0.problem': 'Giúp quan sát luồng mạng ở quy mô nhỏ trước khi áp dụng vào bài toán backend hoặc distributed systems.',
@@ -872,6 +912,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'contact.form.message': 'Nội dung',
 						'contact.form.message.placeholder': 'Viết nội dung cần trao đổi...',
 						'contact.form.submit': 'Gửi tin nhắn',
+						'contact.form.preparing': 'Đang mở ứng dụng email...',
+						'contact.form.mailto': 'Ứng dụng email sẽ mở bằng mailto. Nếu không mở, hãy gửi trực tiếp tới email ở trên.',
 						'gallery.item.0.title': 'Khoảnh khắc 01',
 						'gallery.item.0.caption': 'Event',
 						'gallery.item.1.title': 'Khoảnh khắc 02',
@@ -898,6 +940,11 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.open.aria': 'Mở command palette',
 						'command.title': 'Command Palette',
 						'command.placeholder': 'Gõ lệnh hoặc status...',
+						'command.group.navigation': 'Điều hướng',
+						'command.group.external': 'Liên kết ngoài',
+						'command.group.preferences': 'Tuỳ chọn',
+						'command.group.system': 'Hệ thống',
+						'command.empty': 'Không tìm thấy command phù hợp.',
 						'command.about': 'Đi tới Về tôi',
 						'command.about.desc': 'Định danh và hướng MLOps',
 						'command.projects': 'Đi tới Dự án',
@@ -966,6 +1013,11 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'hero.role': 'MLOps Engineer',
 						'hero.subtitle': 'Building the systems behind machine learning.',
 						'hero.track': 'AI Systems · Cloud Infrastructure · Automation · Research Engineering',
+						'hero.cta.projects': 'View Selected Projects',
+						'hero.cta.resume': 'View Resume',
+						'hero.cta.contact': 'Contact Me',
+						'hero.shortcut.cv': 'CV PDF',
+						'hero.shortcut.log': 'Engineering Log',
 						'hero.status.title': 'SYSTEM STATUS',
 						'hero.status.online': 'ONLINE',
 						'hero.status.focus.label': 'CURRENT FOCUS',
@@ -1028,6 +1080,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'portfolio.meta.domain': 'DOMAIN',
 						'portfolio.problem': 'Problem',
 						'portfolio.role': 'Role',
+						'portfolio.details': 'What I built / learned',
+						'portfolio.repo': 'Open repository',
 						'portfolio.project.0.label': 'Systems',
 						'portfolio.project.0.description': 'A network and internet-behavior simulator for testing how systems communicate, route, and respond to change.',
 						'portfolio.project.0.problem': 'Makes small-scale network flow easier to inspect before applying the ideas to backend or distributed-system problems.',
@@ -1070,6 +1124,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'contact.form.message': 'Message',
 						'contact.form.message.placeholder': 'Write what you want to discuss...',
 						'contact.form.submit': 'Send message',
+						'contact.form.preparing': 'Opening your email app...',
+						'contact.form.mailto': 'Your email app will open via mailto. If it does not open, send directly to the email above.',
 						'gallery.item.0.title': 'Moment 01',
 						'gallery.item.0.caption': 'Event',
 						'gallery.item.1.title': 'Moment 02',
@@ -1096,6 +1152,11 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.open.aria': 'Open command palette',
 						'command.title': 'Command Palette',
 						'command.placeholder': 'Type a command or status...',
+						'command.group.navigation': 'Navigation',
+						'command.group.external': 'External Links',
+						'command.group.preferences': 'Preferences',
+						'command.group.system': 'System',
+						'command.empty': 'No matching command found.',
 						'command.about': 'Go to About',
 						'command.about.desc': 'Identity and MLOps direction',
 						'command.projects': 'Go to Projects',
@@ -1191,6 +1252,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				const input = document.getElementById('command-input');
 				const list = document.getElementById('command-list');
 				const statusBlock = document.getElementById('command-status');
+				const commandEmpty = document.getElementById('command-empty');
 				const toast = document.getElementById('sound-toast');
 				const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 				const isTouch = window.matchMedia('(pointer: coarse)').matches;
@@ -1311,12 +1373,32 @@ const navMeta: Record<string, { index: string; system: string }> = {
 					return commandItems().filter((item) => !item.hidden);
 				}
 
+				function setActiveCommand(next) {
+					const items = visibleCommands();
+					items.forEach((item) => item.classList.remove('is-active'));
+					if (!items.length) return;
+					const target = items[Math.max(0, Math.min(next, items.length - 1))];
+					target.classList.add('is-active');
+					target.scrollIntoView({ block: 'nearest' });
+				}
+
 				function filterCommands(query) {
 					const value = query.trim().toLowerCase();
 					commandItems().forEach((item) => {
 						const text = `${item.textContent || ''} ${item.dataset.keywords || ''}`.toLowerCase();
 						item.hidden = value && !text.includes(value);
 					});
+					document.querySelectorAll('.command-group').forEach((group) => {
+						let sibling = group.nextElementSibling;
+						let hasVisible = false;
+						while (sibling && !sibling.classList.contains('command-group')) {
+							if (sibling.classList.contains('command-item') && !sibling.hidden) hasVisible = true;
+							sibling = sibling.nextElementSibling;
+						}
+						group.hidden = !hasVisible;
+					});
+					if (commandEmpty) commandEmpty.hidden = visibleCommands().length > 0;
+					setActiveCommand(0);
 					if (value === 'status' || value === 'help') showStatus();
 				}
 
@@ -1357,7 +1439,9 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				});
 
 				document.addEventListener('keydown', (event) => {
-					const isCommand = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k';
+					const active = document.activeElement;
+					const isTyping = active && (active.matches('input, textarea, [contenteditable="true"]'));
+					const isCommand = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k' && !isTyping;
 					if (isCommand) {
 						event.preventDefault();
 						openDialog();
@@ -1380,9 +1464,18 @@ const navMeta: Record<string, { index: string; system: string }> = {
 							first.focus();
 						}
 					}
+					if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+						event.preventDefault();
+						const items = visibleCommands();
+						if (!items.length) return;
+						const current = Math.max(0, items.findIndex((item) => item.classList.contains('is-active')));
+						const next = event.key === 'ArrowDown' ? (current + 1) % items.length : (current - 1 + items.length) % items.length;
+						setActiveCommand(next);
+					}
 					if (event.key === 'Enter' && document.activeElement === input) {
-						const first = visibleCommands()[0];
-						if (first) executeCommand(first.dataset.command);
+						event.preventDefault();
+						const activeItem = visibleCommands().find((item) => item.classList.contains('is-active')) || visibleCommands()[0];
+						if (activeItem) executeCommand(activeItem.dataset.command);
 					}
 				});
 
