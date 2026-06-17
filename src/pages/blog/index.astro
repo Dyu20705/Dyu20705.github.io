@@ -8,30 +8,36 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 ---
 
 <ProfileShell
-	headTitle="Blog | Nguyễn Văn Duy"
+	headTitle="Engineering Log | Nguyễn Văn Duy"
 	description="Các bài viết song ngữ về MLOps, reproducible pipelines, CI/CD cho machine learning, monitoring và AI systems."
 	activeNav="blog"
 >
 	<section>
-		<h2 class="page-title" data-i18n="page.blog.title">Blog</h2>
+		<p class="log-eyebrow" data-i18n="blog.index.eyebrow">Engineering Log</p>
+		<h2 class="page-title" data-i18n="page.blog.title">Engineering Log</h2>
 		<div class="page-accent"></div>
 	</section>
 
 	<section class="blog-grid">
-		{posts.map((post) => {
+		{posts.map((post, index) => {
 			const meta = blogCardMeta[post.id] ?? { tag: 'System', readTime: '3 phút' };
+			const logId = `LOG ${String(index + 1).padStart(3, '0')}`;
 			return (
 				<a class="blog-card" href={`/blog/${post.id}/`}>
 					<Image src={sharedCover} alt={post.data.title} loading="lazy" decoding="async" sizes="(max-width: 900px) 100vw, 33vw" />
 					<div class="blog-copy">
+						<span class="log-id">{logId}</span>
 						<div class="blog-meta">
-							<span class="blog-tag">{meta.tag}</span>
-							<span>{post.data.pubDate.toLocaleDateString('vi-VN')}</span>
-							<span>{meta.readTime}</span>
+							<span><b data-i18n="blog.meta.category">CATEGORY</b>{meta.tag}</span>
+							<span><b data-i18n="blog.meta.reading">READING</b>{meta.readTime}</span>
+							<span><b data-i18n="blog.meta.status">STATUS</b><span data-i18n="blog.meta.published">PUBLISHED</span></span>
 						</div>
 						<h3>{post.data.title}</h3>
 						<p>{post.data.description}</p>
-						<strong data-i18n="blog.read">Đọc bài viết</strong>
+						<footer>
+							<time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('vi-VN')}</time>
+							<strong data-i18n="blog.read">Đọc bài viết</strong>
+						</footer>
 					</div>
 				</a>
 			);
@@ -41,6 +47,15 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 	<style>
 		.page-title {
 			font-size: clamp(2.2rem, 4vw, 3.4rem);
+		}
+
+		.log-eyebrow {
+			margin-bottom: 0.35rem;
+			color: #61d5ff;
+			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+			font-size: 0.78rem;
+			letter-spacing: 0.16em;
+			text-transform: uppercase;
 		}
 
 		.page-accent {
@@ -59,39 +74,80 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 		}
 
 		.blog-card {
+			position: relative;
 			overflow: hidden;
 			text-decoration: none;
-			border-radius: 1.2rem;
-			border: 1px solid rgba(216, 190, 154, 0.35);
-			background: rgba(255, 255, 255, 0.03);
+			border-radius: 0.95rem;
+			border: 1px solid rgba(97, 213, 255, 0.16);
+			background: linear-gradient(145deg, rgba(10, 23, 37, 0.96), rgba(7, 12, 22, 0.94));
+			transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease;
+		}
+
+		.blog-card::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			height: 2px;
+			background: linear-gradient(90deg, transparent, #61d5ff, transparent);
+			transform: translateX(-100%);
+			transition: transform 520ms ease;
+		}
+
+		.blog-card:hover,
+		.blog-card:focus-visible {
+			transform: translateY(-3px);
+			border-color: rgba(97, 213, 255, 0.42);
+		}
+
+		.blog-card:hover::after,
+		.blog-card:focus-visible::after {
+			transform: translateX(100%);
 		}
 
 		.blog-card img {
 			width: 100%;
-			height: 220px;
+			height: 150px;
 			object-fit: cover;
 			border-radius: 0;
+			opacity: 0.14;
+			filter: saturate(0.6);
 		}
 
 		.blog-copy {
 			padding: 1rem;
 		}
 
+		.log-id {
+			display: inline-block;
+			margin-bottom: 0.65rem;
+			color: #d8c0a1;
+			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+			font-size: 0.8rem;
+			letter-spacing: 0.12em;
+		}
+
 		.blog-meta {
-			display: flex;
-			flex-wrap: wrap;
+			display: grid;
 			gap: 0.6rem;
 			margin-bottom: 0.75rem;
-			font-size: 0.86rem;
+			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+			font-size: 0.78rem;
 			color: #98a8b8;
 		}
 
-		.blog-tag {
-			padding: 0.18rem 0.55rem;
-			border-radius: 999px;
-			background: rgba(12, 187, 255, 0.12);
+		.blog-meta span {
+			display: flex;
+			justify-content: space-between;
+			gap: 1rem;
+			padding-bottom: 0.32rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		}
+
+		.blog-meta b {
 			color: #19c9ff;
-			font-weight: 700;
+			font-weight: 400;
 		}
 
 		.blog-copy h3 {
@@ -103,6 +159,17 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 			color: #b8c5d2;
 			line-height: 1.78;
 			margin-bottom: 0.85rem;
+		}
+
+		.blog-copy footer {
+			display: flex;
+			justify-content: space-between;
+			gap: 1rem;
+			align-items: center;
+			margin-top: 1rem;
+			color: #98a8b8;
+			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+			font-size: 0.82rem;
 		}
 
 		.blog-copy strong {
@@ -118,6 +185,18 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 		@media (max-width: 900px) {
 			.blog-grid {
 				grid-template-columns: 1fr;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.blog-card,
+			.blog-card::after {
+				transition: none;
+			}
+
+			.blog-card:hover,
+			.blog-card:focus-visible {
+				transform: none;
 			}
 		}
 	</style>

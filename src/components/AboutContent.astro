@@ -1,6 +1,47 @@
 ---
-import { aboutHighlights, serviceCards } from '../data/site';
+import { Image } from 'astro:assets';
+import { aboutHighlights, profile, serviceCards } from '../data/site';
 ---
+
+<section class="control-hero">
+	<div class="hero-copy">
+		<p class="hero-kicker" data-i18n="hero.kicker">MLOps Control Room</p>
+		<h2 class="hero-title">NGUYỄN VĂN DUY</h2>
+		<p class="hero-role" data-i18n="hero.role">MLOps Engineer</p>
+		<p class="hero-subtitle" data-i18n="hero.subtitle">Building the systems behind machine learning.</p>
+		<p class="hero-track" data-i18n="hero.track">AI Systems · Cloud Infrastructure · Automation · Research Engineering</p>
+	</div>
+
+	<div class="hero-visual" aria-label="MLOps pipeline visual">
+		<div class="portrait-node">
+			<Image class="hero-photo" src={profile.photo} alt="Ảnh chân dung Nguyễn Văn Duy" data-i18n-alt="profile.photo.alt" width={180} height={180} loading="eager" decoding="async" />
+			<span class="node-pulse"></span>
+		</div>
+		<svg class="pipeline-map" viewBox="0 0 420 260" fill="none" aria-hidden="true">
+			<path class="pipeline-line line-a" d="M38 68 H150 C186 68 190 120 226 120 H382" />
+			<path class="pipeline-line line-b" d="M38 190 H128 C178 190 178 146 228 146 H382" />
+			<path class="pipeline-line line-c" d="M210 34 V226" />
+			<g class="pipeline-node"><circle cx="38" cy="68" r="9" /><text x="54" y="73">DATA</text></g>
+			<g class="pipeline-node"><circle cx="210" cy="34" r="9" /><text x="226" y="39">TRAIN</text></g>
+			<g class="pipeline-node"><circle cx="382" cy="120" r="9" /><text x="274" y="113">REGISTRY</text></g>
+			<g class="pipeline-node"><circle cx="382" cy="190" r="9" /><text x="286" y="196">MONITOR</text></g>
+			<g class="pipeline-node"><circle cx="210" cy="226" r="9" /><text x="226" y="231">DEPLOY</text></g>
+		</svg>
+	</div>
+
+	<div class="system-status" aria-label="Current system status">
+		<div class="status-head">
+			<span data-i18n="hero.status.title">SYSTEM STATUS</span>
+			<strong><span class="status-light"></span><span data-i18n="hero.status.online">ONLINE</span></strong>
+		</div>
+		<dl>
+			<div><dt data-i18n="hero.status.focus.label">CURRENT FOCUS</dt><dd data-i18n="hero.status.focus.value">REPRODUCIBLE ML PIPELINES</dd></div>
+			<div><dt data-i18n="hero.status.project.label">ACTIVE PROJECT</dt><dd data-i18n="hero.status.project.value">MLOPS PORTFOLIO</dd></div>
+			<div><dt data-i18n="hero.status.track.label">ENGINEERING TRACK</dt><dd data-i18n="hero.status.track.value">MLOPS / CLOUD / AI SYSTEMS</dd></div>
+			<div><dt data-i18n="hero.status.location.label">LOCATION</dt><dd data-i18n="hero.status.location.value">VIETNAM · UTC+7</dd></div>
+		</dl>
+	</div>
+</section>
 
 <section class="page-section">
 	<h2 class="page-title" data-i18n="page.about.title">Về tôi</h2>
@@ -57,6 +98,249 @@ import { aboutHighlights, serviceCards } from '../data/site';
 </section>
 
 <style>
+	.control-hero {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.82fr);
+		gap: 1.1rem;
+		align-items: stretch;
+		min-height: 520px;
+		padding: clamp(1.2rem, 3vw, 2rem);
+		overflow: hidden;
+		border: 1px solid rgba(97, 213, 255, 0.22);
+		border-radius: 1.25rem;
+		background:
+			radial-gradient(circle at 78% 18%, rgba(97, 213, 255, 0.18), transparent 22rem),
+			linear-gradient(135deg, rgba(7, 16, 30, 0.96), rgba(9, 14, 24, 0.9));
+		box-shadow: 0 26px 72px rgba(0, 0, 0, 0.34);
+	}
+
+	.control-hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(97, 213, 255, 0.06) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(97, 213, 255, 0.045) 1px, transparent 1px);
+		background-size: 36px 36px;
+		mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8), transparent 80%);
+		pointer-events: none;
+	}
+
+	.hero-copy,
+	.hero-visual,
+	.system-status {
+		position: relative;
+		z-index: 1;
+	}
+
+	.hero-copy {
+		align-self: center;
+		display: grid;
+		gap: 0.9rem;
+		max-width: 720px;
+	}
+
+	.hero-kicker,
+	.hero-role,
+	.hero-track,
+	.status-head,
+	.system-status dt,
+	.system-status dd,
+	.pipeline-node text {
+		font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+	}
+
+	.hero-kicker {
+		color: #61d5ff;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		font-size: 0.78rem;
+	}
+
+	.hero-title {
+		font-size: clamp(3.2rem, 8vw, 6.8rem);
+		letter-spacing: 0;
+		line-height: 0.95;
+	}
+
+	.hero-role {
+		width: fit-content;
+		padding: 0.36rem 0.72rem;
+		border: 1px solid rgba(97, 213, 255, 0.22);
+		border-radius: 999px;
+		background: rgba(97, 213, 255, 0.08);
+		color: #d8c0a1;
+		font-size: 0.88rem;
+	}
+
+	.hero-subtitle {
+		color: #f3f7fb;
+		font-size: clamp(1.35rem, 2.6vw, 2.1rem);
+		line-height: 1.25;
+		max-width: 15em;
+	}
+
+	.hero-track {
+		color: #9fb0c2;
+		font-size: 0.88rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.hero-visual {
+		min-height: 310px;
+		display: grid;
+		place-items: center;
+	}
+
+	.portrait-node {
+		position: relative;
+		z-index: 2;
+		width: 180px;
+		height: 180px;
+		border-radius: 2rem;
+	}
+
+	.hero-photo {
+		width: 180px;
+		height: 180px;
+		object-fit: cover;
+		object-position: center top;
+		border-radius: 2rem;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		box-shadow: 0 22px 50px rgba(0, 0, 0, 0.44);
+	}
+
+	.node-pulse {
+		position: absolute;
+		inset: -14px;
+		z-index: -1;
+		border: 1px solid rgba(97, 213, 255, 0.32);
+		border-radius: 2.5rem;
+		animation: hero-pulse 2.8s ease-in-out infinite;
+	}
+
+	.pipeline-map {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0.86;
+	}
+
+	.pipeline-line {
+		stroke: rgba(97, 213, 255, 0.4);
+		stroke-width: 1.6;
+		stroke-linecap: round;
+		stroke-dasharray: 7 12;
+		animation: line-flow 6s linear infinite;
+	}
+
+	.line-b {
+		stroke: rgba(255, 190, 96, 0.42);
+		animation-duration: 7.5s;
+	}
+
+	.line-c {
+		stroke: rgba(149, 255, 170, 0.28);
+		animation-duration: 9s;
+	}
+
+	.pipeline-node circle {
+		fill: #081321;
+		stroke: #61d5ff;
+		stroke-width: 2;
+	}
+
+	.pipeline-node text {
+		fill: #c8d7e8;
+		font-size: 10px;
+		letter-spacing: 0.08em;
+	}
+
+	.system-status {
+		grid-column: 1 / -1;
+		display: grid;
+		gap: 0.9rem;
+		align-self: end;
+		padding: 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1rem;
+		background: rgba(3, 9, 17, 0.62);
+	}
+
+	.status-head {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		color: #91a0b2;
+		letter-spacing: 0.12em;
+		font-size: 0.78rem;
+	}
+
+	.status-head strong {
+		display: inline-flex;
+		gap: 0.45rem;
+		align-items: center;
+		color: #95ffaa;
+	}
+
+	.status-light {
+		width: 8px;
+		height: 8px;
+		border-radius: 999px;
+		background: #95ffaa;
+		box-shadow: 0 0 0 5px rgba(149, 255, 170, 0.08), 0 0 18px rgba(149, 255, 170, 0.5);
+		animation: status-pulse 2.4s ease-in-out infinite;
+	}
+
+	.system-status dl {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0.7rem;
+		margin: 0;
+	}
+
+	.system-status div {
+		padding: 0.7rem;
+		border-radius: 0.75rem;
+		background: rgba(255, 255, 255, 0.035);
+	}
+
+	.system-status dt {
+		color: #74849a;
+		font-size: 0.68rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.system-status dd {
+		margin: 0.2rem 0 0;
+		color: #f3f7fb;
+		font-size: 0.82rem;
+	}
+
+	@keyframes line-flow {
+		to {
+			stroke-dashoffset: -76;
+		}
+	}
+
+	@keyframes hero-pulse {
+		50% {
+			transform: scale(1.035);
+			opacity: 0.68;
+		}
+	}
+
+	@keyframes status-pulse {
+		50% {
+			opacity: 0.55;
+			transform: scale(0.88);
+		}
+	}
+
 	.page-section + .page-section {
 		margin-top: 2rem;
 	}
@@ -156,12 +440,61 @@ import { aboutHighlights, serviceCards } from '../data/site';
 	}
 
 	@media (max-width: 900px) {
+		.control-hero {
+			grid-template-columns: 1fr;
+			min-height: auto;
+		}
+
+		.hero-visual {
+			min-height: 260px;
+		}
+
+		.system-status dl {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
 		.service-grid {
 			grid-template-columns: 1fr;
 		}
 
 		.page-title {
 			font-size: 2.5rem;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.control-hero {
+			padding: 1rem;
+		}
+
+		.hero-title {
+			font-size: clamp(2.65rem, 17vw, 4rem);
+		}
+
+		.hero-visual {
+			min-height: 220px;
+		}
+
+		.portrait-node,
+		.hero-photo {
+			width: 142px;
+			height: 142px;
+		}
+
+		.pipeline-node text {
+			display: none;
+		}
+
+		.system-status dl {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pipeline-line,
+		.node-pulse,
+		.status-light {
+			animation: none;
 		}
 	}
 </style>

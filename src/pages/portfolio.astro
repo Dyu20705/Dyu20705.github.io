@@ -30,8 +30,24 @@ import { portfolioProjects } from '../data/site';
 				rel="noopener noreferrer"
 				data-category={project.category}
 			>
-				<Image src={project.image} alt={project.title} loading="lazy" decoding="async" sizes="(max-width: 900px) 100vw, 33vw" />
+				<div class="architecture-preview" aria-hidden="true">
+					<Image src={project.image} alt={project.title} loading="lazy" decoding="async" sizes="(max-width: 900px) 100vw, 33vw" />
+					<svg viewBox="0 0 320 150" fill="none">
+						<path d="M34 78h72c26 0 30-42 58-42h122" />
+						<path d="M34 104h86c23 0 34 25 58 25h108" />
+						<circle cx="34" cy="78" r="7" />
+						<circle cx="164" cy="36" r="7" />
+						<circle cx="286" cy="36" r="7" />
+						<circle cx="286" cy="129" r="7" />
+						<circle cx="34" cy="104" r="7" />
+					</svg>
+				</div>
 				<div class="portfolio-copy">
+					<dl class="dossier-meta">
+						<div><dt data-i18n="portfolio.meta.project">PROJECT</dt><dd>{project.title}</dd></div>
+						<div><dt data-i18n="portfolio.meta.type">TYPE</dt><dd data-i18n={`portfolio.project.${index}.status`}>{project.status}</dd></div>
+						<div><dt data-i18n="portfolio.meta.domain">DOMAIN</dt><dd data-i18n={`portfolio.project.${index}.label`}>{project.label}</dd></div>
+					</dl>
 					<div class="portfolio-top">
 						<h3>{project.title}</h3>
 						<span class="portfolio-tag" data-i18n={`portfolio.project.${index}.label`}>{project.label}</span>
@@ -134,27 +150,114 @@ import { portfolioProjects } from '../data/site';
 		}
 
 		.portfolio-card {
+			position: relative;
 			display: grid;
 			overflow: hidden;
 			text-decoration: none;
-			border-radius: 1.2rem;
-			border: 1px solid rgba(216, 190, 154, 0.38);
-			background: rgba(255, 255, 255, 0.03);
+			border-radius: 0.95rem;
+			border: 1px solid rgba(97, 213, 255, 0.16);
+			background:
+				linear-gradient(145deg, rgba(10, 23, 37, 0.96), rgba(7, 12, 22, 0.94)),
+				rgba(255, 255, 255, 0.03);
+			transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+		}
+
+		.portfolio-card::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			z-index: 2;
+			pointer-events: none;
+			background: linear-gradient(90deg, transparent, rgba(97, 213, 255, 0.22), transparent);
+			transform: translateX(-110%);
+			transition: transform 480ms ease;
+		}
+
+		.portfolio-card:hover,
+		.portfolio-card:focus-visible {
+			transform: translateY(-3px);
+			border-color: rgba(97, 213, 255, 0.42);
+			box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+		}
+
+		.portfolio-card:hover::before,
+		.portfolio-card:focus-visible::before {
+			transform: translateX(110%);
 		}
 
 		.portfolio-card[hidden] {
 			display: none;
 		}
 
-		.portfolio-card img {
+		.architecture-preview {
+			position: relative;
+			min-height: 220px;
+			overflow: hidden;
+			background: #07101b;
+		}
+
+		.architecture-preview img {
 			width: 100%;
 			height: 220px;
 			object-fit: cover;
 			border-radius: 0;
+			opacity: 0.18;
+			filter: saturate(0.7) contrast(1.2);
+		}
+
+		.architecture-preview svg {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			padding: 1rem;
+		}
+
+		.architecture-preview path {
+			stroke: rgba(97, 213, 255, 0.58);
+			stroke-width: 2;
+			stroke-dasharray: 8 10;
+		}
+
+		.architecture-preview circle {
+			fill: #081321;
+			stroke: #61d5ff;
+			stroke-width: 2;
 		}
 
 		.portfolio-copy {
 			padding: 1rem;
+		}
+
+		.dossier-meta {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0.5rem;
+			margin: 0 0 1rem;
+		}
+
+		.dossier-meta div {
+			padding: 0.52rem;
+			border-radius: 0.65rem;
+			background: rgba(255, 255, 255, 0.035);
+		}
+
+		.dossier-meta dt,
+		.dossier-meta dd {
+			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+		}
+
+		.dossier-meta dt {
+			color: #74849a;
+			font-size: 0.62rem;
+			letter-spacing: 0.12em;
+		}
+
+		.dossier-meta dd {
+			margin: 0.14rem 0 0;
+			color: #f3f7fb;
+			font-size: 0.72rem;
+			overflow-wrap: anywhere;
 		}
 
 		.portfolio-top {
@@ -247,6 +350,22 @@ import { portfolioProjects } from '../data/site';
 		@media (max-width: 900px) {
 			.portfolio-grid {
 				grid-template-columns: 1fr;
+			}
+
+			.dossier-meta {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.portfolio-card,
+			.portfolio-card::before {
+				transition: none;
+			}
+
+			.portfolio-card:hover,
+			.portfolio-card:focus-visible {
+				transform: none;
 			}
 		}
 	</style>

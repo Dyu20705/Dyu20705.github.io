@@ -1,8 +1,6 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import { profile, navItems, socialLinks } from '../data/site';
-import entranceSong from '../assets/theme-song/entrance.mp3?url';
-import goodbyeSong from '../assets/theme-song/goodbye.mp3?url';
 import { Image } from 'astro:assets';
 
 interface Props {
@@ -12,6 +10,16 @@ interface Props {
 }
 
 const { headTitle, description, activeNav } = Astro.props;
+
+const navMeta: Record<string, { index: string; system: string }> = {
+	about: { index: '01', system: 'Identity' },
+	resume: { index: '02', system: 'Evidence' },
+	portfolio: { index: '03', system: 'Systems' },
+	blog: { index: '04', system: 'Engineering Log' },
+	contact: { index: '05', system: 'Open Channel' },
+	gallery: { index: '06', system: 'Archive' },
+	cv: { index: '07', system: 'Resume File' },
+};
 ---
 
 <!doctype html>
@@ -22,19 +30,70 @@ const { headTitle, description, activeNav } = Astro.props;
 			.shell {
 				width: min(1360px, calc(100% - 2rem));
 				margin: 0 auto;
-				padding: 1.9rem 0 3rem;
+				padding: 5.2rem 0 3rem;
 				display: grid;
 				grid-template-columns: 270px minmax(0, 1fr);
 				gap: 1.2rem;
 				align-items: start;
+				position: relative;
+				z-index: 1;
+			}
+
+			.control-room-bg {
+				position: fixed;
+				inset: 0;
+				z-index: 0;
+				pointer-events: none;
+				background:
+					radial-gradient(circle at var(--pointer-x, 72%) var(--pointer-y, 18%), rgba(42, 220, 255, 0.16), transparent 22rem),
+					linear-gradient(115deg, rgba(41, 121, 255, 0.08), transparent 38%),
+					linear-gradient(180deg, #050912 0%, #08111d 48%, #04070d 100%);
+			}
+
+			.control-room-bg::before,
+			.control-room-bg::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+			}
+
+			.control-room-bg::before {
+				background-image:
+					linear-gradient(rgba(97, 213, 255, 0.06) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(97, 213, 255, 0.045) 1px, transparent 1px),
+					radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+				background-size: 42px 42px, 42px 42px, 86px 86px;
+				mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.88), transparent 92%);
+				opacity: 0.72;
+			}
+
+			.control-room-bg::after {
+				background:
+					linear-gradient(90deg, transparent, rgba(97, 213, 255, 0.08), transparent),
+					linear-gradient(135deg, transparent 0 45%, rgba(255, 190, 96, 0.08) 46% 47%, transparent 48%);
+				background-size: 28rem 100%, 34rem 34rem;
+				animation: data-flow 18s linear infinite;
+				opacity: 0.42;
+			}
+
+			@keyframes data-flow {
+				from {
+					background-position: -28rem 0, 0 0;
+				}
+				to {
+					background-position: 100vw 0, 34rem 34rem;
+				}
 			}
 
 			.sidebar,
 			.content-panel {
 				border: 1px solid var(--line);
-				border-radius: 1.5rem;
-				background: rgba(12, 16, 24, 0.94);
-				box-shadow: 0 24px 44px rgba(0, 0, 0, 0.22);
+				border-radius: 1.25rem;
+				background:
+					linear-gradient(145deg, rgba(16, 27, 42, 0.96), rgba(7, 12, 22, 0.94)),
+					rgba(12, 16, 24, 0.94);
+				box-shadow: 0 24px 44px rgba(0, 0, 0, 0.28);
+				backdrop-filter: blur(14px);
 			}
 
 			.sidebar {
@@ -52,6 +111,7 @@ const { headTitle, description, activeNav } = Astro.props;
 				object-fit: cover;
 				object-position: center top;
 				border: 1px solid rgba(255, 255, 255, 0.08);
+				box-shadow: 0 0 0 7px rgba(25, 201, 255, 0.04), 0 18px 32px rgba(0, 0, 0, 0.28);
 			}
 
 			.profile-name {
@@ -69,6 +129,8 @@ const { headTitle, description, activeNav } = Astro.props;
 				background: rgba(255, 255, 255, 0.05);
 				color: #d7e6f6;
 				font-size: 0.82rem;
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				letter-spacing: 0.04em;
 			}
 
 			.profile-role-wrap {
@@ -121,6 +183,37 @@ const { headTitle, description, activeNav } = Astro.props;
 				font-size: 0.96rem;
 			}
 
+			.email-row {
+				display: flex;
+				gap: 0.45rem;
+				align-items: center;
+				min-width: 0;
+			}
+
+			.email-row a {
+				min-width: 0;
+				overflow-wrap: anywhere;
+			}
+
+			.copy-email {
+				flex: 0 0 auto;
+				padding: 0.2rem 0.45rem;
+				border: 1px solid rgba(97, 213, 255, 0.18);
+				border-radius: 999px;
+				background: rgba(97, 213, 255, 0.08);
+				color: #61d5ff;
+				font: inherit;
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				font-size: 0.66rem;
+				cursor: pointer;
+			}
+
+			.copy-email:hover,
+			.copy-email:focus-visible {
+				background: rgba(97, 213, 255, 0.14);
+				border-color: rgba(97, 213, 255, 0.36);
+			}
+
 			.sidebar-socials {
 				display: flex;
 				justify-content: center;
@@ -137,11 +230,15 @@ const { headTitle, description, activeNav } = Astro.props;
 				background: rgba(255, 255, 255, 0.04);
 				border: 1px solid transparent;
 				color: var(--text-strong);
+				transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease;
 			}
 
-			.sidebar-socials a:hover {
+			.sidebar-socials a:hover,
+			.sidebar-socials a:focus-visible {
+				transform: translateY(-2px);
 				border-color: rgba(25, 201, 255, 0.28);
 				background: rgba(255, 255, 255, 0.06);
+				color: #7ce8ff;
 			}
 
 			.content-panel {
@@ -154,45 +251,271 @@ const { headTitle, description, activeNav } = Astro.props;
 				gap: 0.55rem;
 				padding: 1rem 1.25rem;
 				border-bottom: 1px solid var(--line);
+				background: linear-gradient(90deg, rgba(97, 213, 255, 0.05), transparent);
 			}
 
 			.top-nav a {
-				padding: 0.72rem 1rem;
+				display: grid;
+				grid-template-columns: auto minmax(0, 1fr);
+				column-gap: 0.55rem;
+				row-gap: 0.08rem;
+				min-width: 8.8rem;
+				padding: 0.62rem 0.86rem;
 				border-radius: 0.9rem;
 				color: #d0b694;
 				text-decoration: none;
 				font-size: 0.9rem;
-				transition: background-color 180ms ease, color 180ms ease;
+				transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+				border: 1px solid transparent;
+			}
+
+			.top-nav a:hover,
+			.top-nav a:focus-visible {
+				transform: translateY(-1px);
+				border-color: rgba(97, 213, 255, 0.18);
+				background: rgba(255, 255, 255, 0.04);
 			}
 
 			.top-nav a.is-active {
-				background: rgba(18, 62, 104, 0.72);
+				background: linear-gradient(135deg, rgba(18, 62, 104, 0.78), rgba(24, 201, 255, 0.12));
 				color: #ffffff;
 				font-weight: 700;
+				border-color: rgba(97, 213, 255, 0.28);
+			}
+
+			.nav-index {
+				grid-row: span 2;
+				align-self: center;
+				color: #61d5ff;
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				font-size: 0.72rem;
+			}
+
+			.nav-system {
+				color: var(--text-muted);
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				font-size: 0.66rem;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
 			}
 
 			.page-body {
 				padding: 1.5rem;
 			}
 
-			.lang-float {
+			.control-cluster {
 				position: fixed;
 				top: 16px;
 				right: 18px;
 				z-index: 80;
-				min-width: 58px;
-				padding: 0.42rem 0.8rem;
+				display: flex;
+				gap: 0.5rem;
+				align-items: center;
+				padding: 0.42rem;
 				border-radius: 999px;
 				border: 1px solid rgba(255, 255, 255, 0.12);
 				background: rgba(14, 18, 26, 0.94);
+				box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+				backdrop-filter: blur(16px);
+			}
+
+			.control-button {
+				min-width: 46px;
+				min-height: 38px;
+				padding: 0.42rem 0.72rem;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 999px;
+				background: rgba(255, 255, 255, 0.04);
 				color: var(--text-strong);
+				font: inherit;
+				font-size: 0.82rem;
 				font-weight: 700;
 				cursor: pointer;
+				transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+			}
+
+			.control-button:hover,
+			.control-button:focus-visible,
+			.control-button[aria-pressed='true'] {
+				transform: translateY(-1px);
+				border-color: rgba(97, 213, 255, 0.32);
+				background: rgba(97, 213, 255, 0.12);
+			}
+
+			.control-button kbd {
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				font-size: 0.74rem;
+			}
+
+			.command-dialog[hidden] {
+				display: none;
+			}
+
+			.command-dialog {
+				position: fixed;
+				inset: 0;
+				z-index: 120;
+				display: grid;
+				place-items: start center;
+				padding: 7vh 1rem 1rem;
+				background: rgba(2, 6, 12, 0.68);
+				backdrop-filter: blur(10px);
+			}
+
+			.command-panel {
+				width: min(720px, 100%);
+				overflow: hidden;
+				border: 1px solid rgba(97, 213, 255, 0.24);
+				border-radius: 1.1rem;
+				background:
+					linear-gradient(145deg, rgba(16, 30, 48, 0.98), rgba(6, 10, 18, 0.98)),
+					#090f18;
+				box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+			}
+
+			.command-header {
+				display: grid;
+				gap: 0.5rem;
+				padding: 1rem;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.command-header label {
+				color: #61d5ff;
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				font-size: 0.78rem;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+			}
+
+			.command-input {
+				width: 100%;
+				padding: 0.95rem 1rem;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 0.85rem;
+				background: rgba(255, 255, 255, 0.04);
+				color: var(--text-strong);
+				font: inherit;
+			}
+
+			.command-list {
+				display: grid;
+				gap: 0.45rem;
+				max-height: min(58vh, 520px);
+				overflow-y: auto;
+				padding: 0.8rem;
+			}
+
+			.command-item {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) auto;
+				gap: 0.75rem;
+				align-items: center;
+				width: 100%;
+				padding: 0.82rem 0.9rem;
+				border: 1px solid transparent;
+				border-radius: 0.85rem;
+				background: transparent;
+				color: var(--text-strong);
+				font: inherit;
+				text-align: left;
+				cursor: pointer;
+			}
+
+			.command-item:hover,
+			.command-item:focus-visible,
+			.command-item.is-active {
+				border-color: rgba(97, 213, 255, 0.24);
+				background: rgba(97, 213, 255, 0.08);
+			}
+
+			.command-item small,
+			.command-shortcut {
+				color: var(--text-muted);
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				font-size: 0.76rem;
+			}
+
+			.command-status {
+				display: none;
+				padding: 0.9rem 1rem 1rem;
+				border-top: 1px solid rgba(255, 255, 255, 0.08);
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				color: #d7e6f6;
+				white-space: pre-wrap;
+			}
+
+			.command-status.is-visible {
+				display: block;
+			}
+
+			[data-reveal] {
+				opacity: 0;
+				transform: translateY(18px);
+				transition: opacity 420ms ease, transform 420ms ease, filter 420ms ease;
+				filter: blur(3px);
+			}
+
+			[data-reveal].is-visible {
+				opacity: 1;
+				transform: translateY(0);
+				filter: blur(0);
+			}
+
+			.sound-toast {
+				position: fixed;
+				left: 50%;
+				bottom: 18px;
+				z-index: 140;
+				padding: 0.7rem 0.9rem;
+				border: 1px solid rgba(97, 213, 255, 0.24);
+				border-radius: 999px;
+				background: rgba(9, 15, 24, 0.96);
+				color: var(--text-strong);
+				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+				font-size: 0.78rem;
+				opacity: 0;
+				transform: translate(-50%, 12px);
+				pointer-events: none;
+				transition: opacity 180ms ease, transform 180ms ease;
+			}
+
+			.sound-toast.is-visible {
+				opacity: 1;
+				transform: translate(-50%, 0);
+			}
+
+			:global(body[data-theme='light']) {
+				--bg: #f2f7fb;
+				--bg-elevated: rgba(255, 255, 255, 0.82);
+				--bg-panel: rgba(255, 255, 255, 0.9);
+				--text-strong: #091423;
+				--text-body: #26384d;
+				--text-muted: #617087;
+				--line: rgba(28, 76, 112, 0.18);
+				color-scheme: light;
+			}
+
+			:global(body[data-theme='light']) .sidebar,
+			:global(body[data-theme='light']) .content-panel,
+			:global(body[data-theme='light']) .control-cluster,
+			:global(body[data-theme='light']) .command-panel {
+				background: rgba(255, 255, 255, 0.92);
+			}
+
+			:global(body.user-reduce-motion) *,
+			:global(body.user-reduce-motion) *::before,
+			:global(body.user-reduce-motion) *::after {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+				scroll-behavior: auto !important;
 			}
 
 			@media (max-width: 1080px) {
 				.shell {
 					grid-template-columns: 1fr;
+					padding-top: 5.6rem;
 				}
 
 				.sidebar {
@@ -203,7 +526,7 @@ const { headTitle, description, activeNav } = Astro.props;
 			@media (max-width: 720px) {
 				.shell {
 					width: calc(100% - 1rem);
-					padding-top: 1rem;
+					padding-top: 5.8rem;
 				}
 
 				.page-body {
@@ -217,13 +540,51 @@ const { headTitle, description, activeNav } = Astro.props;
 				.top-nav a {
 					padding: 0.6rem 0.82rem;
 					font-size: 0.86rem;
+					min-width: 7.5rem;
+				}
+
+				.control-cluster {
+					left: 0.5rem;
+					right: 0.5rem;
+					justify-content: space-between;
+					border-radius: 1rem;
+				}
+
+				.control-button {
+					min-width: 42px;
+					padding-inline: 0.62rem;
+				}
+
+				.command-button-label {
+					display: none;
+				}
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				.control-room-bg::after {
+					animation: none;
+				}
+
+				[data-reveal] {
+					opacity: 1;
+					transform: none;
+					filter: none;
 				}
 			}
 		</style>
 	</head>
 	<body>
+		<div class="control-room-bg" aria-hidden="true"></div>
 		<a class="skip-link" href="#page-content" data-i18n="skip.content">Skip to content</a>
-		<button class="lang-float" id="lang-float" type="button" aria-label="Toggle language">EN</button>
+		<div class="control-cluster" aria-label="Control room settings">
+			<button class="control-button" id="command-open" type="button" aria-label="Open command palette" data-i18n-aria-label="command.open.aria">
+				<span class="command-button-label" data-i18n="command.open">Command</span> <kbd>Ctrl K</kbd>
+			</button>
+			<button class="control-button" id="sound-toggle" type="button" aria-pressed="false" aria-label="Enable sound" data-i18n-aria-label="sound.toggle.aria" data-i18n="sound.off">Sound Off</button>
+			<button class="control-button" id="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" data-i18n-aria-label="theme.toggle.aria" data-i18n="theme.dark">Dark</button>
+			<button class="control-button" id="motion-toggle" type="button" aria-pressed="false" aria-label="Reduce motion" data-i18n-aria-label="motion.toggle.aria" data-i18n="motion.full">Motion</button>
+			<button class="control-button" id="lang-float" type="button" aria-label="Toggle language" data-i18n-aria-label="language.toggle.aria">EN</button>
+		</div>
 		<main class="shell" id="page-content">
 			<aside class="sidebar">
 				<Image class="profile-photo" src={profile.photo} alt="Ảnh chân dung Nguyễn Văn Duy" data-i18n-alt="profile.photo.alt" width={112} height={112} loading="eager" decoding="async" />
@@ -241,7 +602,10 @@ const { headTitle, description, activeNav } = Astro.props;
 						</div>
 						<div class="contact-copy">
 							<small data-i18n="profile.email">Email</small>
-							<a href={`mailto:${profile.email}`}>{profile.email}</a>
+							<div class="email-row">
+								<a href={`mailto:${profile.email}`}>{profile.email}</a>
+								<button class="copy-email" type="button" data-copy-email={profile.email} aria-label="Copy email" data-i18n-aria-label="email.copy.aria" data-i18n="email.copy">Copy</button>
+							</div>
 						</div>
 					</div>
 					<div class="contact-item">
@@ -299,8 +663,10 @@ const { headTitle, description, activeNav } = Astro.props;
 			<section class="content-panel">
 				<nav class="top-nav" aria-label="Primary page sections">
 					{navItems.map((item) => (
-						<a href={item.href} class={item.id === activeNav ? 'is-active' : ''} aria-current={item.id === activeNav ? 'page' : undefined} data-i18n={`nav.${item.id}`}>
-							{item.vi}
+						<a href={item.href} class={item.id === activeNav ? 'is-active' : ''} aria-current={item.id === activeNav ? 'page' : undefined}>
+							<span class="nav-index">{navMeta[item.id]?.index}</span>
+							<span data-i18n={`nav.${item.id}`}>{item.vi}</span>
+							<span class="nav-system" data-i18n={`nav.${item.id}.system`}>{navMeta[item.id]?.system}</span>
 						</a>
 					))}
 				</nav>
@@ -309,6 +675,59 @@ const { headTitle, description, activeNav } = Astro.props;
 				</div>
 			</section>
 		</main>
+
+		<div class="command-dialog" id="command-dialog" role="dialog" aria-modal="true" aria-labelledby="command-title" hidden>
+			<div class="command-panel">
+				<div class="command-header">
+					<label id="command-title" for="command-input" data-i18n="command.title">Command Palette</label>
+					<input class="command-input" id="command-input" type="search" autocomplete="off" data-i18n-placeholder="command.placeholder" placeholder="Type a command or status..." />
+				</div>
+				<div class="command-list" id="command-list">
+					<button class="command-item" type="button" data-command="goto:/about" data-keywords="about identity profile">
+						<span><strong data-i18n="command.about">Go to About</strong><small data-i18n="command.about.desc">Identity and MLOps direction</small></span>
+						<span class="command-shortcut">01</span>
+					</button>
+					<button class="command-item" type="button" data-command="goto:/portfolio" data-keywords="projects systems portfolio">
+						<span><strong data-i18n="command.projects">Go to Projects</strong><small data-i18n="command.projects.desc">Technical system dossiers</small></span>
+						<span class="command-shortcut">03</span>
+					</button>
+					<button class="command-item" type="button" data-command="goto:/blog" data-keywords="blog engineering log writing">
+						<span><strong data-i18n="command.log">Open Engineering Log</strong><small data-i18n="command.log.desc">MLOps notes and system thinking</small></span>
+						<span class="command-shortcut">04</span>
+					</button>
+					<button class="command-item" type="button" data-command="goto:/resume" data-keywords="resume cv evidence skills">
+						<span><strong data-i18n="command.resume">Open Resume</strong><small data-i18n="command.resume.desc">Education and skill evidence</small></span>
+						<span class="command-shortcut">02</span>
+					</button>
+					<button class="command-item" type="button" data-command="external:github" data-keywords="github source repository">
+						<span><strong data-i18n="command.github">Open GitHub</strong><small>github.com/Dyu20705</small></span>
+						<span class="command-shortcut">GH</span>
+					</button>
+					<button class="command-item" type="button" data-command="external:linkedin" data-keywords="linkedin contact profile">
+						<span><strong data-i18n="command.linkedin">Open LinkedIn</strong><small>linkedin.com/in/duynguyenvan05</small></span>
+						<span class="command-shortcut">IN</span>
+					</button>
+					<button class="command-item" type="button" data-command="toggle:language" data-keywords="language vietnamese english">
+						<span><strong data-i18n="command.language">Toggle language</strong><small data-i18n="command.language.desc">Switch VI / EN</small></span>
+						<span class="command-shortcut">VI/EN</span>
+					</button>
+					<button class="command-item" type="button" data-command="toggle:theme" data-keywords="theme light dark">
+						<span><strong data-i18n="command.theme">Toggle theme</strong><small data-i18n="command.theme.desc">Dark or light control room</small></span>
+						<span class="command-shortcut">THEME</span>
+					</button>
+					<button class="command-item" type="button" data-command="toggle:sound" data-keywords="sound audio">
+						<span><strong data-i18n="command.sound">Toggle sound</strong><small data-i18n="command.sound.desc">Opt-in soft interface tones</small></span>
+						<span class="command-shortcut">SOUND</span>
+					</button>
+					<button class="command-item" type="button" data-command="status" data-keywords="status aegis aura help">
+						<span><strong data-i18n="command.status">Show system status</strong><small data-i18n="command.status.desc">Current learning track</small></span>
+						<span class="command-shortcut">STATUS</span>
+					</button>
+				</div>
+				<pre class="command-status" id="command-status" aria-live="polite"></pre>
+			</div>
+		</div>
+		<div class="sound-toast" id="sound-toast" role="status" aria-live="polite"></div>
 
 		<script is:inline>
 			(function () {
@@ -321,11 +740,18 @@ const { headTitle, description, activeNav } = Astro.props;
 						'nav.contact': 'Liên hệ',
 						'nav.gallery': 'Thư viện',
 						'nav.cv': 'CV',
+						'nav.about.system': 'Identity',
+						'nav.resume.system': 'Evidence',
+						'nav.portfolio.system': 'Systems',
+						'nav.blog.system': 'Engineering Log',
+						'nav.contact.system': 'Open Channel',
+						'nav.gallery.system': 'Archive',
+						'nav.cv.system': 'Resume File',
 						'skip.content': 'Bỏ qua đến nội dung',
 						'page.about.title': 'Về tôi',
 						'page.resume.title': 'Hồ sơ',
 						'page.portfolio.title': 'Dự án',
-						'page.blog.title': 'Blog',
+						'page.blog.title': 'Engineering Log',
 						'page.contact.title': 'Liên hệ',
 						'page.gallery.title': 'Thư viện',
 						'page.cv.title': 'CV',
@@ -334,7 +760,24 @@ const { headTitle, description, activeNav } = Astro.props;
 						'profile.birthday': 'Ngày sinh',
 						'profile.location': 'Địa điểm',
 						'profile.photo.alt': 'Ảnh chân dung Nguyễn Văn Duy',
+						'email.copy': 'Sao chép',
+						'email.copy.aria': 'Sao chép email',
+						'email.copied': 'Email copied',
 						'role.main': 'MLOps Engineer',
+						'hero.kicker': 'MLOps Control Room',
+						'hero.role': 'MLOps Engineer',
+						'hero.subtitle': 'Xây dựng hệ thống đứng sau machine learning.',
+						'hero.track': 'AI Systems · Cloud Infrastructure · Automation · Research Engineering',
+						'hero.status.title': 'SYSTEM STATUS',
+						'hero.status.online': 'ONLINE',
+						'hero.status.focus.label': 'CURRENT FOCUS',
+						'hero.status.focus.value': 'REPRODUCIBLE ML PIPELINES',
+						'hero.status.project.label': 'ACTIVE PROJECT',
+						'hero.status.project.value': 'MLOPS PORTFOLIO',
+						'hero.status.track.label': 'ENGINEERING TRACK',
+						'hero.status.track.value': 'MLOPS / CLOUD / AI SYSTEMS',
+						'hero.status.location.label': 'LOCATION',
+						'hero.status.location.value': 'VIETNAM · UTC+7',
 						'about.lead': 'Tôi là sinh viên Công nghệ thông tin đang phát triển theo hướng MLOps Engineer, với nền tảng từ software, hạ tầng và automation.',
 						'about.body': 'Tôi học bằng cách xây dựng dự án nhỏ nhưng có cấu trúc: đóng gói môi trường chạy, viết workflow rõ ràng, kiểm tra giả định và ghi lại quyết định kỹ thuật. Mục tiêu của tôi là xây dựng các hệ thống ML có thể tái lập, triển khai, quan sát và bảo trì thay vì chỉ dừng ở notebook chạy được một lần.',
 						'about.highlight.0': 'Biến kiến thức ML thành pipeline có thể chạy lại, kiểm tra và cải tiến.',
@@ -382,6 +825,9 @@ const { headTitle, description, activeNav } = Astro.props;
 						'portfolio.filter.systems': 'Systems',
 						'portfolio.filter.app': 'App',
 						'portfolio.filter.tools': 'Tools',
+						'portfolio.meta.project': 'PROJECT',
+						'portfolio.meta.type': 'TYPE',
+						'portfolio.meta.domain': 'DOMAIN',
 						'portfolio.problem': 'Vấn đề',
 						'portfolio.role': 'Vai trò',
 						'portfolio.project.0.label': 'Systems',
@@ -443,6 +889,46 @@ const { headTitle, description, activeNav } = Astro.props;
 						'blog.read': 'Đọc bài viết',
 						'blog.back': '← Quay lại blog',
 						'blog.eyebrow': 'Bài viết kỹ thuật',
+						'blog.index.eyebrow': 'Engineering Log',
+						'blog.meta.category': 'CATEGORY',
+						'blog.meta.reading': 'READING',
+						'blog.meta.status': 'STATUS',
+						'blog.meta.published': 'PUBLISHED',
+						'command.open': 'Command',
+						'command.open.aria': 'Mở command palette',
+						'command.title': 'Command Palette',
+						'command.placeholder': 'Gõ lệnh hoặc status...',
+						'command.about': 'Đi tới Về tôi',
+						'command.about.desc': 'Định danh và hướng MLOps',
+						'command.projects': 'Đi tới Dự án',
+						'command.projects.desc': 'Technical system dossiers',
+						'command.log': 'Mở Engineering Log',
+						'command.log.desc': 'Ghi chú MLOps và tư duy hệ thống',
+						'command.resume': 'Mở Hồ sơ',
+						'command.resume.desc': 'Học vấn và bằng chứng kỹ năng',
+						'command.github': 'Mở GitHub',
+						'command.linkedin': 'Mở LinkedIn',
+						'command.language': 'Đổi ngôn ngữ',
+						'command.language.desc': 'Chuyển VI / EN',
+						'command.theme': 'Đổi theme',
+						'command.theme.desc': 'Control room tối hoặc sáng',
+						'command.sound': 'Bật/tắt âm thanh',
+						'command.sound.desc': 'Âm UI mềm, chỉ bật khi cho phép',
+						'command.status': 'Xem system status',
+						'command.status.desc': 'Trạng thái học tập hiện tại',
+						'sound.off': 'Âm tắt',
+						'sound.on': 'Âm bật',
+						'sound.toggle.aria': 'Bật hoặc tắt âm thanh giao diện',
+						'sound.enabled': 'Sound enabled',
+						'sound.disabled': 'Sound disabled',
+						'theme.dark': 'Tối',
+						'theme.light': 'Sáng',
+						'theme.toggle.aria': 'Đổi dark hoặc light theme',
+						'motion.full': 'Motion',
+						'motion.reduced': 'Giảm motion',
+						'motion.toggle.aria': 'Bật hoặc tắt reduced motion',
+						'language.toggle.aria': 'Đổi ngôn ngữ',
+						'status.block': 'AEGIS-DL        RESEARCHING\nAURA            SCOPING\nMLOPS TRACK     ACTIVE\nSYSTEM          LEARNING',
 					},
 					en: {
 						'nav.about': 'About Me',
@@ -452,11 +938,18 @@ const { headTitle, description, activeNav } = Astro.props;
 						'nav.contact': 'Contact',
 						'nav.gallery': 'Gallery',
 						'nav.cv': 'CV',
+						'nav.about.system': 'Identity',
+						'nav.resume.system': 'Evidence',
+						'nav.portfolio.system': 'Systems',
+						'nav.blog.system': 'Engineering Log',
+						'nav.contact.system': 'Open Channel',
+						'nav.gallery.system': 'Archive',
+						'nav.cv.system': 'Resume File',
 						'skip.content': 'Skip to content',
 						'page.about.title': 'About Me',
 						'page.resume.title': 'Resume',
 						'page.portfolio.title': 'Portfolio',
-						'page.blog.title': 'Blog',
+						'page.blog.title': 'Engineering Log',
 						'page.contact.title': 'Contact',
 						'page.gallery.title': 'Gallery',
 						'page.cv.title': 'CV',
@@ -465,7 +958,24 @@ const { headTitle, description, activeNav } = Astro.props;
 						'profile.birthday': 'Birthday',
 						'profile.location': 'Location',
 						'profile.photo.alt': 'Portrait of Nguyen Van Duy',
+						'email.copy': 'Copy',
+						'email.copy.aria': 'Copy email',
+						'email.copied': 'Email copied',
 						'role.main': 'MLOps Engineer',
+						'hero.kicker': 'MLOps Control Room',
+						'hero.role': 'MLOps Engineer',
+						'hero.subtitle': 'Building the systems behind machine learning.',
+						'hero.track': 'AI Systems · Cloud Infrastructure · Automation · Research Engineering',
+						'hero.status.title': 'SYSTEM STATUS',
+						'hero.status.online': 'ONLINE',
+						'hero.status.focus.label': 'CURRENT FOCUS',
+						'hero.status.focus.value': 'REPRODUCIBLE ML PIPELINES',
+						'hero.status.project.label': 'ACTIVE PROJECT',
+						'hero.status.project.value': 'MLOPS PORTFOLIO',
+						'hero.status.track.label': 'ENGINEERING TRACK',
+						'hero.status.track.value': 'MLOPS / CLOUD / AI SYSTEMS',
+						'hero.status.location.label': 'LOCATION',
+						'hero.status.location.value': 'VIETNAM · UTC+7',
 						'about.lead': 'I am an Information Technology student growing toward MLOps engineering, with a foundation in software, infrastructure, and automation.',
 						'about.body': 'I learn by building small but structured projects: packaging runtime environments, writing clear workflows, testing assumptions, and documenting technical decisions. My goal is to build ML systems that can be reproduced, deployed, observed, and maintained instead of stopping at a notebook that runs once.',
 						'about.highlight.0': 'Turn ML knowledge into pipelines that can be rerun, checked, and improved.',
@@ -513,6 +1023,9 @@ const { headTitle, description, activeNav } = Astro.props;
 						'portfolio.filter.systems': 'Systems',
 						'portfolio.filter.app': 'App',
 						'portfolio.filter.tools': 'Tools',
+						'portfolio.meta.project': 'PROJECT',
+						'portfolio.meta.type': 'TYPE',
+						'portfolio.meta.domain': 'DOMAIN',
 						'portfolio.problem': 'Problem',
 						'portfolio.role': 'Role',
 						'portfolio.project.0.label': 'Systems',
@@ -574,10 +1087,51 @@ const { headTitle, description, activeNav } = Astro.props;
 						'blog.read': 'Read article',
 						'blog.back': '← Back to blog',
 						'blog.eyebrow': 'Technical writing',
+						'blog.index.eyebrow': 'Engineering Log',
+						'blog.meta.category': 'CATEGORY',
+						'blog.meta.reading': 'READING',
+						'blog.meta.status': 'STATUS',
+						'blog.meta.published': 'PUBLISHED',
+						'command.open': 'Command',
+						'command.open.aria': 'Open command palette',
+						'command.title': 'Command Palette',
+						'command.placeholder': 'Type a command or status...',
+						'command.about': 'Go to About',
+						'command.about.desc': 'Identity and MLOps direction',
+						'command.projects': 'Go to Projects',
+						'command.projects.desc': 'Technical system dossiers',
+						'command.log': 'Open Engineering Log',
+						'command.log.desc': 'MLOps notes and system thinking',
+						'command.resume': 'Open Resume',
+						'command.resume.desc': 'Education and skill evidence',
+						'command.github': 'Open GitHub',
+						'command.linkedin': 'Open LinkedIn',
+						'command.language': 'Toggle language',
+						'command.language.desc': 'Switch VI / EN',
+						'command.theme': 'Toggle theme',
+						'command.theme.desc': 'Dark or light control room',
+						'command.sound': 'Toggle sound',
+						'command.sound.desc': 'Opt-in soft interface tones',
+						'command.status': 'Show system status',
+						'command.status.desc': 'Current learning track',
+						'sound.off': 'Sound Off',
+						'sound.on': 'Sound On',
+						'sound.toggle.aria': 'Enable or disable interface sound',
+						'sound.enabled': 'Sound enabled',
+						'sound.disabled': 'Sound disabled',
+						'theme.dark': 'Dark',
+						'theme.light': 'Light',
+						'theme.toggle.aria': 'Toggle dark or light theme',
+						'motion.full': 'Motion',
+						'motion.reduced': 'Reduced',
+						'motion.toggle.aria': 'Enable or disable reduced motion',
+						'language.toggle.aria': 'Toggle language',
+						'status.block': 'AEGIS-DL        RESEARCHING\nAURA            SCOPING\nMLOPS TRACK     ACTIVE\nSYSTEM          LEARNING',
 					},
 				};
 
 				const button = document.getElementById('lang-float');
+				window.controlRoomTranslations = translations;
 
 				function applyLang(lang) {
 					document.querySelectorAll('[data-i18n]').forEach((element) => {
@@ -598,12 +1152,19 @@ const { headTitle, description, activeNav } = Astro.props;
 							element.setAttribute('alt', translations[lang][key]);
 						}
 					});
+					document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+						const key = element.getAttribute('data-i18n-aria-label');
+						if (key && translations[lang] && translations[lang][key]) {
+							element.setAttribute('aria-label', translations[lang][key]);
+						}
+					});
 					document.querySelectorAll('[data-i18n-role]').forEach((element) => {
 						element.textContent = translations[lang]['role.main'];
 					});
 					document.documentElement.lang = lang;
 					if (button) button.textContent = lang === 'vi' ? 'EN' : 'VI';
 					localStorage.setItem('siteLang', lang);
+					window.dispatchEvent(new CustomEvent('control-room-lang', { detail: { lang } }));
 				}
 
 				const currentLang = localStorage.getItem('siteLang') || 'vi';
@@ -615,75 +1176,276 @@ const { headTitle, description, activeNav } = Astro.props;
 						applyLang(nextLang);
 					});
 				}
+				window.controlRoomApplyLang = applyLang;
 			})();
 		</script>
-		<script type="module" define:vars={{ entranceSong, goodbyeSong }}>
-			const audioState = {
-				entrancePlayed: false,
-				goodbyePlayed: false,
-				activated: false,
-			};
+		<script is:inline>
+			(function () {
+				const root = document.documentElement;
+				const body = document.body;
+				const soundButton = document.getElementById('sound-toggle');
+				const themeButton = document.getElementById('theme-toggle');
+				const motionButton = document.getElementById('motion-toggle');
+				const commandOpen = document.getElementById('command-open');
+				const dialog = document.getElementById('command-dialog');
+				const input = document.getElementById('command-input');
+				const list = document.getElementById('command-list');
+				const statusBlock = document.getElementById('command-status');
+				const toast = document.getElementById('sound-toast');
+				const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+				const isTouch = window.matchMedia('(pointer: coarse)').matches;
+				let lastFocus = null;
+				let audioContext = null;
+				let soundEnabled = localStorage.getItem('controlRoomSound') === 'on';
+				let motionReduced = localStorage.getItem('controlRoomMotion') === 'reduced' || reduceQuery.matches;
+				let currentTheme = localStorage.getItem('controlRoomTheme') || 'dark';
+				let pointerFrame = 0;
+				let lastTone = 0;
 
-			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			let entranceAudio;
-			let goodbyeAudio;
+				const t = (key) => {
+					const lang = localStorage.getItem('siteLang') || 'vi';
+					return window.controlRoomTranslations?.[lang]?.[key] || key;
+				};
 
-			const ensureAudio = () => {
-				if (reducedMotion) return false;
-				if (!entranceAudio) {
-					entranceAudio = new Audio(entranceSong);
-					entranceAudio.preload = 'none';
-					entranceAudio.volume = 0.12;
+				function showToast(message) {
+					if (!toast) return;
+					toast.textContent = message;
+					toast.classList.add('is-visible');
+					window.clearTimeout(showToast.timer);
+					showToast.timer = window.setTimeout(() => toast.classList.remove('is-visible'), 1400);
 				}
-				if (!goodbyeAudio) {
-					goodbyeAudio = new Audio(goodbyeSong);
-					goodbyeAudio.preload = 'none';
-					goodbyeAudio.volume = 0.1;
+
+				function tone(kind) {
+					if (!soundEnabled || document.visibilityState !== 'visible') return;
+					const now = performance.now();
+					if (now - lastTone < 120) return;
+					lastTone = now;
+					try {
+						audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+						if (audioContext.state === 'suspended') audioContext.resume();
+						const osc = audioContext.createOscillator();
+						const gain = audioContext.createGain();
+						const start = audioContext.currentTime;
+						const tones = {
+							enable: [560, 760, 0.18],
+							nav: [420, 540, 0.12],
+							command: [680, 460, 0.16],
+							project: [520, 660, 0.14],
+							success: [740, 920, 0.18],
+						};
+						const [from, to, duration] = tones[kind] || tones.nav;
+						osc.type = 'sine';
+						osc.frequency.setValueAtTime(from, start);
+						osc.frequency.exponentialRampToValueAtTime(to, start + duration);
+						gain.gain.setValueAtTime(0.0001, start);
+						gain.gain.exponentialRampToValueAtTime(0.035, start + 0.025);
+						gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+						osc.connect(gain);
+						gain.connect(audioContext.destination);
+						osc.start(start);
+						osc.stop(start + duration + 0.02);
+					} catch (_) {}
 				}
-				return true;
-			};
 
-			const tryPlay = (audio) => {
-				if (!audio) return;
-				audio.currentTime = 0;
-				audio.play().catch(() => {});
-			};
-
-			const playEntrance = () => {
-				if (audioState.entrancePlayed || !ensureAudio()) return;
-				audioState.entrancePlayed = true;
-				tryPlay(entranceAudio);
-			};
-
-			const playGoodbye = () => {
-				if (audioState.goodbyePlayed || !audioState.activated || !ensureAudio()) return;
-				audioState.goodbyePlayed = true;
-				tryPlay(goodbyeAudio);
-			};
-
-			const activateAudio = () => {
-				if (audioState.activated || reducedMotion) return;
-				audioState.activated = true;
-				playEntrance();
-			};
-
-			if (!reducedMotion) {
-				window.addEventListener('pointerdown', activateAudio, { once: true });
-				window.addEventListener('keydown', activateAudio, { once: true });
-				window.addEventListener('touchstart', activateAudio, { once: true });
-				window.addEventListener('focus', activateAudio, { once: true });
-
-				document.addEventListener('visibilitychange', () => {
-					if (document.visibilityState === 'visible') {
-						activateAudio();
+				function refreshControls() {
+					if (soundButton) {
+						soundButton.textContent = t(soundEnabled ? 'sound.on' : 'sound.off');
+						soundButton.setAttribute('aria-pressed', String(soundEnabled));
 					}
-					if (document.visibilityState === 'hidden') {
-						playGoodbye();
+					body.dataset.theme = currentTheme;
+					if (themeButton) {
+						themeButton.textContent = t(currentTheme === 'light' ? 'theme.light' : 'theme.dark');
+						themeButton.setAttribute('aria-pressed', String(currentTheme === 'light'));
+					}
+					body.classList.toggle('user-reduce-motion', motionReduced);
+					if (motionButton) {
+						motionButton.textContent = t(motionReduced ? 'motion.reduced' : 'motion.full');
+						motionButton.setAttribute('aria-pressed', String(motionReduced));
+					}
+				}
+
+				function setSound(next) {
+					soundEnabled = next;
+					localStorage.setItem('controlRoomSound', next ? 'on' : 'off');
+					refreshControls();
+					showToast(t(next ? 'sound.enabled' : 'sound.disabled'));
+					if (next) tone('enable');
+				}
+
+				function toggleTheme() {
+					currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+					localStorage.setItem('controlRoomTheme', currentTheme);
+					refreshControls();
+					tone('success');
+				}
+
+				function toggleMotion() {
+					motionReduced = !motionReduced;
+					localStorage.setItem('controlRoomMotion', motionReduced ? 'reduced' : 'full');
+					refreshControls();
+					tone('success');
+				}
+
+				function openDialog() {
+					if (!dialog || !input) return;
+					lastFocus = document.activeElement;
+					dialog.hidden = false;
+					input.value = '';
+					filterCommands('');
+					statusBlock?.classList.remove('is-visible');
+					window.setTimeout(() => input.focus(), 0);
+					tone('command');
+				}
+
+				function closeDialog() {
+					if (!dialog) return;
+					dialog.hidden = true;
+					if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+				}
+
+				function commandItems() {
+					return Array.from(list?.querySelectorAll('.command-item') || []);
+				}
+
+				function visibleCommands() {
+					return commandItems().filter((item) => !item.hidden);
+				}
+
+				function filterCommands(query) {
+					const value = query.trim().toLowerCase();
+					commandItems().forEach((item) => {
+						const text = `${item.textContent || ''} ${item.dataset.keywords || ''}`.toLowerCase();
+						item.hidden = value && !text.includes(value);
+					});
+					if (value === 'status' || value === 'help') showStatus();
+				}
+
+				function showStatus() {
+					if (!statusBlock) return;
+					statusBlock.textContent = t('status.block');
+					statusBlock.classList.add('is-visible');
+					tone('success');
+				}
+
+				function executeCommand(command) {
+					if (!command) return;
+					if (command.startsWith('goto:')) {
+						tone('nav');
+						window.location.href = command.replace('goto:', '');
+						return;
+					}
+					if (command === 'external:github') window.open('https://github.com/Dyu20705', '_blank', 'noopener,noreferrer');
+					if (command === 'external:linkedin') window.open('https://www.linkedin.com/in/duynguyenvan05/', '_blank', 'noopener,noreferrer');
+					if (command === 'toggle:language') document.getElementById('lang-float')?.click();
+					if (command === 'toggle:theme') toggleTheme();
+					if (command === 'toggle:sound') setSound(!soundEnabled);
+					if (command === 'status') {
+						showStatus();
+						return;
+					}
+					closeDialog();
+				}
+
+				soundButton?.addEventListener('click', () => setSound(!soundEnabled));
+				themeButton?.addEventListener('click', toggleTheme);
+				motionButton?.addEventListener('click', toggleMotion);
+				commandOpen?.addEventListener('click', openDialog);
+				input?.addEventListener('input', () => filterCommands(input.value));
+				list?.addEventListener('click', (event) => {
+					const button = event.target.closest('.command-item');
+					if (button) executeCommand(button.dataset.command);
+				});
+
+				document.addEventListener('keydown', (event) => {
+					const isCommand = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k';
+					if (isCommand) {
+						event.preventDefault();
+						openDialog();
+					}
+					if (!dialog || dialog.hidden) return;
+					if (event.key === 'Escape') {
+						event.preventDefault();
+						closeDialog();
+					}
+					if (event.key === 'Tab') {
+						const focusables = Array.from(dialog.querySelectorAll('button, input')).filter((item) => !item.disabled && !item.hidden);
+						const first = focusables[0];
+						const last = focusables[focusables.length - 1];
+						if (!first || !last) return;
+						if (event.shiftKey && document.activeElement === first) {
+							event.preventDefault();
+							last.focus();
+						} else if (!event.shiftKey && document.activeElement === last) {
+							event.preventDefault();
+							first.focus();
+						}
+					}
+					if (event.key === 'Enter' && document.activeElement === input) {
+						const first = visibleCommands()[0];
+						if (first) executeCommand(first.dataset.command);
 					}
 				});
 
-				window.addEventListener('pagehide', playGoodbye, { capture: true });
-			}
+				dialog?.addEventListener('click', (event) => {
+					if (event.target === dialog) closeDialog();
+				});
+
+				document.querySelectorAll('.top-nav a, .portfolio-card, .blog-card').forEach((item) => {
+					item.addEventListener('click', () => tone(item.classList.contains('portfolio-card') ? 'project' : 'nav'));
+				});
+
+				document.querySelectorAll('[data-copy-email]').forEach((button) => {
+					button.addEventListener('click', async () => {
+						const email = button.getAttribute('data-copy-email');
+						if (!email) return;
+						try {
+							await navigator.clipboard.writeText(email);
+							showToast(t('email.copied'));
+							tone('success');
+						} catch (_) {
+							window.location.href = `mailto:${email}`;
+						}
+					});
+				});
+
+				if ('IntersectionObserver' in window && !motionReduced) {
+					const revealTargets = document.querySelectorAll('.page-body section, .service-card, .portfolio-card, .blog-card, .timeline-item, .skill-card, .contact-card');
+					revealTargets.forEach((item, index) => {
+						item.setAttribute('data-reveal', '');
+						item.style.transitionDelay = `${Math.min(index % 6, 5) * 55}ms`;
+					});
+					const observer = new IntersectionObserver((entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-visible');
+								observer.unobserve(entry.target);
+							}
+						});
+					}, { threshold: 0.12 });
+					revealTargets.forEach((item) => observer.observe(item));
+					window.addEventListener('pagehide', () => observer.disconnect(), { once: true });
+				}
+
+				if (!isTouch && !reduceQuery.matches) {
+					window.addEventListener('pointermove', (event) => {
+						if (pointerFrame) return;
+						pointerFrame = requestAnimationFrame(() => {
+							root.style.setProperty('--pointer-x', `${event.clientX}px`);
+							root.style.setProperty('--pointer-y', `${event.clientY}px`);
+							pointerFrame = 0;
+						});
+					}, { passive: true });
+					document.addEventListener('visibilitychange', () => {
+						if (document.hidden && pointerFrame) {
+							cancelAnimationFrame(pointerFrame);
+							pointerFrame = 0;
+						}
+					});
+				}
+
+				window.addEventListener('control-room-lang', refreshControls);
+				refreshControls();
+			})();
 		</script>
 	</body>
 </html>

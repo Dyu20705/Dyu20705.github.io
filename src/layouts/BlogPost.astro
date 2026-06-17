@@ -11,6 +11,7 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 ---
 
 <ProfileShell headTitle={title} description={description} activeNav="blog">
+	<div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
 	<article class="article-shell">
 		<a class="post-backlink" href="/blog" data-i18n="blog.back">← Quay lại blog</a>
 		<div class="hero-image">
@@ -35,7 +36,54 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 		</div>
 	</article>
 
+	<script is:inline>
+		(function () {
+			const bar = document.getElementById('reading-progress-bar');
+			const article = document.querySelector('.article-shell');
+			if (!bar || !article) return;
+			let frame = 0;
+			const update = () => {
+				frame = 0;
+				const rect = article.getBoundingClientRect();
+				const total = rect.height - window.innerHeight;
+				const read = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+				bar.style.transform = `scaleX(${total <= 0 ? 1 : read / total})`;
+			};
+			const request = () => {
+				if (frame) return;
+				frame = requestAnimationFrame(update);
+			};
+			update();
+			window.addEventListener('scroll', request, { passive: true });
+			window.addEventListener('resize', request);
+			window.addEventListener('pagehide', () => {
+				window.removeEventListener('scroll', request);
+				window.removeEventListener('resize', request);
+				if (frame) cancelAnimationFrame(frame);
+			}, { once: true });
+		})();
+	</script>
+
 	<style>
+		.reading-progress {
+			position: sticky;
+			top: 0;
+			z-index: 20;
+			height: 3px;
+			margin: -1.5rem -1.5rem 1.2rem;
+			background: rgba(255, 255, 255, 0.06);
+			transform-origin: left;
+		}
+
+		.reading-progress span {
+			display: block;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, #61d5ff, #d8c0a1);
+			transform: scaleX(0);
+			transform-origin: left;
+		}
+
 		.article-shell {
 			max-width: 860px;
 		}
@@ -57,6 +105,8 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 			display: grid;
 			gap: 0.8rem;
 			margin: 1.25rem 0;
+			padding-bottom: 1rem;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 		}
 
 		.post-title {
@@ -68,6 +118,8 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 			flex-wrap: wrap;
 			gap: 0.8rem;
 			color: #9badbf;
+			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+			font-size: 0.86rem;
 		}
 
 		.prose :global(h2),
