@@ -6,7 +6,7 @@ import { portfolioProjects } from '../data/site';
 
 <ProfileShell
 	headTitle="Dự án | Nguyễn Văn Duy"
-	description="Danh sách dự án cá nhân tập trung vào app, tools và các thử nghiệm hệ thống."
+	description="Các dự án cá nhân liên quan đến systems thinking, automation, backend, workflow và nền tảng cho định hướng MLOps."
 	activeNav="portfolio"
 >
 	<section>
@@ -16,9 +16,9 @@ import { portfolioProjects } from '../data/site';
 
 	<section class="portfolio-filters" aria-label="Portfolio filters">
 		<button class="filter-button is-active" type="button" data-filter="all" data-i18n="portfolio.filter.all">All</button>
+		<button class="filter-button" type="button" data-filter="systems" data-i18n="portfolio.filter.systems">Systems</button>
 		<button class="filter-button" type="button" data-filter="app" data-i18n="portfolio.filter.app">App</button>
 		<button class="filter-button" type="button" data-filter="tools" data-i18n="portfolio.filter.tools">Tools</button>
-		<button class="filter-button" type="button" data-filter="other" data-i18n="portfolio.filter.other">Other</button>
 	</section>
 
 	<section class="portfolio-grid" id="portfolio-grid">
@@ -27,7 +27,7 @@ import { portfolioProjects } from '../data/site';
 				class="portfolio-card"
 				href={project.url}
 				target="_blank"
-				rel="noreferrer"
+				rel="noopener noreferrer"
 				data-category={project.category}
 			>
 				<Image src={project.image} alt={project.title} loading="lazy" decoding="async" sizes="(max-width: 900px) 100vw, 33vw" />
@@ -37,6 +37,22 @@ import { portfolioProjects } from '../data/site';
 						<span class="portfolio-tag" data-i18n={`portfolio.project.${index}.label`}>{project.label}</span>
 					</div>
 					<p data-i18n={`portfolio.project.${index}.description`}>{project.description}</p>
+					<dl class="project-facts">
+						<div>
+							<dt data-i18n="portfolio.problem">Vấn đề</dt>
+							<dd data-i18n={`portfolio.project.${index}.problem`}>{project.problem}</dd>
+						</div>
+						<div>
+							<dt data-i18n="portfolio.role">Vai trò</dt>
+							<dd data-i18n={`portfolio.project.${index}.role`}>{project.role}</dd>
+						</div>
+					</dl>
+					<div class="project-footer">
+						<span class="portfolio-status" data-i18n={`portfolio.project.${index}.status`}>{project.status}</span>
+						<div class="tech-tags" aria-label="Tech stack">
+							{project.stack.map((tech) => <span>{tech}</span>)}
+						</div>
+					</div>
 				</div>
 			</a>
 		))}
@@ -165,6 +181,61 @@ import { portfolioProjects } from '../data/site';
 		.portfolio-copy p {
 			color: #b8c5d2;
 			line-height: 1.78;
+		}
+
+		.project-facts {
+			display: grid;
+			gap: 0.65rem;
+			margin: 0.9rem 0 0;
+		}
+
+		.project-facts div {
+			display: grid;
+			gap: 0.18rem;
+		}
+
+		.project-facts dt {
+			color: #19c9ff;
+			font-size: 0.78rem;
+			font-weight: 700;
+			text-transform: uppercase;
+		}
+
+		.project-facts dd {
+			margin: 0;
+			color: #b8c5d2;
+			line-height: 1.65;
+			font-size: 0.95rem;
+		}
+
+		.project-footer {
+			display: grid;
+			gap: 0.75rem;
+			margin-top: 1rem;
+		}
+
+		.portfolio-status {
+			width: fit-content;
+			padding: 0.24rem 0.62rem;
+			border-radius: 999px;
+			border: 1px solid rgba(25, 201, 255, 0.24);
+			color: #d8c0a1;
+			font-size: 0.82rem;
+			font-weight: 700;
+		}
+
+		.tech-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.45rem;
+		}
+
+		.tech-tags span {
+			padding: 0.2rem 0.52rem;
+			border-radius: 999px;
+			background: rgba(255, 255, 255, 0.05);
+			color: #d9e5f1;
+			font-size: 0.78rem;
 		}
 
 		@media (max-width: 1100px) {

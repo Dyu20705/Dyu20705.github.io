@@ -12,12 +12,12 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 
 <ProfileShell headTitle={title} description={description} activeNav="blog">
 	<article class="article-shell">
-		<a class="post-backlink" href="/blog">← Quay lại blog</a>
+		<a class="post-backlink" href="/blog" data-i18n="blog.back">← Quay lại blog</a>
 		<div class="hero-image">
 			<Image width={1200} height={630} src={sharedCover} alt={title} />
 		</div>
 		<div class="post-header">
-			<p class="eyebrow">Bài viết kỹ thuật</p>
+			<p class="eyebrow" data-i18n="blog.eyebrow">Bài viết kỹ thuật</p>
 			<h1 class="post-title">{title}</h1>
 			<div class="post-meta">
 				<span><FormattedDate date={pubDate} /></span>

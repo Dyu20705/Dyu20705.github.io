@@ -7,13 +7,13 @@ import { aboutHighlights, serviceCards } from '../data/site';
 	<div class="page-accent"></div>
 	<div class="about-copy">
 		<p class="about-lead" data-i18n="about.lead">
-			Tôi muốn thiết kế, xây dựng và bảo trì những system hoặc hạ tầng có tiêu chuẩn rõ ràng: dễ bảo trì,
-			đủ tin cậy, an toàn ngay từ mặc định và sẵn sàng mở rộng khi bài toán lớn dần lên.
+			Tôi là sinh viên Công nghệ thông tin đang phát triển theo hướng MLOps Engineer, với nền tảng từ
+			software, hạ tầng và automation.
 		</p>
 		<p data-i18n="about.body">
-			Cách tôi tiếp cận một hệ thống không dừng ở việc “chạy được”. Tôi quan tâm tới cấu trúc sau khi bàn
-			giao, cách nó được vận hành trong production, mức độ dễ quan sát khi có lỗi và chi phí thay đổi khi sản
-			phẩm tiếp tục phát triển.
+			Tôi học bằng cách xây dựng dự án nhỏ nhưng có cấu trúc: đóng gói môi trường chạy, viết workflow rõ
+			ràng, kiểm tra giả định và ghi lại quyết định kỹ thuật. Mục tiêu của tôi là xây dựng các hệ thống ML có
+			thể tái lập, triển khai, quan sát và bảo trì thay vì chỉ dừng ở notebook chạy được một lần.
 		</p>
 	</div>
 
@@ -34,12 +34,14 @@ import { aboutHighlights, serviceCards } from '../data/site';
 			<article class="service-card">
 				<div class="service-icon">
 					{
-						card.icon === 'infra' ? (
+						card.icon === 'pipeline' ? (
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h5v5H4V6Zm11 7h5v5h-5v-5ZM9 8.5h3.5A3.5 3.5 0 0 1 16 12v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m14 11 2 2 2-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						) : card.icon === 'infra' ? (
 							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M7 4v4M12 10v4M17 16v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
 						) : card.icon === 'deploy' ? (
 							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M5 10l7-7 7 7M5 14l7 7 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-						) : card.icon === 'security' ? (
-							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5.5 6v5.5c0 4.2 2.8 8 6.5 9.5 3.7-1.5 6.5-5.3 6.5-9.5V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.5 12.5 11 14l3.5-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						) : card.icon === 'research' ? (
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 4h4m-2 0v5l5.4 8.8A1.5 1.5 0 0 1 16.1 20H7.9a1.5 1.5 0 0 1-1.3-2.2L12 9V4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 16h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
 						) : (
 							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h4m8 0h4M12 4v4m0 8v4M7 7l2.5 2.5M14.5 14.5 17 17M17 7l-2.5 2.5M9.5 14.5 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
 						)
