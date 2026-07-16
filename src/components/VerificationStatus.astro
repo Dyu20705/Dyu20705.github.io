@@ -1,0 +1,161 @@
+<aside class="verification-status" aria-labelledby="verification-status-title">
+	<div class="verification-status-head">
+		<div>
+			<p class="verification-kicker">PORTFOLIO VERIFICATION</p>
+			<h2 id="verification-status-title">NOT MEASURED</h2>
+		</div>
+		<span class="verification-state" aria-label="Verification state unknown">UNKNOWN</span>
+	</div>
+
+	<p class="verification-copy verification-copy-vi" lang="vi">
+		Portfolio chưa kết nối dữ liệu release, accessibility, performance và synthetic monitoring vào giao diện công khai. Vì vậy trang không tuyên bố <strong>ONLINE</strong>, <strong>HEALTHY</strong> hay <strong>PASS</strong> khi chưa có phép đo thật.
+	</p>
+	<p class="verification-copy verification-copy-en" lang="en">
+		The portfolio does not yet project release, accessibility, performance, or synthetic-monitoring data into the public interface. It therefore makes no <strong>ONLINE</strong>, <strong>HEALTHY</strong>, or <strong>PASS</strong> claim without a real measurement.
+	</p>
+
+	<dl>
+		<div>
+			<dt>RELEASE DATA</dt>
+			<dd>NOT CONNECTED</dd>
+		</div>
+		<div>
+			<dt>ACCESSIBILITY</dt>
+			<dd>NOT MEASURED</dd>
+		</div>
+		<div>
+			<dt>PERFORMANCE</dt>
+			<dd>NOT MEASURED</dd>
+		</div>
+		<div>
+			<dt>MONITORING</dt>
+			<dd>PLANNED</dd>
+		</div>
+	</dl>
+
+	<a href="https://github.com/Dyu20705/Dyu20705.github.io/issues/32" target="_blank" rel="noopener noreferrer">
+		<span class="verification-copy-vi" lang="vi">Xem kế hoạch Operations Console ↗</span>
+		<span class="verification-copy-en" lang="en">View the Operations Console plan ↗</span>
+	</a>
+</aside>
+
+<style is:global>
+	/* The legacy hero status is decorative and hard-coded. Keep it out of the
+	   visual and accessibility trees until issue #32 replaces it with generated data. */
+	.control-hero > .system-status {
+		display: none !important;
+	}
+
+	.verification-copy-en {
+		display: none;
+	}
+
+	html[lang='en'] .verification-copy-vi {
+		display: none;
+	}
+
+	html[lang='en'] .verification-copy-en {
+		display: initial;
+	}
+</style>
+
+<style>
+	.verification-status {
+		display: grid;
+		gap: 1rem;
+		margin-top: 1.2rem;
+		padding: clamp(1rem, 2.5vw, 1.4rem);
+		border: 1px solid rgba(247, 198, 107, .24);
+		border-radius: 1rem;
+		background: linear-gradient(135deg, rgba(247, 198, 107, .07), rgba(7, 15, 27, .84));
+	}
+
+	.verification-status-head {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		align-items: flex-start;
+	}
+
+	.verification-kicker,
+	.verification-state,
+	dt,
+	dd {
+		font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+	}
+
+	.verification-kicker {
+		color: #f7c66b;
+		font-size: .7rem;
+		letter-spacing: .13em;
+		text-transform: uppercase;
+	}
+
+	h2 {
+		margin-top: .35rem;
+		font-size: clamp(1.7rem, 4vw, 2.7rem);
+	}
+
+	.verification-state {
+		padding: .34rem .58rem;
+		border: 1px solid rgba(247, 198, 107, .3);
+		border-radius: 999px;
+		color: #f7d9a1;
+		font-size: .68rem;
+		letter-spacing: .08em;
+	}
+
+	.verification-copy {
+		max-width: 72rem;
+		color: var(--text-body);
+		line-height: 1.7;
+	}
+
+	dl {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: .65rem;
+		margin: 0;
+	}
+
+	dl div {
+		padding: .72rem;
+		border: 1px solid rgba(255, 255, 255, .07);
+		border-radius: .72rem;
+		background: rgba(255, 255, 255, .025);
+	}
+
+	dt {
+		color: var(--text-muted);
+		font-size: .65rem;
+		letter-spacing: .09em;
+	}
+
+	dd {
+		margin: .28rem 0 0;
+		color: #f7d9a1;
+		font-size: .76rem;
+	}
+
+	a {
+		width: fit-content;
+		color: #f7d9a1;
+		font-weight: 700;
+	}
+
+	@media (max-width: 760px) {
+		dl {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 460px) {
+		.verification-status-head {
+			flex-direction: column;
+		}
+
+		dl {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

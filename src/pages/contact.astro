@@ -35,15 +35,6 @@ import { profile } from '../data/site';
 		</article>
 		<article class="contact-card">
 			<div class="contact-card-icon">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.9c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2L9.9 10.2c.8 1.5 2 2.8 3.4 3.6l1.3-1.3c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2l-1.1 1.1c-.9.9-2.2 1.2-3.4.8-5-1.7-9-5.7-10.7-10.7-.4-1.2-.1-2.5.8-3.4L7.2 4.9Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-			</div>
-			<div>
-				<small data-i18n="contact.card.phone">Điện thoại</small>
-				<a href="tel:0869630908">{profile.phone}</a>
-			</div>
-		</article>
-		<article class="contact-card">
-			<div class="contact-card-icon">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20s6-5.6 6-10a6 6 0 1 0-12 0c0 4.4 6 10 6 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.7"/></svg>
 			</div>
 			<div>
@@ -134,7 +125,7 @@ import { profile } from '../data/site';
 
 		.contact-grid {
 			display: grid;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: 1rem;
 			margin-top: 1.2rem;
 		}
@@ -237,6 +228,29 @@ import { profile } from '../data/site';
 
 		.form-status[hidden] {
 			display: none;
+		}
+
+		:global(body[data-theme='light']) .contact-hero,
+		:global(body[data-theme='light']) .contact-card,
+		:global(body[data-theme='light']) .contact-form input,
+		:global(body[data-theme='light']) .contact-form textarea,
+		:global(body[data-theme='light']) .form-status {
+			background: rgba(255, 255, 255, 0.78);
+			border-color: rgba(28, 76, 112, 0.22);
+		}
+
+		:global(body[data-theme='light']) .contact-hero p,
+		:global(body[data-theme='light']) .contact-card small,
+		:global(body[data-theme='light']) .form-status {
+			color: var(--text-body);
+		}
+
+		:global(body[data-theme='light']) .contact-card a,
+		:global(body[data-theme='light']) .contact-card span,
+		:global(body[data-theme='light']) .contact-form span,
+		:global(body[data-theme='light']) .contact-form input,
+		:global(body[data-theme='light']) .contact-form textarea {
+			color: var(--text-strong);
 		}
 
 		@media (max-width: 900px) {

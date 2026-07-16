@@ -613,7 +613,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 			<button class="control-button" id="motion-toggle" type="button" aria-pressed="false" aria-label="Reduce motion" data-i18n-aria-label="motion.toggle.aria" data-i18n="motion.full">Motion</button>
 			<button class="control-button" id="lang-float" type="button" aria-label="Toggle language" data-i18n-aria-label="language.toggle.aria">EN</button>
 		</div>
-		<main class="shell" id="page-content">
+		<main class="shell" id="page-content" tabindex="-1">
 			<aside class="sidebar">
 				<Image class="profile-photo" src={profile.photo} alt="Ảnh chân dung Nguyễn Văn Duy" data-i18n-alt="profile.photo.alt" width={112} height={112} loading="eager" decoding="async" />
 				<h1 class="profile-name">{profile.name}</h1>
@@ -634,24 +634,6 @@ const navMeta: Record<string, { index: string; system: string }> = {
 								<a href={`mailto:${profile.email}`}>{profile.email}</a>
 								<button class="copy-email" type="button" data-copy-email={profile.email} aria-label="Copy email" data-i18n-aria-label="email.copy.aria" data-i18n="email.copy">Copy</button>
 							</div>
-						</div>
-					</div>
-					<div class="contact-item">
-						<div class="contact-icon">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.9c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2L9.9 10.2c.8 1.5 2 2.8 3.4 3.6l1.3-1.3c.6-.6 1.4-.6 2 0l2 2c.6.6.6 1.4 0 2l-1.1 1.1c-.9.9-2.2 1.2-3.4.8-5-1.7-9-5.7-10.7-10.7-.4-1.2-.1-2.5.8-3.4L7.2 4.9Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-						</div>
-						<div class="contact-copy">
-							<small data-i18n="profile.phone">Điện thoại</small>
-							<a href="tel:0869630908">{profile.phone}</a>
-						</div>
-					</div>
-					<div class="contact-item">
-						<div class="contact-icon">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4.5V3m8 1.5V3M5 8h14M6.5 5h11A1.5 1.5 0 0 1 19 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 17.5v-11A1.5 1.5 0 0 1 6.5 5Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-						</div>
-						<div class="contact-copy">
-							<small data-i18n="profile.birthday">Ngày sinh</small>
-							<span>{profile.birthday}</span>
 						</div>
 					</div>
 					<div class="contact-item">
@@ -752,7 +734,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 					</button>
 					<p class="command-group" data-i18n="command.group.system">System</p>
 					<button class="command-item" type="button" data-command="status" data-keywords="status aegis aura help">
-						<span><strong data-i18n="command.status">Show system status</strong><small data-i18n="command.status.desc">Current learning track</small></span>
+						<span><strong data-i18n="command.status">Show learning track</strong><small data-i18n="command.status.desc">Current learning focus</small></span>
 						<span class="command-shortcut">STATUS</span>
 					</button>
 					<p class="command-empty" id="command-empty" data-i18n="command.empty" hidden>No matching command found.</p>
@@ -789,8 +771,6 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'page.gallery.title': 'Thư viện',
 						'page.cv.title': 'CV',
 						'profile.email': 'Email',
-						'profile.phone': 'Điện thoại',
-						'profile.birthday': 'Ngày sinh',
 						'profile.location': 'Địa điểm',
 						'profile.photo.alt': 'Ảnh chân dung Nguyễn Văn Duy',
 						'email.copy': 'Sao chép',
@@ -806,8 +786,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'hero.cta.contact': 'Liên hệ với tôi',
 						'hero.shortcut.cv': 'CV PDF',
 						'hero.shortcut.log': 'Engineering Log',
-						'hero.status.title': 'SYSTEM STATUS',
-						'hero.status.online': 'ONLINE',
+						'hero.status.title': 'LEARNING TRACK',
+						'hero.status.online': 'IN PROGRESS',
 						'hero.status.focus.label': 'CURRENT FOCUS',
 						'hero.status.focus.value': 'REPRODUCIBLE ML PIPELINES',
 						'hero.status.project.label': 'ACTIVE PROJECT',
@@ -903,7 +883,6 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'contact.hero.title': 'Sẵn sàng trao đổi về MLOps, ML systems và cloud infrastructure',
 						'contact.hero.body': 'Nếu anh/chị muốn trao đổi về pipeline ML, automation, cloud infrastructure, open-source hoặc dự án AI mang tính nghiên cứu, có thể liên hệ trực tiếp qua email hoặc gửi form bên dưới.',
 						'contact.card.email': 'Email',
-						'contact.card.phone': 'Điện thoại',
 						'contact.card.location': 'Địa điểm',
 						'contact.form.name': 'Họ và tên',
 						'contact.form.name.placeholder': 'Nguyễn Văn A',
@@ -961,8 +940,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.theme.desc': 'Control room tối hoặc sáng',
 						'command.sound': 'Bật/tắt âm thanh',
 						'command.sound.desc': 'Âm UI mềm, chỉ bật khi cho phép',
-						'command.status': 'Xem system status',
-						'command.status.desc': 'Trạng thái học tập hiện tại',
+						'command.status': 'Xem learning track',
+						'command.status.desc': 'Trọng tâm học tập hiện tại',
 						'sound.off': 'Âm tắt',
 						'sound.on': 'Âm bật',
 						'sound.toggle.aria': 'Bật hoặc tắt âm thanh giao diện',
@@ -1001,8 +980,6 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'page.gallery.title': 'Gallery',
 						'page.cv.title': 'CV',
 						'profile.email': 'Email',
-						'profile.phone': 'Phone',
-						'profile.birthday': 'Birthday',
 						'profile.location': 'Location',
 						'profile.photo.alt': 'Portrait of Nguyen Van Duy',
 						'email.copy': 'Copy',
@@ -1018,8 +995,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'hero.cta.contact': 'Contact Me',
 						'hero.shortcut.cv': 'CV PDF',
 						'hero.shortcut.log': 'Engineering Log',
-						'hero.status.title': 'SYSTEM STATUS',
-						'hero.status.online': 'ONLINE',
+						'hero.status.title': 'LEARNING TRACK',
+						'hero.status.online': 'IN PROGRESS',
 						'hero.status.focus.label': 'CURRENT FOCUS',
 						'hero.status.focus.value': 'REPRODUCIBLE ML PIPELINES',
 						'hero.status.project.label': 'ACTIVE PROJECT',
@@ -1115,7 +1092,6 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'contact.hero.title': 'Open to discuss MLOps, ML systems, and cloud infrastructure',
 						'contact.hero.body': 'If you want to discuss ML pipelines, automation, cloud infrastructure, open source, or research-oriented AI projects, you can reach me directly by email or use the form below.',
 						'contact.card.email': 'Email',
-						'contact.card.phone': 'Phone',
 						'contact.card.location': 'Location',
 						'contact.form.name': 'Full name',
 						'contact.form.name.placeholder': 'Nguyen Van A',
@@ -1173,8 +1149,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.theme.desc': 'Dark or light control room',
 						'command.sound': 'Toggle sound',
 						'command.sound.desc': 'Opt-in soft interface tones',
-						'command.status': 'Show system status',
-						'command.status.desc': 'Current learning track',
+						'command.status': 'Show learning track',
+						'command.status.desc': 'Current learning focus',
 						'sound.off': 'Sound Off',
 						'sound.on': 'Sound On',
 						'sound.toggle.aria': 'Enable or disable interface sound',

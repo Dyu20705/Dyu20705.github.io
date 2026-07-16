@@ -1,0 +1,78 @@
+---
+interface Props {
+	slug: string;
+	title: string;
+}
+
+const { slug, title } = Astro.props;
+---
+
+<div class={`fingerprint fingerprint-${slug}`} role="img" aria-label={`${title} architecture fingerprint`}>
+	{slug === 'runsift' && (
+		<svg viewBox="0 0 520 150" aria-hidden="true">
+			<g class="nodes">
+				<rect x="18" y="48" width="102" height="48" rx="10"/><text x="69" y="77">FAILED RUN</text>
+				<rect x="151" y="48" width="92" height="48" rx="10"/><text x="197" y="77">COLLECT</text>
+				<rect x="274" y="48" width="92" height="48" rx="10"/><text x="320" y="77">EVIDENCE</text>
+				<rect x="397" y="48" width="105" height="48" rx="10"/><text x="449" y="77">REPORT</text>
+			</g>
+			<path d="M120 72h31m92 0h31m92 0h31"/>
+		</svg>
+	)}
+	{slug === 'arcaea-viewer' && (
+		<svg viewBox="0 0 520 150" aria-hidden="true">
+			<g class="nodes">
+				<rect x="18" y="48" width="80" height="48" rx="10"/><text x="58" y="77">AFF</text>
+				<rect x="127" y="48" width="92" height="48" rx="10"/><text x="173" y="77">RUST</text>
+				<rect x="248" y="48" width="92" height="48" rx="10"/><text x="294" y="77">WASM</text>
+				<rect x="369" y="48" width="133" height="48" rx="10"/><text x="435" y="77">SVG SCENE</text>
+			</g>
+			<path d="M98 72h29m92 0h29m92 0h29"/>
+		</svg>
+	)}
+	{slug === 'personal-internet-simulator' && (
+		<svg viewBox="0 0 520 150" aria-hidden="true">
+			<g class="nodes">
+				<circle cx="66" cy="72" r="28"/><text x="66" y="76">CLIENT</text>
+				<circle cx="194" cy="72" r="28"/><text x="194" y="76">ROUTER</text>
+				<circle cx="322" cy="42" r="25"/><text x="322" y="46">DNS</text>
+				<circle cx="450" cy="72" r="28"/><text x="450" y="76">SERVICE</text>
+			</g>
+			<path d="M94 72h72m56-8 75-17m50 1 75 17"/><path class="failure" d="m304 104 18-18 18 18-18 18z"/><text class="failure-label" x="322" y="137">FAILURE EVENT</text>
+		</svg>
+	)}
+	{slug === 'alo' && (
+		<svg viewBox="0 0 520 150" aria-hidden="true">
+			<g class="nodes">
+				<rect x="18" y="48" width="92" height="48" rx="10"/><text x="64" y="77">SOURCE</text>
+				<rect x="139" y="48" width="82" height="48" rx="10"/><text x="180" y="77">BUILD</text>
+				<rect x="250" y="48" width="92" height="48" rx="10"/><text x="296" y="77">ARTIFACT</text>
+				<rect x="371" y="48" width="131" height="48" rx="10"/><text x="436" y="77">VERIFY</text>
+			</g>
+			<path d="M110 72h29m82 0h29m92 0h29"/><path class="planned" d="M18 116h484"/><text class="planned-label" x="260" y="136">PLANNED LINEAGE</text>
+		</svg>
+	)}
+</div>
+
+<style>
+	.fingerprint {
+		min-height: 126px;
+		padding: .55rem;
+		border: 1px solid rgba(97, 213, 255, .12);
+		border-radius: .8rem;
+		background:
+			linear-gradient(rgba(97, 213, 255, .035) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(97, 213, 255, .03) 1px, transparent 1px),
+			rgba(2, 10, 18, .52);
+		background-size: 22px 22px;
+		overflow: hidden;
+	}
+	svg { width: 100%; height: auto; display: block; }
+	.nodes rect, .nodes circle { fill: rgba(9, 26, 42, .96); stroke: rgba(97, 213, 255, .48); stroke-width: 1.5; }
+	path { fill: none; stroke: rgba(97, 213, 255, .65); stroke-width: 1.8; stroke-linecap: round; }
+	text { fill: #d7e7f4; font: 700 10px ui-monospace, SFMono-Regular, Consolas, monospace; text-anchor: middle; letter-spacing: .04em; }
+	.failure { fill: rgba(247, 198, 107, .09); stroke: rgba(247, 198, 107, .74); }
+	.failure-label { fill: #f7d9a1; font-size: 9px; }
+	.planned { stroke: rgba(247, 198, 107, .6); stroke-dasharray: 6 7; }
+	.planned-label { fill: #f7d9a1; font-size: 9px; }
+</style>

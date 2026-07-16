@@ -1,418 +1,129 @@
 ---
-import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import ProjectFingerprint from '../components/projects/ProjectFingerprint.astro';
 import ProfileShell from '../layouts/ProfileShell.astro';
-import { portfolioProjects } from '../data/site';
+
+const projects = (await getCollection('projects'))
+	.filter((project) => project.data.featured)
+	.sort((a, b) => a.data.priority - b.data.priority);
 ---
 
 <ProfileShell
-	headTitle="Dự án | Nguyễn Văn Duy"
-	description="Các dự án cá nhân liên quan đến systems thinking, automation, backend, workflow và nền tảng cho định hướng MLOps."
+	headTitle="Dự án MLOps, Platform và Systems | Nguyễn Văn Duy"
+	description="Four selected owner-led projects presented with honest maturity, architecture, limitations, and inspectable evidence."
 	activeNav="portfolio"
 >
-	<section>
-		<h2 class="page-title" data-i18n="page.portfolio.title">Dự án</h2>
-		<div class="page-accent"></div>
-	</section>
+	<div class="portfolio-page" data-project-language-root>
+		<header class="portfolio-header">
+			<div>
+				<p class="kicker">FOUR SELECTED SYSTEMS</p>
+				<h2><span data-copy-lang="vi">Tiềm năng rõ, bằng chứng trung thực</span><span data-copy-lang="en" hidden>High potential, honest evidence</span></h2>
+			</div>
+			<div class="intro">
+				<p data-copy-lang="vi">Bốn dự án do tôi trực tiếp định hướng được chọn theo giá trị đối với MLOps, Platform, Reliability và systems engineering. Mức trưởng thành khác nhau được hiển thị rõ; backlog hoặc ý tưởng không được trình bày như implementation.</p>
+				<p data-copy-lang="en" hidden>Four projects I directly shaped are selected for their MLOps, platform, reliability, and systems-engineering value. Their maturity differs intentionally; a backlog or concept is never presented as implementation.</p>
+			</div>
+		</header>
 
-	<section class="portfolio-filters" aria-label="Portfolio filters">
-		<button class="filter-button is-active" type="button" data-filter="all" data-i18n="portfolio.filter.all">All</button>
-		<button class="filter-button" type="button" data-filter="systems" data-i18n="portfolio.filter.systems">Systems</button>
-		<button class="filter-button" type="button" data-filter="app" data-i18n="portfolio.filter.app">App</button>
-		<button class="filter-button" type="button" data-filter="tools" data-i18n="portfolio.filter.tools">Tools</button>
-	</section>
+		<p class="evidence-policy">
+			<strong><span data-copy-lang="vi">Nguyên tắc tuyển chọn:</span><span data-copy-lang="en" hidden>Selection policy:</span></strong>
+			<span data-copy-lang="vi"> Chỉ đưa dự án tôi trực tiếp lên ý tưởng hoặc thực hiện. Không dùng Discord bot như bằng chứng chính khi quyền sở hữu ý tưởng/implementation không đủ rõ; không bịa metric, demo hay production state.</span>
+			<span data-copy-lang="en" hidden> Include only projects I directly conceived or implemented. A Discord bot is not used as primary evidence when idea/implementation ownership is unclear; metrics, demos, and production states are never invented.</span>
+		</p>
 
-	<section class="portfolio-grid" id="portfolio-grid">
-		{portfolioProjects.map((project, index) => (
-			<article
-				class="portfolio-card"
-				data-category={project.category}
-			>
-				<div class="architecture-preview" aria-hidden="true">
-					<Image src={project.image} alt={project.title} loading="lazy" decoding="async" sizes="(max-width: 900px) 100vw, 33vw" />
-					<svg viewBox="0 0 320 150" fill="none">
-						<path d="M34 78h72c26 0 30-42 58-42h122" />
-						<path d="M34 104h86c23 0 34 25 58 25h108" />
-						<circle cx="34" cy="78" r="7" />
-						<circle cx="164" cy="36" r="7" />
-						<circle cx="286" cy="36" r="7" />
-						<circle cx="286" cy="129" r="7" />
-						<circle cx="34" cy="104" r="7" />
-					</svg>
-				</div>
-				<div class="portfolio-copy">
-					<dl class="dossier-meta">
-						<div><dt data-i18n="portfolio.meta.project">PROJECT</dt><dd>{project.title}</dd></div>
-						<div><dt data-i18n="portfolio.meta.type">TYPE</dt><dd data-i18n={`portfolio.project.${index}.status`}>{project.status}</dd></div>
-						<div><dt data-i18n="portfolio.meta.domain">DOMAIN</dt><dd data-i18n={`portfolio.project.${index}.label`}>{project.label}</dd></div>
-					</dl>
-					<div class="portfolio-top">
-						<h3>{project.title}</h3>
-						<span class="portfolio-tag" data-i18n={`portfolio.project.${index}.label`}>{project.label}</span>
-					</div>
-					<p data-i18n={`portfolio.project.${index}.description`}>{project.description}</p>
-					<dl class="project-facts">
-						<div>
-							<dt data-i18n="portfolio.problem">Vấn đề</dt>
-							<dd data-i18n={`portfolio.project.${index}.problem`}>{project.problem}</dd>
+		<section class="project-grid" aria-label="Selected projects">
+			{projects.map((project, index) => {
+				const data = project.data;
+				return (
+					<article class="project-card">
+						<div class="signal" aria-hidden="true"><span>{String(index + 1).padStart(2, '0')}</span><i></i></div>
+						<header>
+							<div>
+								<p class="domain"><span data-copy-lang="vi">{data.domain.vi}</span><span data-copy-lang="en" hidden>{data.domain.en}</span></p>
+								<h3><a href={`/projects/${data.slug}/`}>{data.title}</a></h3>
+							</div>
+							<span class={`status status-${data.status}`}><span data-copy-lang="vi">{data.statusLabel.vi}</span><span data-copy-lang="en" hidden>{data.statusLabel.en}</span></span>
+						</header>
+
+						<ProjectFingerprint slug={data.slug} title={data.title} />
+
+						<p class="value" data-copy-lang="vi">{data.value.vi}</p>
+						<p class="value" data-copy-lang="en" hidden>{data.value.en}</p>
+
+						<div class="proof">
+							<strong><span data-copy-lang="vi">Bằng chứng hiện có</span><span data-copy-lang="en" hidden>Current evidence</span></strong>
+							<ul>
+								{data.evidence.slice(0, 3).map((item) => (
+									<li class={item.href ? 'verified-link' : 'planned-evidence'}>
+										<span data-copy-lang="vi">{item.label.vi}</span>
+										<span data-copy-lang="en" hidden>{item.label.en}</span>
+									</li>
+								))}
+							</ul>
 						</div>
-					</dl>
-					<details class="project-details">
-						<summary data-i18n="portfolio.details">What I built / learned</summary>
-						<p data-i18n={`portfolio.project.${index}.role`}>{project.role}</p>
-					</details>
-					<div class="project-footer">
-						<span class="portfolio-status" data-i18n={`portfolio.project.${index}.status`}>{project.status}</span>
-						<div class="tech-tags" aria-label="Tech stack">
-							{project.stack.map((tech) => <span>{tech}</span>)}
-						</div>
-						<a class="project-link" href={project.url} target="_blank" rel="noopener noreferrer" data-i18n="portfolio.repo">Mở repository</a>
-					</div>
-				</div>
-			</article>
-		))}
-	</section>
+
+						<footer>
+							<div class="stack" aria-label="Technology stack">{data.stack.slice(0, 6).map((technology) => <span>{technology}</span>)}</div>
+							<div class="links">
+								<a class="case-link" href={`/projects/${data.slug}/`}><span data-copy-lang="vi">Kiểm tra case study</span><span data-copy-lang="en" hidden>Inspect case study</span> →</a>
+								{data.repoUrl && <a href={data.repoUrl} target="_blank" rel="noopener noreferrer">Repository ↗</a>}
+							</div>
+						</footer>
+					</article>
+				);
+			})}
+		</section>
+
+		<section class="portfolio-cta">
+			<div><p class="kicker">RECRUITER → ENGINEER</p><h2><span data-copy-lang="vi">Đọc nhanh giá trị ở card, sau đó truy sâu architecture, validation, failure modes và evidence.</span><span data-copy-lang="en" hidden>Scan value on each card, then drill into architecture, validation, failure modes, and evidence.</span></h2></div>
+			<div class="cta-links"><a href="/resume"><span data-copy-lang="vi">Xem hồ sơ</span><span data-copy-lang="en" hidden>View resume</span></a><a href="/contact"><span data-copy-lang="vi">Liên hệ</span><span data-copy-lang="en" hidden>Contact</span></a></div>
+		</section>
+	</div>
 
 	<script is:inline>
-		(function () {
-			const buttons = document.querySelectorAll('.filter-button');
-			const cards = document.querySelectorAll('.portfolio-card');
-
-			const setPressedState = (activeButton) => {
-				buttons.forEach((item) => {
-					item.setAttribute('aria-pressed', String(item === activeButton));
-				});
-			};
-
-			buttons.forEach((button) => {
-				button.setAttribute('aria-pressed', button.classList.contains('is-active') ? 'true' : 'false');
-				button.addEventListener('click', () => {
-					const filter = button.getAttribute('data-filter');
-					buttons.forEach((item) => item.classList.remove('is-active'));
-					button.classList.add('is-active');
-					setPressedState(button);
-					cards.forEach((card) => {
-						const category = card.getAttribute('data-category');
-						card.toggleAttribute('hidden', !(filter === 'all' || category === filter));
-					});
-				});
-			});
+		(() => {
+			const root = document.querySelector('[data-project-language-root]');
+			if (!root) return;
+			const applyLanguage = (lang) => root.querySelectorAll('[data-copy-lang]').forEach((element) => { element.hidden = element.getAttribute('data-copy-lang') !== lang; });
+			applyLanguage(localStorage.getItem('siteLang') || 'vi');
+			window.addEventListener('control-room-lang', (event) => applyLanguage(event.detail?.lang || 'vi'));
 		})();
 	</script>
 
 	<style>
-		.page-title {
-			font-size: clamp(2.2rem, 4vw, 3.4rem);
-		}
-
-		.page-accent {
-			width: 58px;
-			height: 4px;
-			margin-top: 0.9rem;
-			border-radius: 999px;
-			background: #17b8ff;
-		}
-
-		.portfolio-filters {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.75rem;
-			margin-top: 1.5rem;
-		}
-
-		.filter-button {
-			padding: 0.82rem 1.15rem;
-			border: none;
-			border-radius: 0.95rem;
-			background: rgba(255, 255, 255, 0.05);
-			color: #c4af91;
-			font: inherit;
-			cursor: pointer;
-		}
-
-			.filter-button:focus-visible {
-				outline: none;
-				box-shadow: 0 0 0 3px rgba(23, 184, 255, 0.24);
-			}
-
-		.filter-button.is-active {
-			background: #179dff;
-			color: #ffffff;
-			font-weight: 700;
-		}
-
-		.portfolio-grid {
-			display: grid;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-			gap: 1rem;
-			margin-top: 1.25rem;
-		}
-
-		.portfolio-card {
-			position: relative;
-			display: grid;
-			overflow: hidden;
-			border-radius: 0.95rem;
-			border: 1px solid rgba(97, 213, 255, 0.16);
-			background:
-				linear-gradient(145deg, rgba(10, 23, 37, 0.96), rgba(7, 12, 22, 0.94)),
-				rgba(255, 255, 255, 0.03);
-			transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
-		}
-
-		.portfolio-card::before {
-			content: '';
-			position: absolute;
-			inset: 0;
-			z-index: 2;
-			pointer-events: none;
-			background: linear-gradient(90deg, transparent, rgba(97, 213, 255, 0.22), transparent);
-			transform: translateX(-110%);
-			transition: transform 480ms ease;
-		}
-
-		.portfolio-card:hover,
-		.portfolio-card:focus-visible {
-			transform: translateY(-3px);
-			border-color: rgba(97, 213, 255, 0.42);
-			box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
-		}
-
-		.portfolio-card:hover::before,
-		.portfolio-card:focus-visible::before {
-			transform: translateX(110%);
-		}
-
-		.portfolio-card[hidden] {
-			display: none;
-		}
-
-		.architecture-preview {
-			position: relative;
-			min-height: 220px;
-			overflow: hidden;
-			background: #07101b;
-		}
-
-		.architecture-preview img {
-			width: 100%;
-			height: 220px;
-			object-fit: cover;
-			border-radius: 0;
-			opacity: 0.18;
-			filter: saturate(0.7) contrast(1.2);
-		}
-
-		.architecture-preview svg {
-			position: absolute;
-			inset: 0;
-			width: 100%;
-			height: 100%;
-			padding: 1rem;
-		}
-
-		.architecture-preview path {
-			stroke: rgba(97, 213, 255, 0.58);
-			stroke-width: 2;
-			stroke-dasharray: 8 10;
-		}
-
-		.architecture-preview circle {
-			fill: #081321;
-			stroke: #61d5ff;
-			stroke-width: 2;
-		}
-
-		.portfolio-copy {
-			padding: 1rem;
-		}
-
-		.dossier-meta {
-			display: grid;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-			gap: 0.5rem;
-			margin: 0 0 1rem;
-		}
-
-		.dossier-meta div {
-			padding: 0.52rem;
-			border-radius: 0.65rem;
-			background: rgba(255, 255, 255, 0.035);
-		}
-
-		.dossier-meta dt,
-		.dossier-meta dd {
-			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-		}
-
-		.dossier-meta dt {
-			color: #74849a;
-			font-size: 0.62rem;
-			letter-spacing: 0.12em;
-		}
-
-		.dossier-meta dd {
-			margin: 0.14rem 0 0;
-			color: #f3f7fb;
-			font-size: 0.72rem;
-			overflow-wrap: anywhere;
-		}
-
-		.portfolio-top {
-			display: flex;
-			justify-content: space-between;
-			gap: 0.8rem;
-			align-items: flex-start;
-			margin-bottom: 0.7rem;
-		}
-
-		.portfolio-top h3 {
-			font-size: 1.35rem;
-		}
-
-		.portfolio-tag {
-			padding: 0.28rem 0.7rem;
-			border-radius: 999px;
-			background: rgba(10, 187, 255, 0.12);
-			color: #19c9ff;
-			font-size: 0.78rem;
-			font-weight: 700;
-		}
-
-		.portfolio-copy p {
-			color: #b8c5d2;
-			line-height: 1.78;
-		}
-
-		.project-facts {
-			display: grid;
-			gap: 0.65rem;
-			margin: 0.9rem 0 0;
-		}
-
-		.project-facts div {
-			display: grid;
-			gap: 0.18rem;
-		}
-
-		.project-facts dt {
-			color: #19c9ff;
-			font-size: 0.78rem;
-			font-weight: 700;
-			text-transform: uppercase;
-		}
-
-		.project-facts dd {
-			margin: 0;
-			color: #b8c5d2;
-			line-height: 1.65;
-			font-size: 0.95rem;
-		}
-
-		.project-details {
-			margin-top: 0.9rem;
-			border: 1px solid rgba(255, 255, 255, 0.08);
-			border-radius: 0.75rem;
-			background: rgba(255, 255, 255, 0.025);
-		}
-
-		.project-details summary {
-			min-height: 42px;
-			padding: 0.55rem 0.7rem;
-			color: #d8c0a1;
-			cursor: pointer;
-			font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-			font-size: 0.78rem;
-		}
-
-		.project-details summary:focus-visible {
-			outline: none;
-			box-shadow: 0 0 0 3px rgba(97, 213, 255, 0.22);
-		}
-
-		.project-details p {
-			padding: 0 0.7rem 0.75rem;
-			font-size: 0.94rem;
-		}
-
-		.project-footer {
-			display: grid;
-			gap: 0.75rem;
-			margin-top: 1rem;
-		}
-
-		.portfolio-status {
-			width: fit-content;
-			padding: 0.24rem 0.62rem;
-			border-radius: 999px;
-			border: 1px solid rgba(25, 201, 255, 0.24);
-			color: #d8c0a1;
-			font-size: 0.82rem;
-			font-weight: 700;
-		}
-
-		.tech-tags {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.45rem;
-		}
-
-		.tech-tags span {
-			padding: 0.2rem 0.52rem;
-			border-radius: 999px;
-			background: rgba(255, 255, 255, 0.05);
-			color: #d9e5f1;
-			font-size: 0.78rem;
-		}
-
-		.project-link {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			width: fit-content;
-			min-height: 42px;
-			padding: 0.58rem 0.82rem;
-			border: 1px solid rgba(97, 213, 255, 0.28);
-			border-radius: 999px;
-			background: rgba(97, 213, 255, 0.08);
-			color: #f3f7fb;
-			text-decoration: none;
-			font-weight: 700;
-			transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease;
-		}
-
-		.project-link:hover,
-		.project-link:focus-visible {
-			transform: translateY(-1px);
-			border-color: rgba(97, 213, 255, 0.46);
-			background: rgba(97, 213, 255, 0.14);
-		}
-
-		@media (max-width: 1100px) {
-			.portfolio-grid {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-			}
-		}
-
-		@media (max-width: 900px) {
-			.portfolio-grid {
-				grid-template-columns: 1fr;
-			}
-
-			.dossier-meta {
-				grid-template-columns: 1fr;
-			}
-		}
-
-		@media (prefers-reduced-motion: reduce) {
-			.portfolio-card,
-			.portfolio-card::before {
-				transition: none;
-			}
-
-			.portfolio-card:hover,
-			.portfolio-card:focus-visible {
-				transform: none;
-			}
-		}
+		.portfolio-page { display: grid; gap: 1.2rem; }
+		.portfolio-header, .portfolio-cta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .75fr); gap: 1.4rem; align-items: end; padding: clamp(1.2rem, 3vw, 1.8rem); border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(135deg, rgba(13,30,48,.98), rgba(7,13,23,.94)); }
+		.kicker, .domain { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+		.portfolio-header h2 { margin-top: .65rem; max-width: 13ch; color: #f2f7fc; font-size: clamp(2.2rem, 5.7vw, 4.5rem); }
+		.intro, .value { color: #c4d0dc; line-height: 1.75; }
+		.evidence-policy { padding: .9rem 1rem; border-left: 3px solid #61d5ff; background: rgba(97,213,255,.06); line-height: 1.65; }
+		.project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+		.project-card { display: grid; gap: 1rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(145deg, rgba(10,23,37,.96), rgba(7,12,22,.94)); box-shadow: 0 18px 42px rgba(0,0,0,.22); }
+		.signal { display: flex; gap: .7rem; align-items: center; color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .7rem; }
+		.signal i { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(97,213,255,.5), transparent); }
+		.project-card > header { display: flex; justify-content: space-between; gap: .8rem; align-items: flex-start; }
+		.project-card h3 { margin-top: .38rem; font-size: clamp(1.35rem, 2.4vw, 1.9rem); }
+		.project-card h3 a { color: #eef7ff; text-decoration: none; }
+		.project-card h3 a:hover, .project-card h3 a:focus-visible { color: #8ee7ff; }
+		.status { flex: 0 0 auto; max-width: 13rem; padding: .34rem .58rem; border: 1px solid rgba(255,255,255,.1); border-radius: 999px; color: #d2deea; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .66rem; line-height: 1.35; text-align: center; }
+		.status-work-in-progress { border-color: rgba(247,198,107,.32); color: #f7d9a1; }
+		.status-research { border-color: rgba(160,132,255,.3); color: #c9baff; }
+		.status-prototype { border-color: rgba(97,213,255,.34); color: #9be8ff; }
+		.proof { padding: .8rem; border: 1px solid rgba(255,255,255,.07); border-radius: .75rem; background: rgba(255,255,255,.022); }
+		.proof strong { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
+		.proof ul { display: grid; gap: .42rem; margin: .65rem 0 0; padding-left: 1.05rem; color: #b9c7d4; font-size: .88rem; line-height: 1.55; }
+		.proof .verified-link::marker { color: #61d5ff; }
+		.proof .planned-evidence { color: #aeb9c5; font-style: italic; }
+		.proof .planned-evidence::marker { color: #f7c66b; }
+		.project-card footer { display: grid; gap: .8rem; margin-top: auto; }
+		.stack, .links, .cta-links { display: flex; flex-wrap: wrap; gap: .5rem; }
+		.stack span { padding: .24rem .52rem; border-radius: 999px; background: rgba(255,255,255,.05); color: #c8d5e1; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .66rem; }
+		.links a { color: #c4d4e3; font-weight: 700; font-size: .88rem; }
+		.links .case-link { color: #61d5ff; }
+		.portfolio-cta { align-items: center; background: linear-gradient(135deg, rgba(97,213,255,.08), rgba(255,255,255,.02)); }
+		.portfolio-cta h2 { margin-top: .45rem; max-width: 28ch; font-size: clamp(1.25rem, 2.7vw, 1.9rem); }
+		.cta-links a { min-height: 44px; display: inline-flex; align-items: center; padding: .62rem .88rem; border: 1px solid rgba(97,213,255,.22); border-radius: 999px; text-decoration: none; font-weight: 700; }
+		@media (max-width: 960px) { .portfolio-header, .portfolio-cta, .project-grid { grid-template-columns: 1fr; } .portfolio-header h2 { max-width: none; } }
+		@media (max-width: 650px) { .project-card > header { flex-direction: column; } .status { max-width: none; text-align: left; } }
 	</style>
 </ProfileShell>
