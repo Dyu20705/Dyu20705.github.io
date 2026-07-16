@@ -62,6 +62,7 @@ const privacyPatterns = [
 	{ label: 'phone field', pattern: /\b(?:phone|telephone)\b\s*["']?\s*:/i },
 	{ label: 'birthday field', pattern: /\bbirthday\b\s*["']?\s*:/i },
 ];
+const privacyScanExclusions = new Set([path.join(root, 'scripts', 'validate-build.mjs')]);
 
 const repositorySourceFiles = [];
 for (const sourceDirectory of sourceDirectories) {
@@ -80,6 +81,7 @@ for (const entry of rootEntries) {
 }
 
 for (const file of repositorySourceFiles) {
+	if (privacyScanExclusions.has(file)) continue;
 	const source = await fs.readFile(file, 'utf8');
 	for (const { label, pattern } of privacyPatterns) {
 		if (pattern.test(source)) {
@@ -129,5 +131,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-	`Validated ${htmlFiles.length} HTML files and ${repositorySourceFiles.length} repository source files: privacy, landmarks, and internal links passed.`,
+	`Validated ${htmlFiles.length} HTML files and ${repositorySourceFiles.length - privacyScanExclusions.size} repository source files: privacy, landmarks, and internal links passed.`,
 );
