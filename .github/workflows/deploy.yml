@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: pages-${{ github.ref }}
@@ -20,10 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout migration branch
+      - name: Checkout
         uses: actions/checkout@v7
-        with:
-          ref: review/astro7-mdx7-migration
 
       - name: Setup Node
         uses: actions/setup-node@v7
@@ -31,23 +29,7 @@ jobs:
           node-version: 22.12.0
           cache: npm
 
-      - name: Resolve coordinated Astro lockfile
-        run: npm install --package-lock-only --ignore-scripts
-
-      - name: Commit generated lockfile
-        shell: bash
-        run: |
-          if git diff --quiet -- package-lock.json; then
-            echo "Lockfile already current."
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add package-lock.json
-            git commit -m "chore(deps): refresh lockfile for Astro 7"
-            git push origin HEAD:review/astro7-mdx7-migration
-          fi
-
-      - name: Install from generated lockfile
+      - name: Install from lockfile
         run: npm ci
 
       - name: Build and validate generated routes
