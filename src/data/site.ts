@@ -11,8 +11,6 @@ export const profile = {
 	name: 'Nguyễn Văn Duy',
 	role: 'MLOps Engineer',
 	email: 'nguyenvanduy20072005@gmail.com',
-	phone: '0869630908',
-	birthday: '20/07/2005',
 	location: 'Hà Nội, Việt Nam',
 	photo: profilePhoto,
 };
