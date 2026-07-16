@@ -1,0 +1,26 @@
+name: PR Build Check
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-build-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-check:
+    name: Validate pull request
+    if: github.event.pull_request.draft == false
+    uses: ./.github/workflows/buildandcheck.yaml
+    with:
+      upload-artifact: false
