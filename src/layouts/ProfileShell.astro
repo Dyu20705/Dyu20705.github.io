@@ -613,7 +613,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 			<button class="control-button" id="motion-toggle" type="button" aria-pressed="false" aria-label="Reduce motion" data-i18n-aria-label="motion.toggle.aria" data-i18n="motion.full">Motion</button>
 			<button class="control-button" id="lang-float" type="button" aria-label="Toggle language" data-i18n-aria-label="language.toggle.aria">EN</button>
 		</div>
-		<main class="shell" id="page-content">
+		<main class="shell" id="page-content" tabindex="-1">
 			<aside class="sidebar">
 				<Image class="profile-photo" src={profile.photo} alt="Ảnh chân dung Nguyễn Văn Duy" data-i18n-alt="profile.photo.alt" width={112} height={112} loading="eager" decoding="async" />
 				<h1 class="profile-name">{profile.name}</h1>
@@ -734,7 +734,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 					</button>
 					<p class="command-group" data-i18n="command.group.system">System</p>
 					<button class="command-item" type="button" data-command="status" data-keywords="status aegis aura help">
-						<span><strong data-i18n="command.status">Show system status</strong><small data-i18n="command.status.desc">Current learning track</small></span>
+						<span><strong data-i18n="command.status">Show learning track</strong><small data-i18n="command.status.desc">Current learning focus</small></span>
 						<span class="command-shortcut">STATUS</span>
 					</button>
 					<p class="command-empty" id="command-empty" data-i18n="command.empty" hidden>No matching command found.</p>
@@ -786,8 +786,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'hero.cta.contact': 'Liên hệ với tôi',
 						'hero.shortcut.cv': 'CV PDF',
 						'hero.shortcut.log': 'Engineering Log',
-						'hero.status.title': 'SYSTEM STATUS',
-						'hero.status.online': 'ONLINE',
+						'hero.status.title': 'LEARNING TRACK',
+						'hero.status.online': 'IN PROGRESS',
 						'hero.status.focus.label': 'CURRENT FOCUS',
 						'hero.status.focus.value': 'REPRODUCIBLE ML PIPELINES',
 						'hero.status.project.label': 'ACTIVE PROJECT',
@@ -883,7 +883,6 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'contact.hero.title': 'Sẵn sàng trao đổi về MLOps, ML systems và cloud infrastructure',
 						'contact.hero.body': 'Nếu anh/chị muốn trao đổi về pipeline ML, automation, cloud infrastructure, open-source hoặc dự án AI mang tính nghiên cứu, có thể liên hệ trực tiếp qua email hoặc gửi form bên dưới.',
 						'contact.card.email': 'Email',
-						'contact.card.phone': 'Điện thoại',
 						'contact.card.location': 'Địa điểm',
 						'contact.form.name': 'Họ và tên',
 						'contact.form.name.placeholder': 'Nguyễn Văn A',
@@ -941,8 +940,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.theme.desc': 'Control room tối hoặc sáng',
 						'command.sound': 'Bật/tắt âm thanh',
 						'command.sound.desc': 'Âm UI mềm, chỉ bật khi cho phép',
-						'command.status': 'Xem system status',
-						'command.status.desc': 'Trạng thái học tập hiện tại',
+						'command.status': 'Xem learning track',
+						'command.status.desc': 'Trọng tâm học tập hiện tại',
 						'sound.off': 'Âm tắt',
 						'sound.on': 'Âm bật',
 						'sound.toggle.aria': 'Bật hoặc tắt âm thanh giao diện',
@@ -996,8 +995,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'hero.cta.contact': 'Contact Me',
 						'hero.shortcut.cv': 'CV PDF',
 						'hero.shortcut.log': 'Engineering Log',
-						'hero.status.title': 'SYSTEM STATUS',
-						'hero.status.online': 'ONLINE',
+						'hero.status.title': 'LEARNING TRACK',
+						'hero.status.online': 'IN PROGRESS',
 						'hero.status.focus.label': 'CURRENT FOCUS',
 						'hero.status.focus.value': 'REPRODUCIBLE ML PIPELINES',
 						'hero.status.project.label': 'ACTIVE PROJECT',
@@ -1093,7 +1092,6 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'contact.hero.title': 'Open to discuss MLOps, ML systems, and cloud infrastructure',
 						'contact.hero.body': 'If you want to discuss ML pipelines, automation, cloud infrastructure, open source, or research-oriented AI projects, you can reach me directly by email or use the form below.',
 						'contact.card.email': 'Email',
-						'contact.card.phone': 'Phone',
 						'contact.card.location': 'Location',
 						'contact.form.name': 'Full name',
 						'contact.form.name.placeholder': 'Nguyen Van A',
@@ -1151,8 +1149,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.theme.desc': 'Dark or light control room',
 						'command.sound': 'Toggle sound',
 						'command.sound.desc': 'Opt-in soft interface tones',
-						'command.status': 'Show system status',
-						'command.status.desc': 'Current learning track',
+						'command.status': 'Show learning track',
+						'command.status.desc': 'Current learning focus',
 						'sound.off': 'Sound Off',
 						'sound.on': 'Sound On',
 						'sound.toggle.aria': 'Enable or disable interface sound',

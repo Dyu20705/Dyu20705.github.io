@@ -94,7 +94,7 @@ const projects = (await getCollection('projects'))
 		.portfolio-page { display: grid; gap: 1.2rem; }
 		.portfolio-header, .portfolio-cta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .75fr); gap: 1.4rem; align-items: end; padding: clamp(1.2rem, 3vw, 1.8rem); border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(135deg, rgba(13,30,48,.98), rgba(7,13,23,.94)); }
 		.kicker, .domain { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
-		.portfolio-header h2 { margin-top: .65rem; max-width: 13ch; font-size: clamp(2.2rem, 5.7vw, 4.5rem); }
+		.portfolio-header h2 { margin-top: .65rem; max-width: 13ch; color: #f2f7fc; font-size: clamp(2.2rem, 5.7vw, 4.5rem); }
 		.intro, .value { color: #c4d0dc; line-height: 1.75; }
 		.evidence-policy { padding: .9rem 1rem; border-left: 3px solid #61d5ff; background: rgba(97,213,255,.06); line-height: 1.65; }
 		.project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
@@ -103,7 +103,7 @@ const projects = (await getCollection('projects'))
 		.signal i { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(97,213,255,.5), transparent); }
 		.project-card > header { display: flex; justify-content: space-between; gap: .8rem; align-items: flex-start; }
 		.project-card h3 { margin-top: .38rem; font-size: clamp(1.35rem, 2.4vw, 1.9rem); }
-		.project-card h3 a { color: var(--text-strong); text-decoration: none; }
+		.project-card h3 a { color: #eef7ff; text-decoration: none; }
 		.project-card h3 a:hover, .project-card h3 a:focus-visible { color: #8ee7ff; }
 		.status { flex: 0 0 auto; max-width: 13rem; padding: .34rem .58rem; border: 1px solid rgba(255,255,255,.1); border-radius: 999px; color: #d2deea; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .66rem; line-height: 1.35; text-align: center; }
 		.status-work-in-progress { border-color: rgba(247,198,107,.32); color: #f7d9a1; }
@@ -111,7 +111,7 @@ const projects = (await getCollection('projects'))
 		.status-prototype { border-color: rgba(97,213,255,.34); color: #9be8ff; }
 		.proof { padding: .8rem; border: 1px solid rgba(255,255,255,.07); border-radius: .75rem; background: rgba(255,255,255,.022); }
 		.proof strong { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
-		.proof ul { display: grid; gap: .42rem; margin: .65rem 0 0; padding-left: 1.05rem; color: var(--text-muted); font-size: .88rem; line-height: 1.55; }
+		.proof ul { display: grid; gap: .42rem; margin: .65rem 0 0; padding-left: 1.05rem; color: #b9c7d4; font-size: .88rem; line-height: 1.55; }
 		.proof .verified-link::marker { color: #61d5ff; }
 		.proof .planned-evidence { color: #aeb9c5; font-style: italic; }
 		.proof .planned-evidence::marker { color: #f7c66b; }

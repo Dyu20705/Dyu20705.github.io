@@ -45,6 +45,28 @@ async function resolveInternalTarget(href) {
 const htmlFiles = await collectFiles(dist, (file) => file.endsWith('.html'));
 const failures = [];
 
+const sourceRoots = ['src', 'public'];
+const textExtensions = new Set(['.astro', '.html', '.js', '.json', '.md', '.mdx', '.mjs', '.ts', '.txt', '.yaml', '.yml']);
+const privacyPatterns = [
+	{ label: 'telephone URI', pattern: /\btel:/i },
+	{ label: 'phone field', pattern: /\bphone\s*:/i },
+	{ label: 'birthday field', pattern: /\bbirthday\s*:/i },
+];
+
+for (const sourceRoot of sourceRoots) {
+	const directory = path.join(root, sourceRoot);
+	if (!(await exists(directory))) continue;
+	const sourceFiles = await collectFiles(directory, (file) => textExtensions.has(path.extname(file)));
+	for (const file of sourceFiles) {
+		const source = await fs.readFile(file, 'utf8');
+		for (const { label, pattern } of privacyPatterns) {
+			if (pattern.test(source)) {
+				failures.push(`${path.relative(root, file)}: contains prohibited public ${label}`);
+			}
+		}
+	}
+}
+
 for (const file of htmlFiles) {
 	const html = await fs.readFile(file, 'utf8');
 	const relativeFile = path.relative(root, file);
@@ -65,9 +87,12 @@ for (const file of htmlFiles) {
 			href.startsWith('http://') ||
 			href.startsWith('https://') ||
 			href.startsWith('mailto:') ||
-			href.startsWith('tel:') ||
 			href.startsWith('data:')
 		) continue;
+		if (href.startsWith('tel:')) {
+			failures.push(`${relativeFile}: contains a prohibited public telephone link`);
+			continue;
+		}
 
 		const target = await resolveInternalTarget(href);
 		if (!target) failures.push(`${relativeFile}: broken internal link ${href}`);
