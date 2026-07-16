@@ -825,7 +825,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						<span class="command-shortcut">SOUND</span>
 					</button>
 					<button class="command-item" type="button" data-command="toggle:motion" data-keywords="motion animation reduced accessibility">
-						<span><strong data-i18n="command.motion">Reduce motion</strong><small data-i18n="command.motion.desc">Limit interface animation</small></span>
+						<span><strong id="command-motion-label" data-i18n="command.motion">Reduce motion</strong><small id="command-motion-description" data-i18n="command.motion.desc">Limit interface animation</small></span>
 						<span class="command-shortcut">MOTION</span>
 					</button>
 					<p class="command-group" data-i18n="command.group.system">System</p>
@@ -1050,6 +1050,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.sound.desc': 'Âm UI mềm, chỉ bật khi cho phép',
 						'command.motion': 'Giảm chuyển động',
 						'command.motion.desc': 'Hạn chế animation của giao diện',
+						'command.motion.restore': 'Khôi phục chuyển động',
+						'command.motion.restore.desc': 'Cho phép animation của giao diện',
 						'command.status': 'Xem learning track',
 						'command.status.desc': 'Trọng tâm học tập hiện tại',
 						'sound.off': 'Âm tắt',
@@ -1277,6 +1279,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.sound.desc': 'Opt-in soft interface tones',
 						'command.motion': 'Reduce motion',
 						'command.motion.desc': 'Limit interface animation',
+						'command.motion.restore': 'Restore motion',
+						'command.motion.restore.desc': 'Allow interface animation',
 						'command.status': 'Show learning track',
 						'command.status.desc': 'Current learning focus',
 						'sound.off': 'Sound Off',
@@ -1364,6 +1368,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				const list = document.getElementById('command-list');
 				const statusBlock = document.getElementById('command-status');
 				const commandEmpty = document.getElementById('command-empty');
+				const motionCommandLabel = document.getElementById('command-motion-label');
+				const motionCommandDescription = document.getElementById('command-motion-description');
 				const toast = document.getElementById('sound-toast');
 				const reduceQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 				const isTouch = window.matchMedia('(pointer: coarse)').matches;
@@ -1429,6 +1435,12 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						themeButton.setAttribute('title', themeLabel);
 					}
 					body.classList.toggle('user-reduce-motion', motionReduced);
+					if (motionCommandLabel) {
+						motionCommandLabel.textContent = t(motionReduced ? 'command.motion.restore' : 'command.motion');
+					}
+					if (motionCommandDescription) {
+						motionCommandDescription.textContent = t(motionReduced ? 'command.motion.restore.desc' : 'command.motion.desc');
+					}
 				}
 
 				function setSound(next) {
