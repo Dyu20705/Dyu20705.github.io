@@ -25,11 +25,19 @@ async function exists(candidate) {
 }
 
 async function resolveInternalTarget(href) {
-	const pathname = decodeURIComponent(href.split(/[?#]/, 1)[0]);
+	let pathname;
+	try {
+		pathname = decodeURIComponent(href.split(/[?#]/, 1)[0]);
+	} catch {
+		return null;
+	}
+
 	const relative = pathname.replace(/^\/+/, '');
 	if (!relative) return path.join(dist, 'index.html');
 
-	const exact = path.join(dist, relative);
+	const exact = path.resolve(dist, relative);
+	if (exact !== dist && !exact.startsWith(`${dist}${path.sep}`)) return null;
+
 	const candidates = pathname.endsWith('/')
 		? [path.join(exact, 'index.html')]
 		: path.extname(relative)
@@ -45,24 +53,37 @@ async function resolveInternalTarget(href) {
 const htmlFiles = await collectFiles(dist, (file) => file.endsWith('.html'));
 const failures = [];
 
-const sourceRoots = ['src', 'public'];
+if (htmlFiles.length === 0) failures.push('dist: expected at least one generated HTML file');
+
+const sourceDirectories = ['.github', 'docs', 'public', 'scripts', 'src'];
 const textExtensions = new Set(['.astro', '.html', '.js', '.json', '.md', '.mdx', '.mjs', '.ts', '.txt', '.yaml', '.yml']);
 const privacyPatterns = [
-	{ label: 'telephone URI', pattern: /\btel:/i },
-	{ label: 'phone field', pattern: /\bphone\s*:/i },
-	{ label: 'birthday field', pattern: /\bbirthday\s*:/i },
+	{ label: 'telephone URI', pattern: /\btel\s*:/i },
+	{ label: 'phone field', pattern: /\b(?:phone|telephone)\b\s*["']?\s*:/i },
+	{ label: 'birthday field', pattern: /\bbirthday\b\s*["']?\s*:/i },
 ];
 
-for (const sourceRoot of sourceRoots) {
-	const directory = path.join(root, sourceRoot);
+const repositorySourceFiles = [];
+for (const sourceDirectory of sourceDirectories) {
+	const directory = path.join(root, sourceDirectory);
 	if (!(await exists(directory))) continue;
-	const sourceFiles = await collectFiles(directory, (file) => textExtensions.has(path.extname(file)));
-	for (const file of sourceFiles) {
-		const source = await fs.readFile(file, 'utf8');
-		for (const { label, pattern } of privacyPatterns) {
-			if (pattern.test(source)) {
-				failures.push(`${path.relative(root, file)}: contains prohibited public ${label}`);
-			}
+	repositorySourceFiles.push(
+		...(await collectFiles(directory, (file) => textExtensions.has(path.extname(file).toLowerCase()))),
+	);
+}
+
+const rootEntries = await fs.readdir(root, { withFileTypes: true });
+for (const entry of rootEntries) {
+	if (!entry.isFile()) continue;
+	const absolute = path.join(root, entry.name);
+	if (textExtensions.has(path.extname(absolute).toLowerCase())) repositorySourceFiles.push(absolute);
+}
+
+for (const file of repositorySourceFiles) {
+	const source = await fs.readFile(file, 'utf8');
+	for (const { label, pattern } of privacyPatterns) {
+		if (pattern.test(source)) {
+			failures.push(`${path.relative(root, file)}: contains prohibited public ${label}`);
 		}
 	}
 }
@@ -82,20 +103,22 @@ for (const file of htmlFiles) {
 	const hrefPattern = /href=["']([^"']+)["']/gi;
 	for (const match of html.matchAll(hrefPattern)) {
 		const href = match[1];
+		const normalizedHref = href.toLowerCase();
 		if (
 			href.startsWith('#') ||
-			href.startsWith('http://') ||
-			href.startsWith('https://') ||
-			href.startsWith('mailto:') ||
-			href.startsWith('data:')
+			normalizedHref.startsWith('http://') ||
+			normalizedHref.startsWith('https://') ||
+			normalizedHref.startsWith('mailto:') ||
+			normalizedHref.startsWith('data:') ||
+			normalizedHref.startsWith('blob:')
 		) continue;
-		if (href.startsWith('tel:')) {
+		if (normalizedHref.startsWith('tel:')) {
 			failures.push(`${relativeFile}: contains a prohibited public telephone link`);
 			continue;
 		}
 
 		const target = await resolveInternalTarget(href);
-		if (!target) failures.push(`${relativeFile}: broken internal link ${href}`);
+		if (!target) failures.push(`${relativeFile}: broken or unsafe internal link ${href}`);
 	}
 }
 
@@ -105,4 +128,6 @@ if (failures.length > 0) {
 	process.exit(1);
 }
 
-console.log(`Validated ${htmlFiles.length} HTML files: landmarks and internal links passed.`);
+console.log(
+	`Validated ${htmlFiles.length} HTML files and ${repositorySourceFiles.length} repository source files: privacy, landmarks, and internal links passed.`,
+);
