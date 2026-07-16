@@ -1,0 +1,185 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import ProfileShell from '../../layouts/ProfileShell.astro';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.data.slug },
+		props: { project },
+	}));
+}
+
+const { project } = Astro.props as { project: CollectionEntry<'projects'> };
+const data = project.data;
+
+const sections = [
+	{ title: { vi: 'Bối cảnh', en: 'Context' }, value: data.context },
+	{ title: { vi: 'Ràng buộc', en: 'Constraints' }, items: data.constraints },
+	{ title: { vi: 'Vai trò của tôi', en: 'My role' }, value: data.role },
+	{ title: { vi: 'Kiến trúc', en: 'Architecture' }, items: data.architecture },
+	{ title: { vi: 'Quyết định kỹ thuật', en: 'Technical decisions' }, items: data.decisions },
+	{ title: { vi: 'Kiểm thử và validation', en: 'Testing and validation' }, items: data.validation },
+	{ title: { vi: 'Observability', en: 'Observability' }, items: data.observability },
+	{ title: { vi: 'Bảo mật', en: 'Security considerations' }, items: data.security },
+	{ title: { vi: 'Failure modes', en: 'Failure modes' }, items: data.failureModes },
+	{ title: { vi: 'Kết quả hiện có', en: 'Current results' }, items: data.results },
+	{ title: { vi: 'Bài học', en: 'What I learned' }, items: data.learned },
+	{ title: { vi: 'Bước tiếp theo', en: 'What I would improve next' }, items: data.next },
+].filter((section) => section.value || (section.items && section.items.length > 0));
+---
+
+<ProfileShell
+	headTitle={`${data.title} | Nguyễn Văn Duy`}
+	description={data.value.en}
+	activeNav="portfolio"
+>
+	<article class="case-study" data-project-language-root>
+		<a class="back-link" href="/portfolio">
+			<span aria-hidden="true">←</span>
+			<span data-copy-lang="vi">Tất cả dự án</span>
+			<span data-copy-lang="en" hidden>All projects</span>
+		</a>
+
+		<header class="case-header">
+			<div class="case-heading">
+				<p class="case-kicker">
+					<span data-copy-lang="vi">Project case study</span>
+					<span data-copy-lang="en" hidden>Project case study</span>
+				</p>
+				<h1>{data.title}</h1>
+				<p class="case-value" data-copy-lang="vi">{data.value.vi}</p>
+				<p class="case-value" data-copy-lang="en" hidden>{data.value.en}</p>
+			</div>
+
+			<dl class="case-facts">
+				<div>
+					<dt><span data-copy-lang="vi">Trạng thái</span><span data-copy-lang="en" hidden>Status</span></dt>
+					<dd><span data-copy-lang="vi">{data.statusLabel.vi}</span><span data-copy-lang="en" hidden>{data.statusLabel.en}</span></dd>
+				</div>
+				<div>
+					<dt><span data-copy-lang="vi">Lĩnh vực</span><span data-copy-lang="en" hidden>Domain</span></dt>
+					<dd><span data-copy-lang="vi">{data.domain.vi}</span><span data-copy-lang="en" hidden>{data.domain.en}</span></dd>
+				</div>
+				<div>
+					<dt><span data-copy-lang="vi">Cập nhật</span><span data-copy-lang="en" hidden>Updated</span></dt>
+					<dd>{data.updated.toISOString().slice(0, 10)}</dd>
+				</div>
+			</dl>
+		</header>
+
+		<section class="problem-panel" aria-labelledby="problem-heading">
+			<p class="section-index">01 / PROBLEM</p>
+			<h2 id="problem-heading"><span data-copy-lang="vi">Vấn đề</span><span data-copy-lang="en" hidden>Problem</span></h2>
+			<p data-copy-lang="vi">{data.problem.vi}</p>
+			<p data-copy-lang="en" hidden>{data.problem.en}</p>
+		</section>
+
+		<div class="case-sections">
+			{sections.map((section, index) => (
+				<section class="case-section">
+					<p class="section-index">{String(index + 2).padStart(2, '0')}</p>
+					<h2>
+						<span data-copy-lang="vi">{section.title.vi}</span>
+						<span data-copy-lang="en" hidden>{section.title.en}</span>
+					</h2>
+					{section.value && (
+						<>
+							<p data-copy-lang="vi">{section.value.vi}</p>
+							<p data-copy-lang="en" hidden>{section.value.en}</p>
+						</>
+					)}
+					{section.items && section.items.length > 0 && (
+						<ul>
+							{section.items.map((item) => (
+								<li>
+									<span data-copy-lang="vi">{item.vi}</span>
+									<span data-copy-lang="en" hidden>{item.en}</span>
+								</li>
+							))}
+						</ul>
+					)}
+				</section>
+			))}
+		</div>
+
+		<section class="evidence-panel">
+			<div>
+				<p class="section-index">EVIDENCE</p>
+				<h2><span data-copy-lang="vi">Bằng chứng và liên kết</span><span data-copy-lang="en" hidden>Evidence and links</span></h2>
+				<p class="evidence-note" data-copy-lang="vi">Các liên kết chỉ trỏ tới artifact đang tồn tại. Công việc planned được ghi rõ là planned.</p>
+				<p class="evidence-note" data-copy-lang="en" hidden>Links point only to artifacts that currently exist. Planned work is explicitly labeled as planned.</p>
+			</div>
+			<div class="evidence-links">
+				{data.repoUrl && <a href={data.repoUrl} target="_blank" rel="noopener noreferrer">Repository ↗</a>}
+				{data.demoUrl && <a href={data.demoUrl} target="_blank" rel="noopener noreferrer">Demo ↗</a>}
+				{data.evidence.map((item) => item.href ? (
+					<a href={item.href} target="_blank" rel="noopener noreferrer">
+						<span data-copy-lang="vi">{item.label.vi}</span>
+						<span data-copy-lang="en" hidden>{item.label.en}</span>
+						<span aria-hidden="true"> ↗</span>
+					</a>
+				) : (
+					<span class="evidence-pending"><span data-copy-lang="vi">{item.label.vi}</span><span data-copy-lang="en" hidden>{item.label.en}</span></span>
+				))}
+			</div>
+		</section>
+
+		<footer class="case-footer">
+			<div class="tech-list" aria-label="Technology stack">
+				{data.stack.map((technology) => <span>{technology}</span>)}
+			</div>
+			<a href="/contact"><span data-copy-lang="vi">Trao đổi về dự án</span><span data-copy-lang="en" hidden>Discuss this project</span></a>
+		</footer>
+	</article>
+
+	<script is:inline>
+		(() => {
+			const root = document.querySelector('[data-project-language-root]');
+			if (!root) return;
+
+			const applyProjectLanguage = (lang) => {
+				root.querySelectorAll('[data-copy-lang]').forEach((element) => {
+					element.hidden = element.getAttribute('data-copy-lang') !== lang;
+				});
+			};
+
+			applyProjectLanguage(localStorage.getItem('siteLang') || 'vi');
+			window.addEventListener('control-room-lang', (event) => {
+				applyProjectLanguage(event.detail?.lang || 'vi');
+			});
+		})();
+	</script>
+
+	<style>
+		.case-study { display: grid; gap: 1.25rem; }
+		.back-link { width: fit-content; display: inline-flex; gap: 0.45rem; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 0.92rem; }
+		.back-link:hover, .back-link:focus-visible { color: var(--text-strong); }
+		.case-header, .problem-panel, .case-section, .evidence-panel, .case-footer { border: 1px solid var(--line); border-radius: 1rem; background: rgba(7, 15, 27, 0.74); }
+		.case-header { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(240px, 0.65fr); gap: 1.25rem; padding: clamp(1.25rem, 3vw, 2rem); background: linear-gradient(135deg, rgba(11, 27, 44, 0.98), rgba(7, 13, 23, 0.94)); }
+		.case-heading { display: grid; gap: 0.85rem; }
+		.case-kicker, .section-index, .case-facts dt { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+		.case-heading h1 { font-size: clamp(2.6rem, 7vw, 5.2rem); }
+		.case-value { max-width: 48rem; color: #d6e0ea; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.65; }
+		.case-facts { display: grid; gap: 0.7rem; margin: 0; align-content: start; }
+		.case-facts div { padding: 0.85rem; border: 1px solid rgba(255,255,255,0.07); border-radius: 0.75rem; background: rgba(255,255,255,0.025); }
+		.case-facts dd { margin: 0.25rem 0 0; color: var(--text-strong); line-height: 1.5; }
+		.problem-panel, .case-section { padding: clamp(1.1rem, 2.5vw, 1.5rem); }
+		.problem-panel { border-color: rgba(97, 213, 255, 0.24); background: linear-gradient(135deg, rgba(97, 213, 255, 0.08), rgba(255,255,255,0.02)); }
+		.problem-panel h2, .case-section h2, .evidence-panel h2 { margin: 0.45rem 0 0.75rem; font-size: clamp(1.35rem, 2.4vw, 1.9rem); }
+		.problem-panel p:last-child, .case-section p, .case-section li, .evidence-note { color: var(--text-body); line-height: 1.75; }
+		.case-sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+		.case-section ul { display: grid; gap: 0.65rem; margin: 0; padding-left: 1.15rem; }
+		.evidence-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 0.7fr); gap: 1rem; padding: clamp(1.1rem, 2.5vw, 1.5rem); }
+		.evidence-links { display: grid; gap: 0.65rem; align-content: start; }
+		.evidence-links a, .evidence-pending { display: block; padding: 0.75rem 0.85rem; border: 1px solid rgba(97,213,255,0.18); border-radius: 0.75rem; background: rgba(97,213,255,0.05); color: var(--text-strong); text-decoration: none; }
+		.evidence-pending { color: var(--text-muted); border-style: dashed; }
+		.case-footer { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding: 1rem 1.1rem; }
+		.case-footer > a { color: #61d5ff; font-weight: 700; }
+		.tech-list { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+		.tech-list span { padding: 0.28rem 0.6rem; border-radius: 999px; background: rgba(255,255,255,0.05); color: #c7d5e3; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.72rem; }
+		@media (max-width: 860px) { .case-header, .evidence-panel, .case-sections { grid-template-columns: 1fr; } }
+		@media (max-width: 560px) { .case-footer { align-items: flex-start; flex-direction: column; } }
+	</style>
+</ProfileShell>
