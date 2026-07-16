@@ -1,0 +1,37 @@
+name: One-time privacy patch
+
+on:
+  push:
+    branches:
+      - feat/portfolio-professional-upgrade
+    paths:
+      - .github/workflows/privacy-patch.yml
+      - scripts/remove-public-pii.mjs
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/portfolio-professional-upgrade
+
+      - name: Remove public PII from source
+        run: node scripts/remove-public-pii.mjs
+
+      - name: Commit privacy fix
+        run: |
+          if git diff --quiet; then
+            echo "No privacy patch required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/layouts/ProfileShell.astro src/data/site.ts
+          git commit -m "privacy: remove public phone and birthday"
+          git push origin HEAD:feat/portfolio-professional-upgrade
