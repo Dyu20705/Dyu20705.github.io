@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets';
-import { aboutHighlights, profile, serviceCards } from '../data/site';
+import MLOpsSystemMap from './MLOpsSystemMap.astro';
+import { aboutHighlights, serviceCards } from '../data/site';
 ---
 
 <section class="control-hero">
@@ -22,21 +22,8 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 		</div>
 	</div>
 
-	<div class="hero-visual" aria-label="MLOps pipeline visual">
-		<div class="portrait-node">
-			<Image class="hero-photo" src={profile.photo} alt="Ảnh chân dung Nguyễn Văn Duy" data-i18n-alt="profile.photo.alt" width={180} height={180} loading="eager" decoding="async" />
-			<span class="node-pulse"></span>
-		</div>
-		<svg class="pipeline-map" viewBox="0 0 420 260" fill="none" aria-hidden="true">
-			<path class="pipeline-line line-a" d="M38 68 H150 C186 68 190 120 226 120 H382" />
-			<path class="pipeline-line line-b" d="M38 190 H128 C178 190 178 146 228 146 H382" />
-			<path class="pipeline-line line-c" d="M210 34 V226" />
-			<g class="pipeline-node"><circle cx="38" cy="68" r="9" /><text x="54" y="73">DATA</text></g>
-			<g class="pipeline-node"><circle cx="210" cy="34" r="9" /><text x="226" y="39">TRAIN</text></g>
-			<g class="pipeline-node"><circle cx="382" cy="120" r="9" /><text x="274" y="113">REGISTRY</text></g>
-			<g class="pipeline-node"><circle cx="382" cy="190" r="9" /><text x="286" y="196">MONITOR</text></g>
-			<g class="pipeline-node"><circle cx="210" cy="226" r="9" /><text x="226" y="231">DEPLOY</text></g>
-		</svg>
+	<div class="hero-visual">
+		<MLOpsSystemMap />
 	</div>
 
 	<div class="system-status" aria-label="Current learning track">
@@ -156,8 +143,7 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 	.hero-track,
 	.status-head,
 	.system-status dt,
-	.system-status dd,
-	.pipeline-node text {
+	.system-status dd {
 		font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
 	}
 
@@ -256,74 +242,9 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 	}
 
 	.hero-visual {
-		min-height: 310px;
 		display: grid;
-		place-items: center;
-	}
-
-	.portrait-node {
-		position: relative;
-		z-index: 2;
-		width: 180px;
-		height: 180px;
-		border-radius: 2rem;
-	}
-
-	.hero-photo {
-		width: 180px;
-		height: 180px;
-		object-fit: cover;
-		object-position: center top;
-		border-radius: 2rem;
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		box-shadow: 0 22px 50px rgba(0, 0, 0, 0.44);
-	}
-
-	.node-pulse {
-		position: absolute;
-		inset: -14px;
-		z-index: -1;
-		border: 1px solid rgba(97, 213, 255, 0.32);
-		border-radius: 2.5rem;
-		animation: hero-pulse 2.8s ease-in-out infinite;
-	}
-
-	.pipeline-map {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		opacity: 0.86;
-	}
-
-	.pipeline-line {
-		stroke: rgba(97, 213, 255, 0.4);
-		stroke-width: 1.6;
-		stroke-linecap: round;
-		stroke-dasharray: 7 12;
-		animation: line-flow 6s linear infinite;
-	}
-
-	.line-b {
-		stroke: rgba(255, 190, 96, 0.42);
-		animation-duration: 7.5s;
-	}
-
-	.line-c {
-		stroke: rgba(149, 255, 170, 0.28);
-		animation-duration: 9s;
-	}
-
-	.pipeline-node circle {
-		fill: #081321;
-		stroke: #61d5ff;
-		stroke-width: 2;
-	}
-
-	.pipeline-node text {
-		fill: #c8d7e8;
-		font-size: 10px;
-		letter-spacing: 0.08em;
+		align-items: center;
+		min-width: 0;
 	}
 
 	.system-status {
@@ -350,16 +271,15 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 		display: inline-flex;
 		gap: 0.45rem;
 		align-items: center;
-		color: #95ffaa;
+		color: #f7c66b;
 	}
 
 	.status-light {
 		width: 8px;
 		height: 8px;
 		border-radius: 999px;
-		background: #95ffaa;
-		box-shadow: 0 0 0 5px rgba(149, 255, 170, 0.08), 0 0 18px rgba(149, 255, 170, 0.5);
-		animation: status-pulse 2.4s ease-in-out infinite;
+		background: #f7c66b;
+		box-shadow: 0 0 0 5px rgba(247, 198, 107, 0.08), 0 0 18px rgba(247, 198, 107, 0.42);
 	}
 
 	.system-status dl {
@@ -386,26 +306,6 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 		margin: 0.2rem 0 0;
 		color: #f3f7fb;
 		font-size: 0.82rem;
-	}
-
-	@keyframes line-flow {
-		to {
-			stroke-dashoffset: -76;
-		}
-	}
-
-	@keyframes hero-pulse {
-		50% {
-			transform: scale(1.035);
-			opacity: 0.68;
-		}
-	}
-
-	@keyframes status-pulse {
-		50% {
-			opacity: 0.55;
-			transform: scale(0.88);
-		}
 	}
 
 	.page-section + .page-section {
@@ -506,16 +406,14 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 		line-height: 1.8;
 	}
 
-	@media (max-width: 900px) {
+	@media (max-width: 1080px) {
 		.control-hero {
 			grid-template-columns: 1fr;
 			min-height: auto;
 		}
+	}
 
-		.hero-visual {
-			min-height: 260px;
-		}
-
+	@media (max-width: 900px) {
 		.system-status dl {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
@@ -538,20 +436,6 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 			font-size: clamp(2.65rem, 17vw, 4rem);
 		}
 
-		.hero-visual {
-			min-height: 220px;
-		}
-
-		.portrait-node,
-		.hero-photo {
-			width: 142px;
-			height: 142px;
-		}
-
-		.pipeline-node text {
-			display: none;
-		}
-
 		.hero-actions {
 			display: grid;
 			grid-template-columns: 1fr;
@@ -566,11 +450,4 @@ import { aboutHighlights, profile, serviceCards } from '../data/site';
 		}
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.pipeline-line,
-		.node-pulse,
-		.status-light {
-			animation: none;
-		}
-	}
 </style>

@@ -1,0 +1,364 @@
+---
+const stages = [
+	{ id: 'ingest', index: '01', label: 'INGEST', detail: 'Sources / events' },
+	{ id: 'validate', index: '02', label: 'VALIDATE', detail: 'Schema / quality' },
+	{ id: 'train', index: '03', label: 'TRAIN', detail: 'Repeatable runs' },
+	{ id: 'register', index: '04', label: 'REGISTER', detail: 'Versioned model' },
+	{ id: 'deploy', index: '05', label: 'DEPLOY', detail: 'Controlled release' },
+	{ id: 'monitor', index: '06', label: 'MONITOR', detail: 'Drift / reliability' },
+];
+---
+
+<section class="system-map" aria-label="MLOps system pipeline" data-i18n-aria-label="system.map.aria">
+	<header class="map-header">
+		<div>
+			<p class="map-eyebrow" data-i18n="system.map.eyebrow">MLOPS LIFECYCLE</p>
+			<h3 data-i18n="system.map.title">SYSTEM PIPELINE</h3>
+		</div>
+		<p class="map-state">
+			<span class="map-state-dot" aria-hidden="true"></span>
+			<span data-i18n="system.map.state">REFERENCE FLOW</span>
+		</p>
+	</header>
+
+	<div class="pipeline-canvas">
+		<svg class="pipeline-links" viewBox="0 0 600 320" fill="none" aria-hidden="true">
+			<defs>
+				<marker id="pipeline-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+					<path class="pipeline-arrow" d="M0 0 8 4 0 8Z" />
+				</marker>
+				<marker id="feedback-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+					<path class="feedback-arrow" d="M0 0 8 4 0 8Z" />
+				</marker>
+			</defs>
+			<path class="pipeline-link" d="M180 91H220" marker-end="url(#pipeline-arrow)" />
+			<path class="pipeline-link" d="M380 91H420" marker-end="url(#pipeline-arrow)" />
+			<path class="pipeline-link" d="M500 130V188" marker-end="url(#pipeline-arrow)" />
+			<path class="pipeline-link" d="M420 227H380" marker-end="url(#pipeline-arrow)" />
+			<path class="pipeline-link" d="M220 227H180" marker-end="url(#pipeline-arrow)" />
+			<path class="feedback-link" d="M100 266V294H8V91H20" marker-end="url(#feedback-arrow)" />
+		</svg>
+
+		<div class="pipeline-stages-wrap">
+			<span class="mobile-feedback-path" aria-hidden="true"></span>
+			<ol class="pipeline-stages">
+				{stages.map((stage, index) => (
+					<li class={`pipeline-stage stage-${stage.id}`}>
+						<span class="stage-index">{stage.index}</span>
+						<strong>{stage.label}</strong>
+						<small data-i18n={`system.map.stage.${stage.id}`}>{stage.detail}</small>
+						{index < stages.length - 1 && <span class="stage-connector" aria-hidden="true"></span>}
+					</li>
+				))}
+			</ol>
+		</div>
+
+		<p class="feedback-caption" data-i18n="system.map.feedback">MONITOR → INGEST · FEEDBACK</p>
+	</div>
+</section>
+
+<style>
+	.system-map {
+		width: 100%;
+		min-width: 0;
+		overflow: hidden;
+		border: 1px solid var(--line-strong);
+		border-radius: var(--radius-md);
+		background: var(--bg-panel);
+		box-shadow: var(--shadow-lg);
+	}
+
+	.map-header,
+	.map-state,
+	.pipeline-stage,
+	.feedback-caption {
+		font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+	}
+
+	.map-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.8rem;
+		padding: 0.82rem 0.95rem;
+		border-bottom: 1px solid var(--line);
+		background: var(--bg-elevated);
+	}
+
+	.map-eyebrow {
+		margin: 0 0 0.16rem;
+		color: var(--text-muted);
+		font-size: 0.58rem;
+		letter-spacing: 0.14em;
+	}
+
+	.map-header h3 {
+		margin: 0;
+		color: var(--text-strong);
+		font-size: 0.9rem;
+		letter-spacing: 0.09em;
+	}
+
+	.map-state {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin: 0;
+		color: var(--text-muted);
+		font-size: 0.58rem;
+		letter-spacing: 0.1em;
+		white-space: nowrap;
+	}
+
+	.map-state-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--text-accent);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--text-accent) 10%, transparent);
+	}
+
+	.pipeline-canvas {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 600 / 320;
+		background-image:
+			linear-gradient(color-mix(in srgb, var(--text-accent) 5%, transparent) 1px, transparent 1px),
+			linear-gradient(90deg, color-mix(in srgb, var(--text-accent) 4%, transparent) 1px, transparent 1px);
+		background-size: 24px 24px;
+	}
+
+	.pipeline-links {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+	}
+
+	.pipeline-link,
+	.feedback-link {
+		vector-effect: non-scaling-stroke;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.pipeline-link {
+		stroke: color-mix(in srgb, var(--text-accent) 72%, transparent);
+		stroke-width: 1.4;
+	}
+
+	.feedback-link {
+		stroke: color-mix(in srgb, var(--text-warm) 72%, transparent);
+		stroke-width: 1.25;
+	}
+
+	.pipeline-arrow {
+		fill: var(--text-accent);
+	}
+
+	.feedback-arrow {
+		fill: var(--text-warm);
+	}
+
+	.pipeline-stages {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.pipeline-stage {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 26.6667%;
+		height: 24.375%;
+		padding: 0.5rem 0.62rem;
+		border: 1px solid var(--line-strong);
+		border-radius: var(--radius-sm);
+		background: var(--bg-elevated);
+	}
+
+	.pipeline-stage strong {
+		color: var(--text-strong);
+		font-size: clamp(0.68rem, 1vw, 0.84rem);
+		letter-spacing: 0.08em;
+		line-height: 1.1;
+	}
+
+	.pipeline-stage small {
+		margin-top: 0.28rem;
+		color: var(--text-muted);
+		font-size: clamp(0.5rem, 0.72vw, 0.62rem);
+		line-height: 1.2;
+	}
+
+	.stage-index {
+		position: absolute;
+		top: 0.34rem;
+		right: 0.42rem;
+		color: var(--text-accent);
+		font-size: 0.52rem;
+		letter-spacing: 0.08em;
+	}
+
+	.stage-ingest,
+	.stage-monitor {
+		left: 3.3333%;
+	}
+
+	.stage-validate,
+	.stage-deploy {
+		left: 36.6667%;
+	}
+
+	.stage-train,
+	.stage-register {
+		left: 70%;
+	}
+
+	.stage-ingest,
+	.stage-validate,
+	.stage-train {
+		top: 16.25%;
+	}
+
+	.stage-register,
+	.stage-deploy,
+	.stage-monitor {
+		top: 58.75%;
+	}
+
+	.stage-register,
+	.stage-monitor {
+		border-color: var(--line-warm);
+	}
+
+	.stage-register .stage-index,
+	.stage-monitor .stage-index {
+		color: var(--text-warm);
+	}
+
+	.stage-connector,
+	.mobile-feedback-path {
+		display: none;
+	}
+
+	.feedback-caption {
+		position: absolute;
+		left: 17%;
+		bottom: 2.4%;
+		margin: 0;
+		padding: 0.16rem 0.38rem;
+		background: var(--bg);
+		color: var(--text-warm);
+		font-size: 0.5rem;
+		letter-spacing: 0.08em;
+	}
+
+	@media (max-width: 560px) {
+		.map-header {
+			align-items: flex-start;
+			padding: 0.75rem 0.82rem;
+		}
+
+		.map-state {
+			margin-top: 0.12rem;
+			font-size: 0.52rem;
+		}
+
+		.pipeline-canvas {
+			aspect-ratio: auto;
+			padding: 1rem 0.9rem 0.92rem 2.65rem;
+			background-size: 22px 22px;
+		}
+
+		.pipeline-links {
+			display: none;
+		}
+
+		.pipeline-stages-wrap {
+			position: relative;
+		}
+
+		.pipeline-stages {
+			display: grid;
+			gap: 1.35rem;
+		}
+
+		.pipeline-stage {
+			position: relative;
+			left: auto;
+			top: auto;
+			width: 100%;
+			height: auto;
+			min-height: 58px;
+			padding: 0.68rem 0.82rem;
+		}
+
+		.pipeline-stage strong {
+			font-size: 0.78rem;
+		}
+
+		.pipeline-stage small {
+			font-size: 0.6rem;
+		}
+
+		.stage-connector {
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			display: block;
+			width: 1px;
+			height: 1.35rem;
+			background: color-mix(in srgb, var(--text-accent) 62%, transparent);
+		}
+
+		.stage-connector::after {
+			content: '';
+			position: absolute;
+			left: 50%;
+			bottom: -1px;
+			width: 6px;
+			height: 6px;
+			border-right: 1px solid var(--text-accent);
+			border-bottom: 1px solid var(--text-accent);
+			transform: translateX(-50%) rotate(45deg);
+		}
+
+		.mobile-feedback-path {
+			position: absolute;
+			top: 29px;
+			bottom: 29px;
+			left: -1.72rem;
+			display: block;
+			width: 1.55rem;
+			border-top: 1px solid color-mix(in srgb, var(--text-warm) 66%, transparent);
+			border-bottom: 1px solid color-mix(in srgb, var(--text-warm) 66%, transparent);
+			border-left: 1px solid color-mix(in srgb, var(--text-warm) 66%, transparent);
+			border-radius: 0.72rem 0 0 0.72rem;
+		}
+
+		.mobile-feedback-path::after {
+			content: '';
+			position: absolute;
+			top: -3px;
+			right: -1px;
+			width: 6px;
+			height: 6px;
+			border-top: 1px solid var(--text-warm);
+			border-right: 1px solid var(--text-warm);
+			transform: rotate(45deg);
+		}
+
+		.feedback-caption {
+			position: static;
+			width: fit-content;
+			margin: 0.72rem 0 0;
+			padding: 0;
+			background: transparent;
+			font-size: 0.54rem;
+		}
+	}
+</style>
