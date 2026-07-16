@@ -1,31 +1,34 @@
 ---
 import { getCollection } from 'astro:content';
+import ProjectFingerprint from '../components/projects/ProjectFingerprint.astro';
 import ProfileShell from '../layouts/ProfileShell.astro';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.priority - b.data.priority);
+const projects = (await getCollection('projects'))
+	.filter((project) => project.data.featured)
+	.sort((a, b) => a.data.priority - b.data.priority);
 ---
 
 <ProfileShell
-	headTitle="Dự án MLOps và Platform | Nguyễn Văn Duy"
-	description="Selected MLOps, data engineering, CI/CD, and reliability projects presented as evidence-backed case studies."
+	headTitle="Dự án MLOps, Platform và Systems | Nguyễn Văn Duy"
+	description="Four selected owner-led projects presented with honest maturity, architecture, limitations, and inspectable evidence."
 	activeNav="portfolio"
 >
 	<div class="portfolio-page" data-project-language-root>
 		<header class="portfolio-header">
 			<div>
-				<p class="kicker">SELECTED ENGINEERING WORK</p>
-				<h2><span data-copy-lang="vi">Dự án có bằng chứng</span><span data-copy-lang="en" hidden>Evidence-backed projects</span></h2>
+				<p class="kicker">FOUR SELECTED SYSTEMS</p>
+				<h2><span data-copy-lang="vi">Tiềm năng rõ, bằng chứng trung thực</span><span data-copy-lang="en" hidden>High potential, honest evidence</span></h2>
 			</div>
 			<div class="intro">
-				<p data-copy-lang="vi">Các dự án được ưu tiên theo mức độ chứng minh tư duy MLOps, Platform và Reliability. Trạng thái, giới hạn và phần chưa kiểm chứng được ghi rõ.</p>
-				<p data-copy-lang="en" hidden>Projects are prioritized by how clearly they demonstrate MLOps, platform, and reliability thinking. Status, constraints, and unvalidated work remain explicit.</p>
+				<p data-copy-lang="vi">Bốn dự án do tôi trực tiếp định hướng được chọn theo giá trị đối với MLOps, Platform, Reliability và systems engineering. Mức trưởng thành khác nhau được hiển thị rõ; backlog hoặc ý tưởng không được trình bày như implementation.</p>
+				<p data-copy-lang="en" hidden>Four projects I directly shaped are selected for their MLOps, platform, reliability, and systems-engineering value. Their maturity differs intentionally; a backlog or concept is never presented as implementation.</p>
 			</div>
 		</header>
 
 		<p class="evidence-policy">
-			<strong><span data-copy-lang="vi">Nguyên tắc:</span><span data-copy-lang="en" hidden>Policy:</span></strong>
-			<span data-copy-lang="vi"> Không dùng số liệu, production scale, chứng chỉ hoặc demo chưa tồn tại.</span>
-			<span data-copy-lang="en" hidden> No invented metrics, production scale, certificates, or demos.</span>
+			<strong><span data-copy-lang="vi">Nguyên tắc tuyển chọn:</span><span data-copy-lang="en" hidden>Selection policy:</span></strong>
+			<span data-copy-lang="vi"> Chỉ đưa dự án tôi trực tiếp lên ý tưởng hoặc thực hiện. Không dùng Discord bot như bằng chứng chính khi quyền sở hữu ý tưởng/implementation không đủ rõ; không bịa metric, demo hay production state.</span>
+			<span data-copy-lang="en" hidden> Include only projects I directly conceived or implemented. A Discord bot is not used as primary evidence when idea/implementation ownership is unclear; metrics, demos, and production states are never invented.</span>
 		</p>
 
 		<section class="project-grid" aria-label="Selected projects">
@@ -42,22 +45,27 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.priorit
 							<span class={`status status-${data.status}`}><span data-copy-lang="vi">{data.statusLabel.vi}</span><span data-copy-lang="en" hidden>{data.statusLabel.en}</span></span>
 						</header>
 
+						<ProjectFingerprint slug={data.slug} title={data.title} />
+
 						<p class="value" data-copy-lang="vi">{data.value.vi}</p>
 						<p class="value" data-copy-lang="en" hidden>{data.value.en}</p>
 
 						<div class="proof">
 							<strong><span data-copy-lang="vi">Bằng chứng hiện có</span><span data-copy-lang="en" hidden>Current evidence</span></strong>
 							<ul>
-								<li><span data-copy-lang="vi">Problem, constraints và architecture có cấu trúc.</span><span data-copy-lang="en" hidden>Structured problem, constraints, and architecture.</span></li>
-								<li><span data-copy-lang="vi">Validation và failure modes tách khỏi claim hiện tại.</span><span data-copy-lang="en" hidden>Validation and failure modes are separated from current claims.</span></li>
-								{data.repoUrl && <li><span data-copy-lang="vi">Repository public có thể kiểm tra.</span><span data-copy-lang="en" hidden>Inspectable public repository.</span></li>}
+								{data.evidence.slice(0, 3).map((item) => (
+									<li class={item.href ? 'verified-link' : 'planned-evidence'}>
+										<span data-copy-lang="vi">{item.label.vi}</span>
+										<span data-copy-lang="en" hidden>{item.label.en}</span>
+									</li>
+								))}
 							</ul>
 						</div>
 
 						<footer>
-							<div class="stack" aria-label="Technology stack">{data.stack.slice(0, 5).map((technology) => <span>{technology}</span>)}</div>
+							<div class="stack" aria-label="Technology stack">{data.stack.slice(0, 6).map((technology) => <span>{technology}</span>)}</div>
 							<div class="links">
-								<a class="case-link" href={`/projects/${data.slug}/`}><span data-copy-lang="vi">Đọc case study</span><span data-copy-lang="en" hidden>Read case study</span> →</a>
+								<a class="case-link" href={`/projects/${data.slug}/`}><span data-copy-lang="vi">Kiểm tra case study</span><span data-copy-lang="en" hidden>Inspect case study</span> →</a>
 								{data.repoUrl && <a href={data.repoUrl} target="_blank" rel="noopener noreferrer">Repository ↗</a>}
 							</div>
 						</footer>
@@ -67,7 +75,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.priorit
 		</section>
 
 		<section class="portfolio-cta">
-			<div><p class="kicker">FROM PROBLEM TO PRODUCTION</p><h2><span data-copy-lang="vi">Xem CV hoặc trao đổi về một quyết định kỹ thuật.</span><span data-copy-lang="en" hidden>Review the CV or discuss an engineering decision.</span></h2></div>
+			<div><p class="kicker">RECRUITER → ENGINEER</p><h2><span data-copy-lang="vi">Đọc nhanh giá trị ở card, sau đó truy sâu architecture, validation, failure modes và evidence.</span><span data-copy-lang="en" hidden>Scan value on each card, then drill into architecture, validation, failure modes, and evidence.</span></h2></div>
 			<div class="cta-links"><a href="/resume"><span data-copy-lang="vi">Xem hồ sơ</span><span data-copy-lang="en" hidden>View resume</span></a><a href="/contact"><span data-copy-lang="vi">Liên hệ</span><span data-copy-lang="en" hidden>Contact</span></a></div>
 		</section>
 	</div>
@@ -86,30 +94,34 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.priorit
 		.portfolio-page { display: grid; gap: 1.2rem; }
 		.portfolio-header, .portfolio-cta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .75fr); gap: 1.4rem; align-items: end; padding: clamp(1.2rem, 3vw, 1.8rem); border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(135deg, rgba(13,30,48,.98), rgba(7,13,23,.94)); }
 		.kicker, .domain { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
-		.portfolio-header h2 { margin-top: .65rem; max-width: 11ch; font-size: clamp(2.4rem, 6vw, 4.7rem); }
+		.portfolio-header h2 { margin-top: .65rem; max-width: 13ch; font-size: clamp(2.2rem, 5.7vw, 4.5rem); }
 		.intro, .value { color: #c4d0dc; line-height: 1.75; }
-		.evidence-policy { padding: .9rem 1rem; border-left: 3px solid #61d5ff; background: rgba(97,213,255,.06); }
+		.evidence-policy { padding: .9rem 1rem; border-left: 3px solid #61d5ff; background: rgba(97,213,255,.06); line-height: 1.65; }
 		.project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 		.project-card { display: grid; gap: 1rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(145deg, rgba(10,23,37,.96), rgba(7,12,22,.94)); box-shadow: 0 18px 42px rgba(0,0,0,.22); }
 		.signal { display: flex; gap: .7rem; align-items: center; color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .7rem; }
 		.signal i { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(97,213,255,.5), transparent); }
 		.project-card > header { display: flex; justify-content: space-between; gap: .8rem; align-items: flex-start; }
-		.project-card h3 { margin-top: .38rem; font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+		.project-card h3 { margin-top: .38rem; font-size: clamp(1.35rem, 2.4vw, 1.9rem); }
 		.project-card h3 a { color: var(--text-strong); text-decoration: none; }
 		.project-card h3 a:hover, .project-card h3 a:focus-visible { color: #8ee7ff; }
 		.status { flex: 0 0 auto; max-width: 13rem; padding: .34rem .58rem; border: 1px solid rgba(255,255,255,.1); border-radius: 999px; color: #d2deea; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .66rem; line-height: 1.35; text-align: center; }
 		.status-work-in-progress { border-color: rgba(247,198,107,.32); color: #f7d9a1; }
 		.status-research { border-color: rgba(160,132,255,.3); color: #c9baff; }
+		.status-prototype { border-color: rgba(97,213,255,.34); color: #9be8ff; }
 		.proof { padding: .8rem; border: 1px solid rgba(255,255,255,.07); border-radius: .75rem; background: rgba(255,255,255,.022); }
 		.proof strong { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
 		.proof ul { display: grid; gap: .42rem; margin: .65rem 0 0; padding-left: 1.05rem; color: var(--text-muted); font-size: .88rem; line-height: 1.55; }
+		.proof .verified-link::marker { color: #61d5ff; }
+		.proof .planned-evidence { color: #aeb9c5; font-style: italic; }
+		.proof .planned-evidence::marker { color: #f7c66b; }
 		.project-card footer { display: grid; gap: .8rem; margin-top: auto; }
 		.stack, .links, .cta-links { display: flex; flex-wrap: wrap; gap: .5rem; }
 		.stack span { padding: .24rem .52rem; border-radius: 999px; background: rgba(255,255,255,.05); color: #c8d5e1; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .66rem; }
 		.links a { color: #c4d4e3; font-weight: 700; font-size: .88rem; }
 		.links .case-link { color: #61d5ff; }
 		.portfolio-cta { align-items: center; background: linear-gradient(135deg, rgba(97,213,255,.08), rgba(255,255,255,.02)); }
-		.portfolio-cta h2 { margin-top: .45rem; max-width: 22ch; font-size: clamp(1.35rem, 3vw, 2rem); }
+		.portfolio-cta h2 { margin-top: .45rem; max-width: 28ch; font-size: clamp(1.25rem, 2.7vw, 1.9rem); }
 		.cta-links a { min-height: 44px; display: inline-flex; align-items: center; padding: .62rem .88rem; border: 1px solid rgba(97,213,255,.22); border-radius: 999px; text-decoration: none; font-weight: 700; }
 		@media (max-width: 960px) { .portfolio-header, .portfolio-cta, .project-grid { grid-template-columns: 1fr; } .portfolio-header h2 { max-width: none; } }
 		@media (max-width: 650px) { .project-card > header { flex-direction: column; } .status { max-width: none; text-align: left; } }
