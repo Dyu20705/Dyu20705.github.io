@@ -10,136 +10,108 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.priorit
 	description="Selected MLOps, data engineering, CI/CD, and reliability projects presented as evidence-backed case studies."
 	activeNav="portfolio"
 >
-	<main class="portfolio-page" data-project-language-root>
+	<div class="portfolio-page" data-project-language-root>
 		<header class="portfolio-header">
 			<div>
-				<p class="portfolio-kicker">SELECTED ENGINEERING WORK</p>
-				<h1><span data-copy-lang="vi">Dự án có bằng chứng</span><span data-copy-lang="en" hidden>Evidence-backed projects</span></h1>
+				<p class="kicker">SELECTED ENGINEERING WORK</p>
+				<h2><span data-copy-lang="vi">Dự án có bằng chứng</span><span data-copy-lang="en" hidden>Evidence-backed projects</span></h2>
 			</div>
-			<div class="portfolio-intro">
-				<p data-copy-lang="vi">
-					Các dự án được ưu tiên theo mức độ chứng minh tư duy MLOps, Platform và Reliability. Trạng thái, giới hạn và phần chưa kiểm chứng được ghi rõ.
-				</p>
-				<p data-copy-lang="en" hidden>
-					Projects are prioritized by how clearly they demonstrate MLOps, platform, and reliability thinking. Status, constraints, and unvalidated work remain explicit.
-				</p>
+			<div class="intro">
+				<p data-copy-lang="vi">Các dự án được ưu tiên theo mức độ chứng minh tư duy MLOps, Platform và Reliability. Trạng thái, giới hạn và phần chưa kiểm chứng được ghi rõ.</p>
+				<p data-copy-lang="en" hidden>Projects are prioritized by how clearly they demonstrate MLOps, platform, and reliability thinking. Status, constraints, and unvalidated work remain explicit.</p>
 			</div>
 		</header>
 
-		<section class="portfolio-notice" aria-label="Portfolio evidence policy">
+		<p class="evidence-policy">
 			<strong><span data-copy-lang="vi">Nguyên tắc:</span><span data-copy-lang="en" hidden>Policy:</span></strong>
 			<span data-copy-lang="vi"> Không dùng số liệu, production scale, chứng chỉ hoặc demo chưa tồn tại.</span>
 			<span data-copy-lang="en" hidden> No invented metrics, production scale, certificates, or demos.</span>
-		</section>
+		</p>
 
 		<section class="project-grid" aria-label="Selected projects">
 			{projects.map((project, index) => {
 				const data = project.data;
 				return (
 					<article class="project-card">
-						<div class="project-signal" aria-hidden="true">
-							<span>{String(index + 1).padStart(2, '0')}</span>
-							<div class="signal-line"><i></i><i></i><i></i></div>
-						</div>
-						<div class="project-card-header">
+						<div class="signal" aria-hidden="true"><span>{String(index + 1).padStart(2, '0')}</span><i></i></div>
+						<header>
 							<div>
-								<p class="project-domain"><span data-copy-lang="vi">{data.domain.vi}</span><span data-copy-lang="en" hidden>{data.domain.en}</span></p>
-								<h2><a href={`/projects/${data.slug}/`}>{data.title}</a></h2>
+								<p class="domain"><span data-copy-lang="vi">{data.domain.vi}</span><span data-copy-lang="en" hidden>{data.domain.en}</span></p>
+								<h3><a href={`/projects/${data.slug}/`}>{data.title}</a></h3>
 							</div>
 							<span class={`status status-${data.status}`}><span data-copy-lang="vi">{data.statusLabel.vi}</span><span data-copy-lang="en" hidden>{data.statusLabel.en}</span></span>
-						</div>
+						</header>
 
-						<p class="project-value" data-copy-lang="vi">{data.value.vi}</p>
-						<p class="project-value" data-copy-lang="en" hidden>{data.value.en}</p>
+						<p class="value" data-copy-lang="vi">{data.value.vi}</p>
+						<p class="value" data-copy-lang="en" hidden>{data.value.en}</p>
 
-						<div class="project-proof">
-							<h3><span data-copy-lang="vi">Bằng chứng hiện có</span><span data-copy-lang="en" hidden>Current evidence</span></h3>
+						<div class="proof">
+							<strong><span data-copy-lang="vi">Bằng chứng hiện có</span><span data-copy-lang="en" hidden>Current evidence</span></strong>
 							<ul>
-								<li><span data-copy-lang="vi">Problem, constraints và architecture được mô tả có cấu trúc.</span><span data-copy-lang="en" hidden>Structured problem, constraints, and architecture.</span></li>
-								<li><span data-copy-lang="vi">Validation, failure modes và next steps được tách khỏi claim hiện tại.</span><span data-copy-lang="en" hidden>Validation, failure modes, and next steps are separated from current claims.</span></li>
+								<li><span data-copy-lang="vi">Problem, constraints và architecture có cấu trúc.</span><span data-copy-lang="en" hidden>Structured problem, constraints, and architecture.</span></li>
+								<li><span data-copy-lang="vi">Validation và failure modes tách khỏi claim hiện tại.</span><span data-copy-lang="en" hidden>Validation and failure modes are separated from current claims.</span></li>
 								{data.repoUrl && <li><span data-copy-lang="vi">Repository public có thể kiểm tra.</span><span data-copy-lang="en" hidden>Inspectable public repository.</span></li>}
 							</ul>
 						</div>
 
-						<div class="project-footer">
-							<div class="stack" aria-label="Technology stack">
-								{data.stack.slice(0, 5).map((technology) => <span>{technology}</span>)}
-							</div>
-							<div class="project-links">
+						<footer>
+							<div class="stack" aria-label="Technology stack">{data.stack.slice(0, 5).map((technology) => <span>{technology}</span>)}</div>
+							<div class="links">
 								<a class="case-link" href={`/projects/${data.slug}/`}><span data-copy-lang="vi">Đọc case study</span><span data-copy-lang="en" hidden>Read case study</span> →</a>
 								{data.repoUrl && <a href={data.repoUrl} target="_blank" rel="noopener noreferrer">Repository ↗</a>}
 							</div>
-						</div>
+						</footer>
 					</article>
 				);
 			})}
 		</section>
 
 		<section class="portfolio-cta">
-			<div>
-				<p class="portfolio-kicker">FROM PROBLEM TO PRODUCTION</p>
-				<h2><span data-copy-lang="vi">Tìm nhanh CV hoặc trao đổi về một quyết định kỹ thuật.</span><span data-copy-lang="en" hidden>Review the CV or discuss an engineering decision.</span></h2>
-			</div>
-			<div class="cta-links">
-				<a href="/resume"><span data-copy-lang="vi">Xem hồ sơ</span><span data-copy-lang="en" hidden>View resume</span></a>
-				<a href="/contact"><span data-copy-lang="vi">Liên hệ</span><span data-copy-lang="en" hidden>Contact</span></a>
-			</div>
+			<div><p class="kicker">FROM PROBLEM TO PRODUCTION</p><h2><span data-copy-lang="vi">Xem CV hoặc trao đổi về một quyết định kỹ thuật.</span><span data-copy-lang="en" hidden>Review the CV or discuss an engineering decision.</span></h2></div>
+			<div class="cta-links"><a href="/resume"><span data-copy-lang="vi">Xem hồ sơ</span><span data-copy-lang="en" hidden>View resume</span></a><a href="/contact"><span data-copy-lang="vi">Liên hệ</span><span data-copy-lang="en" hidden>Contact</span></a></div>
 		</section>
-	</main>
+	</div>
 
 	<script is:inline>
 		(() => {
 			const root = document.querySelector('[data-project-language-root]');
 			if (!root) return;
-			const applyProjectLanguage = (lang) => {
-				root.querySelectorAll('[data-copy-lang]').forEach((element) => {
-					element.hidden = element.getAttribute('data-copy-lang') !== lang;
-				});
-			};
-			applyProjectLanguage(localStorage.getItem('siteLang') || 'vi');
-			window.addEventListener('control-room-lang', (event) => applyProjectLanguage(event.detail?.lang || 'vi'));
+			const applyLanguage = (lang) => root.querySelectorAll('[data-copy-lang]').forEach((element) => { element.hidden = element.getAttribute('data-copy-lang') !== lang; });
+			applyLanguage(localStorage.getItem('siteLang') || 'vi');
+			window.addEventListener('control-room-lang', (event) => applyLanguage(event.detail?.lang || 'vi'));
 		})();
 	</script>
 
 	<style>
-		.portfolio-page { display: grid; gap: 1.25rem; }
-		.portfolio-header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr); gap: 1.5rem; align-items: end; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--line); border-radius: 1.1rem; background: linear-gradient(135deg, rgba(13, 30, 48, 0.98), rgba(7, 13, 23, 0.94)); }
-		.portfolio-kicker { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; }
-		.portfolio-header h1 { margin-top: 0.7rem; font-size: clamp(2.5rem, 7vw, 5rem); max-width: 10ch; }
-		.portfolio-intro { color: #c4d0dc; line-height: 1.75; font-size: 1.02rem; }
-		.portfolio-notice { padding: 0.9rem 1rem; border-left: 3px solid #61d5ff; background: rgba(97, 213, 255, 0.06); color: var(--text-body); }
+		.portfolio-page { display: grid; gap: 1.2rem; }
+		.portfolio-header, .portfolio-cta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .75fr); gap: 1.4rem; align-items: end; padding: clamp(1.2rem, 3vw, 1.8rem); border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(135deg, rgba(13,30,48,.98), rgba(7,13,23,.94)); }
+		.kicker, .domain { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+		.portfolio-header h2 { margin-top: .65rem; max-width: 11ch; font-size: clamp(2.4rem, 6vw, 4.7rem); }
+		.intro, .value { color: #c4d0dc; line-height: 1.75; }
+		.evidence-policy { padding: .9rem 1rem; border-left: 3px solid #61d5ff; background: rgba(97,213,255,.06); }
 		.project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-		.project-card { display: grid; gap: 1rem; padding: 1.15rem; border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(145deg, rgba(10, 23, 37, 0.96), rgba(7, 12, 22, 0.94)); box-shadow: 0 18px 42px rgba(0,0,0,0.22); }
-		.project-card:focus-within { border-color: rgba(97, 213, 255, 0.38); }
-		.project-signal { display: flex; justify-content: space-between; gap: 1rem; align-items: center; color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.72rem; }
-		.signal-line { display: flex; gap: 0.32rem; align-items: center; flex: 1; justify-content: flex-end; }
-		.signal-line::before { content: ''; width: min(8rem, 55%); height: 1px; background: linear-gradient(90deg, transparent, rgba(97,213,255,0.48)); }
-		.signal-line i { width: 6px; height: 6px; border-radius: 50%; background: #61d5ff; opacity: 0.35; }
-		.signal-line i:last-child { opacity: 1; }
-		.project-card-header { display: flex; justify-content: space-between; gap: 0.9rem; align-items: flex-start; }
-		.project-domain { color: #9aabbc; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; }
-		.project-card h2 { margin-top: 0.42rem; font-size: clamp(1.45rem, 2.5vw, 2rem); }
-		.project-card h2 a { color: var(--text-strong); text-decoration: none; }
-		.project-card h2 a:hover, .project-card h2 a:focus-visible { color: #8ee7ff; }
-		.status { flex: 0 0 auto; max-width: 13rem; padding: 0.34rem 0.62rem; border: 1px solid rgba(255,255,255,0.09); border-radius: 999px; background: rgba(255,255,255,0.04); color: #d2deea; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.68rem; line-height: 1.35; text-align: center; }
-		.status-prototype { border-color: rgba(97,213,255,0.24); }
-		.status-work-in-progress { border-color: rgba(247,198,107,0.3); color: #f7d9a1; }
-		.status-research { border-color: rgba(160,132,255,0.28); color: #c9baff; }
-		.project-value { color: #c2cfdb; line-height: 1.75; }
-		.project-proof { padding: 0.85rem; border: 1px solid rgba(255,255,255,0.07); border-radius: 0.75rem; background: rgba(255,255,255,0.022); }
-		.project-proof h3 { font-size: 0.78rem; color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.08em; text-transform: uppercase; }
-		.project-proof ul { display: grid; gap: 0.45rem; margin: 0.7rem 0 0; padding-left: 1.1rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.55; }
-		.project-footer { display: grid; gap: 0.85rem; margin-top: auto; }
-		.stack { display: flex; flex-wrap: wrap; gap: 0.42rem; }
-		.stack span { padding: 0.25rem 0.55rem; border-radius: 999px; background: rgba(255,255,255,0.05); color: #c8d5e1; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.68rem; }
-		.project-links { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-		.project-links a { color: #c4d4e3; font-weight: 700; font-size: 0.9rem; }
-		.project-links .case-link { color: #61d5ff; }
-		.portfolio-cta { display: flex; justify-content: space-between; gap: 1.5rem; align-items: center; padding: clamp(1.2rem, 3vw, 1.7rem); border: 1px solid rgba(97,213,255,0.2); border-radius: 1rem; background: linear-gradient(135deg, rgba(97,213,255,0.08), rgba(255,255,255,0.02)); }
-		.portfolio-cta h2 { margin-top: 0.5rem; max-width: 22ch; font-size: clamp(1.4rem, 3vw, 2.1rem); }
-		.cta-links { display: flex; flex-wrap: wrap; gap: 0.65rem; }
-		.cta-links a { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0.65rem 0.9rem; border: 1px solid rgba(97,213,255,0.22); border-radius: 999px; color: var(--text-strong); text-decoration: none; font-weight: 700; }
-		@media (max-width: 960px) { .portfolio-header, .project-grid { grid-template-columns: 1fr; } .portfolio-header h1 { max-width: none; } }
-		@media (max-width: 650px) { .project-card-header, .portfolio-cta { align-items: flex-start; flex-direction: column; } .status { max-width: none; text-align: left; } }
+		.project-card { display: grid; gap: 1rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(145deg, rgba(10,23,37,.96), rgba(7,12,22,.94)); box-shadow: 0 18px 42px rgba(0,0,0,.22); }
+		.signal { display: flex; gap: .7rem; align-items: center; color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .7rem; }
+		.signal i { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(97,213,255,.5), transparent); }
+		.project-card > header { display: flex; justify-content: space-between; gap: .8rem; align-items: flex-start; }
+		.project-card h3 { margin-top: .38rem; font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+		.project-card h3 a { color: var(--text-strong); text-decoration: none; }
+		.project-card h3 a:hover, .project-card h3 a:focus-visible { color: #8ee7ff; }
+		.status { flex: 0 0 auto; max-width: 13rem; padding: .34rem .58rem; border: 1px solid rgba(255,255,255,.1); border-radius: 999px; color: #d2deea; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .66rem; line-height: 1.35; text-align: center; }
+		.status-work-in-progress { border-color: rgba(247,198,107,.32); color: #f7d9a1; }
+		.status-research { border-color: rgba(160,132,255,.3); color: #c9baff; }
+		.proof { padding: .8rem; border: 1px solid rgba(255,255,255,.07); border-radius: .75rem; background: rgba(255,255,255,.022); }
+		.proof strong { color: #61d5ff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; }
+		.proof ul { display: grid; gap: .42rem; margin: .65rem 0 0; padding-left: 1.05rem; color: var(--text-muted); font-size: .88rem; line-height: 1.55; }
+		.project-card footer { display: grid; gap: .8rem; margin-top: auto; }
+		.stack, .links, .cta-links { display: flex; flex-wrap: wrap; gap: .5rem; }
+		.stack span { padding: .24rem .52rem; border-radius: 999px; background: rgba(255,255,255,.05); color: #c8d5e1; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .66rem; }
+		.links a { color: #c4d4e3; font-weight: 700; font-size: .88rem; }
+		.links .case-link { color: #61d5ff; }
+		.portfolio-cta { align-items: center; background: linear-gradient(135deg, rgba(97,213,255,.08), rgba(255,255,255,.02)); }
+		.portfolio-cta h2 { margin-top: .45rem; max-width: 22ch; font-size: clamp(1.35rem, 3vw, 2rem); }
+		.cta-links a { min-height: 44px; display: inline-flex; align-items: center; padding: .62rem .88rem; border: 1px solid rgba(97,213,255,.22); border-radius: 999px; text-decoration: none; font-weight: 700; }
+		@media (max-width: 960px) { .portfolio-header, .portfolio-cta, .project-grid { grid-template-columns: 1fr; } .portfolio-header h2 { max-width: none; } }
+		@media (max-width: 650px) { .project-card > header { flex-direction: column; } .status { max-width: none; text-align: left; } }
 	</style>
 </ProfileShell>
