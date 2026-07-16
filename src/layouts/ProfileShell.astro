@@ -30,7 +30,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 			.shell {
 				width: min(1360px, calc(100% - 2rem));
 				margin: 0 auto;
-				padding: 5.2rem 0 3rem;
+				padding: 4.6rem 0 3rem;
 				display: grid;
 				grid-template-columns: 270px minmax(0, 1fr);
 				gap: 1.2rem;
@@ -318,42 +318,103 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				right: 18px;
 				z-index: 80;
 				display: flex;
-				gap: 0.5rem;
+				gap: 0.2rem;
 				align-items: center;
-				padding: 0.42rem;
-				border-radius: 999px;
+				padding: 0.28rem;
+				border-radius: 0.9rem;
 				border: 1px solid rgba(255, 255, 255, 0.12);
-				background: rgba(14, 18, 26, 0.94);
-				box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+				background: rgba(9, 14, 22, 0.9);
+				box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
 				backdrop-filter: blur(16px);
 			}
 
 			.control-button {
-				min-width: 46px;
-				min-height: 38px;
-				padding: 0.42rem 0.72rem;
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				border-radius: 999px;
-				background: rgba(255, 255, 255, 0.04);
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.34rem;
+				min-width: 34px;
+				height: 34px;
+				padding: 0 0.52rem;
+				border: 1px solid transparent;
+				border-radius: 0.68rem;
+				background: transparent;
 				color: var(--text-strong);
 				font: inherit;
-				font-size: 0.82rem;
-				font-weight: 700;
+				font-size: 0.72rem;
+				font-weight: 650;
 				cursor: pointer;
-				transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+				transition: border-color var(--motion-fast) ease, background-color var(--motion-fast) ease, color var(--motion-fast) ease;
 			}
 
 			.control-button:hover,
-			.control-button:focus-visible,
-			.control-button[aria-pressed='true'] {
-				transform: translateY(-1px);
-				border-color: rgba(97, 213, 255, 0.32);
-				background: rgba(97, 213, 255, 0.12);
+			.control-button:focus-visible {
+				border-color: rgba(97, 213, 255, 0.3);
+				background: rgba(97, 213, 255, 0.09);
 			}
 
-			.control-button kbd {
+			.control-button:focus-visible {
+				outline: 2px solid var(--text-accent);
+				outline-offset: 2px;
+				box-shadow: var(--focus-ring);
+			}
+
+			.theme-switch {
+				width: 34px;
+				padding: 0;
+			}
+
+			.bulb-icon,
+			.globe-icon {
+				display: block;
+				flex: 0 0 auto;
+			}
+
+			.bulb-glass,
+			.bulb-rays,
+			.bulb-base {
+				transform-origin: center;
+				transition: fill var(--motion-base) ease, opacity var(--motion-base) ease, stroke var(--motion-base) ease, transform var(--motion-base) ease;
+			}
+
+			.bulb-rays {
+				opacity: 0;
+				transform: scale(0.82);
+			}
+
+			.theme-switch[aria-pressed='true'] {
+				border-color: rgba(255, 206, 111, 0.28);
+				background: rgba(255, 196, 82, 0.1);
+				color: #ffd57a;
+			}
+
+			.theme-switch[aria-pressed='true'] .bulb-glass {
+				fill: rgba(255, 202, 94, 0.22);
+				filter: drop-shadow(0 0 5px rgba(255, 202, 94, 0.42));
+			}
+
+			.theme-switch[aria-pressed='true'] .bulb-rays {
+				opacity: 1;
+				transform: scale(1);
+			}
+
+			.language-switch {
+				color: #738397;
 				font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-				font-size: 0.74rem;
+				letter-spacing: 0.04em;
+			}
+
+			.language-switch .lang-option {
+				transition: color var(--motion-fast) ease;
+			}
+
+			.language-switch[data-active-lang='vi'] [data-lang-option='vi'],
+			.language-switch[data-active-lang='en'] [data-lang-option='en'] {
+				color: #dff7ff;
+			}
+
+			.lang-separator {
+				color: #4e5f72;
 			}
 
 			.command-dialog[hidden] {
@@ -531,6 +592,22 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				background: rgba(255, 255, 255, 0.92);
 			}
 
+			:global(body[data-theme='light']) .theme-switch[aria-pressed='true'] {
+				border-color: rgba(138, 90, 0, 0.28);
+				background: rgba(180, 112, 0, 0.1);
+				color: #7a5000;
+			}
+
+			:global(body[data-theme='light']) .theme-switch[aria-pressed='true'] .bulb-glass {
+				fill: rgba(214, 143, 0, 0.16);
+				filter: drop-shadow(0 0 4px rgba(138, 90, 0, 0.22));
+			}
+
+			:global(body[data-theme='light']) .language-switch[data-active-lang='vi'] [data-lang-option='vi'],
+			:global(body[data-theme='light']) .language-switch[data-active-lang='en'] [data-lang-option='en'] {
+				color: #0e5676;
+			}
+
 			:global(body.user-reduce-motion) *,
 			:global(body.user-reduce-motion) *::before,
 			:global(body.user-reduce-motion) *::after {
@@ -543,7 +620,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 			@media (max-width: 1080px) {
 				.shell {
 					grid-template-columns: 1fr;
-					padding-top: 5.6rem;
+					padding-top: 4.8rem;
 				}
 
 				.sidebar {
@@ -554,7 +631,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 			@media (max-width: 720px) {
 				.shell {
 					width: calc(100% - 1rem);
-					padding-top: 5.8rem;
+					padding-top: 4.5rem;
 				}
 
 				.page-body {
@@ -572,19 +649,9 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				}
 
 				.control-cluster {
-					left: 0.5rem;
+					top: 0.5rem;
 					right: 0.5rem;
-					justify-content: space-between;
-					border-radius: 1rem;
-				}
-
-				.control-button {
-					min-width: 42px;
-					padding-inline: 0.62rem;
-				}
-
-				.command-button-label {
-					display: none;
+					border-radius: 0.82rem;
 				}
 			}
 
@@ -604,14 +671,25 @@ const navMeta: Record<string, { index: string; system: string }> = {
 	<body>
 		<div class="control-room-bg" aria-hidden="true"></div>
 		<a class="skip-link" href="#page-content" data-i18n="skip.content">Skip to content</a>
-		<div class="control-cluster" aria-label="Control room settings">
-			<button class="control-button" id="command-open" type="button" aria-label="Open command palette" data-i18n-aria-label="command.open.aria">
-				<span class="command-button-label" data-i18n="command.open">Command</span> <kbd>Ctrl K</kbd>
+		<div class="control-cluster" aria-label="Interface utilities" data-i18n-aria-label="controls.aria">
+			<button class="control-button theme-switch" id="theme-toggle" type="button" aria-pressed="false" aria-label="Turn on the light and use light theme" title="Turn on the light and use light theme">
+				<svg class="bulb-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+					<g class="bulb-rays" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+						<path d="M12 1v2M4.2 4.2l1.4 1.4M19.8 4.2l-1.4 1.4M2 12h2M20 12h2" />
+					</g>
+					<path class="bulb-glass" d="M7.2 11.3a4.8 4.8 0 1 1 9.6 0c0 1.8-.8 2.8-1.8 3.9-.5.5-.8 1.1-.8 1.8H9.8c0-.7-.3-1.3-.8-1.8-1-1.1-1.8-2.1-1.8-3.9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" />
+					<path class="bulb-base" d="M9.7 20h4.6M10.2 17h3.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+				</svg>
 			</button>
-			<button class="control-button" id="sound-toggle" type="button" aria-pressed="false" aria-label="Enable sound" data-i18n-aria-label="sound.toggle.aria" data-i18n="sound.off">Sound Off</button>
-			<button class="control-button" id="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme" data-i18n-aria-label="theme.toggle.aria" data-i18n="theme.dark">Dark</button>
-			<button class="control-button" id="motion-toggle" type="button" aria-pressed="false" aria-label="Reduce motion" data-i18n-aria-label="motion.toggle.aria" data-i18n="motion.full">Motion</button>
-			<button class="control-button" id="lang-float" type="button" aria-label="Toggle language" data-i18n-aria-label="language.toggle.aria">EN</button>
+			<button class="control-button language-switch" id="lang-float" type="button" aria-label="Switch language to English" title="Switch language to English" data-active-lang="vi">
+				<svg class="globe-icon" width="15" height="15" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+					<circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.3" />
+					<path d="M2.3 9h13.4M9 2c2 1.9 3 4.2 3 7s-1 5.1-3 7c-2-1.9-3-4.2-3-7s1-5.1 3-7Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+				</svg>
+				<span class="lang-option" data-lang-option="vi" aria-hidden="true">VI</span>
+				<span class="lang-separator" aria-hidden="true">/</span>
+				<span class="lang-option" data-lang-option="en" aria-hidden="true">EN</span>
+			</button>
 		</div>
 		<main class="shell" id="page-content" tabindex="-1">
 			<aside class="sidebar">
@@ -732,6 +810,10 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						<span><strong data-i18n="command.sound">Toggle sound</strong><small data-i18n="command.sound.desc">Opt-in soft interface tones</small></span>
 						<span class="command-shortcut">SOUND</span>
 					</button>
+					<button class="command-item" type="button" data-command="toggle:motion" data-keywords="motion animation reduced accessibility">
+						<span><strong data-i18n="command.motion">Reduce motion</strong><small data-i18n="command.motion.desc">Limit interface animation</small></span>
+						<span class="command-shortcut">MOTION</span>
+					</button>
 					<p class="command-group" data-i18n="command.group.system">System</p>
 					<button class="command-item" type="button" data-command="status" data-keywords="status aegis aura help">
 						<span><strong data-i18n="command.status">Show learning track</strong><small data-i18n="command.status.desc">Current learning focus</small></span>
@@ -763,6 +845,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'nav.gallery.system': 'Archive',
 						'nav.cv.system': 'Resume File',
 						'skip.content': 'Bỏ qua đến nội dung',
+						'controls.aria': 'Tiện ích giao diện',
 						'page.about.title': 'Về tôi',
 						'page.resume.title': 'Hồ sơ',
 						'page.portfolio.title': 'Dự án',
@@ -940,6 +1023,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.theme.desc': 'Control room tối hoặc sáng',
 						'command.sound': 'Bật/tắt âm thanh',
 						'command.sound.desc': 'Âm UI mềm, chỉ bật khi cho phép',
+						'command.motion': 'Giảm chuyển động',
+						'command.motion.desc': 'Hạn chế animation của giao diện',
 						'command.status': 'Xem learning track',
 						'command.status.desc': 'Trọng tâm học tập hiện tại',
 						'sound.off': 'Âm tắt',
@@ -950,10 +1035,14 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'theme.dark': 'Tối',
 						'theme.light': 'Sáng',
 						'theme.toggle.aria': 'Đổi dark hoặc light theme',
+						'theme.to.light.aria': 'Bật đèn và chuyển sang giao diện sáng',
+						'theme.to.dark.aria': 'Tắt đèn và chuyển sang giao diện tối',
 						'motion.full': 'Motion',
 						'motion.reduced': 'Giảm motion',
 						'motion.toggle.aria': 'Bật hoặc tắt reduced motion',
 						'language.toggle.aria': 'Đổi ngôn ngữ',
+						'language.to.en.aria': 'Chuyển ngôn ngữ sang tiếng Anh',
+						'language.to.vi.aria': 'Chuyển ngôn ngữ sang tiếng Việt',
 						'status.block': 'AEGIS-DL        RESEARCHING\nAURA            SCOPING\nMLOPS TRACK     ACTIVE\nSYSTEM          LEARNING',
 					},
 					en: {
@@ -972,6 +1061,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'nav.gallery.system': 'Archive',
 						'nav.cv.system': 'Resume File',
 						'skip.content': 'Skip to content',
+						'controls.aria': 'Interface utilities',
 						'page.about.title': 'About Me',
 						'page.resume.title': 'Resume',
 						'page.portfolio.title': 'Portfolio',
@@ -1149,6 +1239,8 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'command.theme.desc': 'Dark or light control room',
 						'command.sound': 'Toggle sound',
 						'command.sound.desc': 'Opt-in soft interface tones',
+						'command.motion': 'Reduce motion',
+						'command.motion.desc': 'Limit interface animation',
 						'command.status': 'Show learning track',
 						'command.status.desc': 'Current learning focus',
 						'sound.off': 'Sound Off',
@@ -1159,10 +1251,14 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						'theme.dark': 'Dark',
 						'theme.light': 'Light',
 						'theme.toggle.aria': 'Toggle dark or light theme',
+						'theme.to.light.aria': 'Turn on the light and use light theme',
+						'theme.to.dark.aria': 'Turn off the light and use dark theme',
 						'motion.full': 'Motion',
 						'motion.reduced': 'Reduced',
 						'motion.toggle.aria': 'Enable or disable reduced motion',
 						'language.toggle.aria': 'Toggle language',
+						'language.to.en.aria': 'Switch language to English',
+						'language.to.vi.aria': 'Switch language to Vietnamese',
 						'status.block': 'AEGIS-DL        RESEARCHING\nAURA            SCOPING\nMLOPS TRACK     ACTIVE\nSYSTEM          LEARNING',
 					},
 				};
@@ -1199,7 +1295,12 @@ const navMeta: Record<string, { index: string; system: string }> = {
 						element.textContent = translations[lang]['role.main'];
 					});
 					document.documentElement.lang = lang;
-					if (button) button.textContent = lang === 'vi' ? 'EN' : 'VI';
+					if (button) {
+						const languageLabel = translations[lang][lang === 'vi' ? 'language.to.en.aria' : 'language.to.vi.aria'];
+						button.dataset.activeLang = lang;
+						button.setAttribute('aria-label', languageLabel);
+						button.setAttribute('title', languageLabel);
+					}
 					localStorage.setItem('siteLang', lang);
 					window.dispatchEvent(new CustomEvent('control-room-lang', { detail: { lang } }));
 				}
@@ -1220,10 +1321,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 			(function () {
 				const root = document.documentElement;
 				const body = document.body;
-				const soundButton = document.getElementById('sound-toggle');
 				const themeButton = document.getElementById('theme-toggle');
-				const motionButton = document.getElementById('motion-toggle');
-				const commandOpen = document.getElementById('command-open');
 				const dialog = document.getElementById('command-dialog');
 				const input = document.getElementById('command-input');
 				const list = document.getElementById('command-list');
@@ -1286,20 +1384,14 @@ const navMeta: Record<string, { index: string; system: string }> = {
 				}
 
 				function refreshControls() {
-					if (soundButton) {
-						soundButton.textContent = t(soundEnabled ? 'sound.on' : 'sound.off');
-						soundButton.setAttribute('aria-pressed', String(soundEnabled));
-					}
 					body.dataset.theme = currentTheme;
 					if (themeButton) {
-						themeButton.textContent = t(currentTheme === 'light' ? 'theme.light' : 'theme.dark');
+						const themeLabel = t(currentTheme === 'light' ? 'theme.to.dark.aria' : 'theme.to.light.aria');
 						themeButton.setAttribute('aria-pressed', String(currentTheme === 'light'));
+						themeButton.setAttribute('aria-label', themeLabel);
+						themeButton.setAttribute('title', themeLabel);
 					}
 					body.classList.toggle('user-reduce-motion', motionReduced);
-					if (motionButton) {
-						motionButton.textContent = t(motionReduced ? 'motion.reduced' : 'motion.full');
-						motionButton.setAttribute('aria-pressed', String(motionReduced));
-					}
 				}
 
 				function setSound(next) {
@@ -1397,6 +1489,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 					if (command === 'toggle:language') document.getElementById('lang-float')?.click();
 					if (command === 'toggle:theme') toggleTheme();
 					if (command === 'toggle:sound') setSound(!soundEnabled);
+					if (command === 'toggle:motion') toggleMotion();
 					if (command === 'status') {
 						showStatus();
 						return;
@@ -1404,10 +1497,7 @@ const navMeta: Record<string, { index: string; system: string }> = {
 					closeDialog();
 				}
 
-				soundButton?.addEventListener('click', () => setSound(!soundEnabled));
 				themeButton?.addEventListener('click', toggleTheme);
-				motionButton?.addEventListener('click', toggleMotion);
-				commandOpen?.addEventListener('click', openDialog);
 				input?.addEventListener('input', () => filterCommands(input.value));
 				list?.addEventListener('click', (event) => {
 					const button = event.target.closest('.command-item');
