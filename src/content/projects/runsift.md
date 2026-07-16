@@ -66,8 +66,8 @@ learned:
   - vi: Một backlog chi tiết giúp giảm mơ hồ nhưng không được trình bày như implementation evidence.
     en: A detailed backlog reduces ambiguity but must not be presented as implementation evidence.
 next:
-  - vi: Hoàn thành foundation contract, fixture format và vertical slice đầu tiên: fixture log → evidence extraction → Markdown report.
-    en: Complete the foundation contract, fixture format, and first vertical slice: fixture log → evidence extraction → Markdown report.
+  - vi: "Hoàn thành foundation contract, fixture format và vertical slice đầu tiên: fixture log → evidence extraction → Markdown report."
+    en: "Complete the foundation contract, fixture format, and first vertical slice: fixture log → evidence extraction → Markdown report."
 stack:
   - Python
   - GitHub API
