@@ -5,79 +5,87 @@ featured: true
 priority: 3
 status: research
 statusLabel:
-  vi: Research prototype
-  en: Research prototype
+  vi: Research · documented-first
+  en: Research · documented-first
 domain:
-  vi: Distributed systems · Reliability lab
-  en: Distributed systems · Reliability lab
+  vi: Distributed systems · Networking · Reliability lab
+  en: Distributed systems · Networking · Reliability lab
 value:
-  vi: Môi trường mô phỏng nhỏ để quan sát latency, routing và failure propagation trước khi áp dụng tư duy reliability vào hệ thống thật.
-  en: A small simulation environment for observing latency, routing, and failure propagation before applying reliability thinking to real systems.
+  vi: Thiết kế một infrastructure lab xác định được để quan sát packet routing, latency propagation và failure scenarios; implementation simulator hiện chưa được đưa vào repository.
+  en: A design for a deterministic infrastructure lab that makes packet routing, latency propagation, and failure scenarios observable; the simulator implementation has not yet landed in the repository.
 problem:
-  vi: Nhiều khái niệm mạng và distributed systems khó hiểu nếu chỉ đọc lý thuyết hoặc chỉ nhìn trạng thái cuối.
-  en: Networking and distributed-systems concepts are difficult to understand from theory or final-state screenshots alone.
+  vi: Networking và distributed-systems failures khó hiểu nếu chỉ đọc lý thuyết hoặc chỉ nhìn trạng thái cuối mà không theo dõi causal event flow.
+  en: Networking and distributed-systems failures are difficult to understand from theory or final-state snapshots without following causal event flow.
 context:
-  vi: Dự án là learning/research lab, không mô phỏng đầy đủ Internet và không được dùng để khẳng định production scale.
-  en: This is a learning and research lab; it does not model the full Internet and is not evidence of production scale.
+  vi: Repository hiện ở trạng thái documented-first với vision, architecture, invariants, protocol và roadmap. README cũng ghi rõ workflow chạy chỉ là expected workflow khi implementation được bổ sung.
+  en: The repository is currently documented-first, with vision, architecture, invariants, protocol, and roadmap documents. Its README explicitly marks the run workflow as an expected workflow for when implementation lands.
 constraints:
-  - vi: Mô hình phải đủ nhỏ để chạy local, inspect từng event và tái lập scenario.
-    en: The model must remain small enough to run locally, inspect each event, and replay scenarios.
-  - vi: Failure injection phải deterministic khi dùng cùng seed và configuration.
-    en: Failure injection should be deterministic for the same seed and configuration.
-  - vi: Visual chỉ hỗ trợ hiểu event flow; correctness nằm ở state transition và test.
-    en: Visuals support event-flow understanding; correctness belongs in state transitions and tests.
+  - vi: Mô hình phải đủ nhỏ để chạy local, inspect từng event và replay bằng cùng seed/configuration.
+    en: The model must remain small enough to run locally, inspect each event, and replay from the same seed/configuration.
+  - vi: Renderer chỉ là projection; correctness phải nằm ở state transition, scheduler và invariant tests.
+    en: The renderer is only a projection; correctness must live in state transitions, the scheduler, and invariant tests.
+  - vi: Không gửi traffic thật, không mô phỏng Internet đầy đủ và không trình bày như production network platform.
+    en: Send no real traffic, do not model the full Internet, and do not present the project as a production network platform.
 role:
-  vi: Thiết kế model node/link/packet, scenario format, failure injection và hướng quan sát event.
-  en: Designed the node/link/packet model, scenario format, failure injection, and event-observation approach.
+  vi: Xác định vision, kiến trúc actor/event-driven, invariants, protocol, roadmap và failure-first engineering principles; simulator code vẫn là planned work.
+  en: Defined the vision, actor/event-driven architecture, invariants, protocol, roadmap, and failure-first engineering principles; simulator code remains planned work.
 architecture:
-  - vi: Scenario khai báo nodes, links, latency, capacity và failure events.
-    en: Scenarios define nodes, links, latency, capacity, and failure events.
-  - vi: Event loop xử lý packet movement và state transition theo discrete time.
-    en: An event loop processes packet movement and state transitions in discrete time.
-  - vi: Event log và snapshot cung cấp evidence cho routing decision và failure propagation.
-    en: Event logs and snapshots provide evidence for routing decisions and failure propagation.
+  - vi: Planned scheduler cung cấp central clock và deterministic event ordering.
+    en: A planned scheduler provides a central clock and deterministic event ordering.
+  - vi: Planned actors gồm client, router, DNS, CDN, firewall và monitor; topology/scenario được khai báo bằng configuration.
+    en: Planned actors include client, router, DNS, CDN, firewall, and monitor; topology/scenarios are configuration-driven.
+  - vi: Planned metrics/event log ghi packet flow, routing decision, latency, node state và failure/recovery events.
+    en: Planned metrics/event logs record packet flow, routing decisions, latency, node state, and failure/recovery events.
 decisions:
   - vi: Discrete-event simulation thay vì real sockets để giữ tính deterministic và dễ kiểm thử.
     en: Use discrete-event simulation instead of real sockets to preserve determinism and testability.
-  - vi: Scenario-as-data để cùng một case có thể chạy lại và so sánh.
-    en: Treat scenarios as data so the same case can be replayed and compared.
-  - vi: Tập trung reliability lab thay vì cố làm một bản sao Internet có phạm vi quá rộng.
-    en: Focus on a reliability lab rather than attempting an over-broad replica of the Internet.
+  - vi: Immutable packet structures và config-driven scenarios để giảm hidden state và hỗ trợ replay.
+    en: Use immutable packet structures and config-driven scenarios to reduce hidden state and support replay.
+  - vi: Failure handling và observability được thiết kế trước visualization polish.
+    en: Design failure handling and observability before visualization polish.
 validation:
-  - vi: Kiểm tra invariant như packet không xuất hiện ở hai node cùng lúc và event time không đi lùi.
-    en: Validate invariants such as a packet never existing at two nodes simultaneously and event time never moving backward.
-  - vi: Golden scenarios cho normal routing, link failure và recovery.
-    en: Golden scenarios for normal routing, link failure, and recovery.
+  - vi: Hiện có thể review documentation contract và roadmap; chưa có build, test hoặc executable simulation result.
+    en: The current evidence is limited to reviewable documentation contracts and a roadmap; no build, test, or executable simulation result exists.
+  - vi: Planned validation gồm deterministic replay, scheduler ordering, packet-location invariant, routing-loop detection và golden failure scenarios.
+    en: Planned validation includes deterministic replay, scheduler ordering, packet-location invariants, routing-loop detection, and golden failure scenarios.
 observability:
-  - vi: Event log có timestamp, actor, transition, cause và correlation identifier.
-    en: Event logs include timestamp, actor, transition, cause, and correlation identifier.
+  - vi: Planned packet traces, routing logs, latency histograms, node metrics và replay sessions.
+    en: Planned packet traces, routing logs, latency histograms, node metrics, and replay sessions.
 security:
-  - vi: Simulator không gửi traffic thật và không cần quyền mạng đặc biệt.
-    en: The simulator sends no real traffic and requires no special network privileges.
+  - vi: Config input phải được validate và resource limits phải ngăn scenario làm event queue tăng không kiểm soát.
+    en: Configuration input must be validated, and resource limits must prevent scenarios from growing the event queue without bounds.
 failureModes:
-  - vi: Event queue tăng quá lớn, scenario không hợp lệ hoặc routing loop trong model.
-    en: Event-queue growth, invalid scenarios, or routing loops in the model.
+  - vi: Invalid scenario, routing loop, event queue runaway, deterministic replay mismatch hoặc node failure làm hỏng global state.
+    en: Invalid scenarios, routing loops, runaway event queues, deterministic-replay mismatches, or node failures corrupting global state.
 results:
-  - vi: Evidence hiện tại là repository prototype và design direction; chưa có benchmark hiệu năng được công bố.
-    en: Current evidence is the prototype repository and design direction; no performance benchmark is published.
+  - vi: Đã có README, vision, architecture, invariants, protocol và roadmap public; chưa có simulator implementation, visual demo hoặc benchmark.
+    en: A public README, vision, architecture, invariants, protocol, and roadmap exist; no simulator implementation, visual demo, or benchmark exists yet.
 learned:
-  - vi: Failure propagation dễ hiểu hơn khi hệ thống lưu được causal event thay vì chỉ log text rời rạc.
-    en: Failure propagation becomes easier to reason about when the system records causal events rather than disconnected text logs.
+  - vi: Design document có thể làm rõ boundary và invariant, nhưng chỉ code/test chạy được mới chứng minh behavior.
+    en: Design documents can clarify boundaries and invariants, but only running code and tests prove behavior.
 next:
-  - vi: Thêm scenario fixture, invariant tests và một visualization tĩnh cho failure timeline.
-    en: Add scenario fixtures, invariant tests, and a static visualization for a failure timeline.
+  - vi: Tạo vertical slice Zig tối thiểu gồm scheduler, packet model, hai node, deterministic seed và một link-failure test.
+    en: Build a minimal Zig vertical slice with a scheduler, packet model, two nodes, a deterministic seed, and one link-failure test.
 stack:
-  - Simulation
+  - Zig
+  - Discrete-event simulation
   - Networking
-  - Event log
+  - Deterministic replay
   - Reliability testing
 repoUrl: https://github.com/Dyu20705/Personal-Internet-Simulator
 evidence:
   - label:
-      vi: Repository prototype
-      en: Prototype repository
-    href: https://github.com/Dyu20705/Personal-Internet-Simulator
+      vi: README documented-first
+      en: Documented-first README
+    href: https://github.com/Dyu20705/Personal-Internet-Simulator/blob/main/README.md
+  - label:
+      vi: Architecture, invariants và roadmap
+      en: Architecture, invariants, and roadmap
+    href: https://github.com/Dyu20705/Personal-Internet-Simulator/tree/main/docs
+  - label:
+      vi: Executable simulation chưa tồn tại
+      en: Executable simulation is not available yet
 updated: 2026-07-16
 ---
 
-The portfolio positions this project as supporting systems evidence, not as a production network platform.
+The portfolio presents this as a high-potential reliability research project, not as implemented infrastructure.
