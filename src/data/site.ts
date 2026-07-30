@@ -28,7 +28,7 @@ export const navItems = [
 export const socialLinks = [
 	{ id: 'github', label: 'GitHub', href: 'https://github.com/Dyu20705' },
 	{ id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/duynguyenvan05/' },
-	{ id: 'leetcode', label: 'LeetCode', href: 'https://leetcode.com/u/Qiskit2030/' },
+	{ id: 'leetcode', label: 'LeetCode', href: 'https://leetcode.com/u/nguyndi_utc64/' },
 ];
 
 export const aboutHighlights = [
