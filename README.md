@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="public/readme-preview.svg" alt="Dyu20705.github.io MLOps Control Room preview" width="820" />
 
   # Dyu20705.github.io
 
