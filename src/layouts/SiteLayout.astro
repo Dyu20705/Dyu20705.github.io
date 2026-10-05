@@ -1,0 +1,22 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import type { Localized } from '../i18n/site';
+interface Props { title: Localized; description: Localized; activeNav?: string; noindex?: boolean; }
+const { title, description, activeNav, noindex = false } = Astro.props;
+---
+<!doctype html>
+<html lang="vi">
+  <head><BaseHead title={title.vi} titleEn={title.en} description={description.vi} descriptionEn={description.en} noindex={noindex} /></head>
+  <body>
+    <a class="skip-link" href="#page-content" data-ui="skip">Đến nội dung</a>
+    <Header activeNav={activeNav} />
+    <main id="page-content" class="container page-main" tabindex="-1"><slot /></main>
+    <Footer />
+    <script>
+      import { initLocale } from '../i18n/client';
+      initLocale();
+    </script>
+  </body>
+</html>

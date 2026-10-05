@@ -1,14 +1,30 @@
 ---
-import AboutContent from '../components/AboutContent.astro';
-import VerificationStatus from '../components/VerificationStatus.astro';
-import ProfileShell from '../layouts/ProfileShell.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Copy from '../components/Copy.astro';
+import ProjectList from '../components/projects/ProjectList.astro';
+import { publishedProjects } from '../data/content';
+const projects = (await publishedProjects()).filter(project => project.data.featured).slice(0, 2);
 ---
-
-<ProfileShell
-	headTitle="Nguyễn Văn Duy | MLOps Engineer"
-	description="Portfolio cá nhân định hướng MLOps, tập trung vào machine learning systems, cloud, automation, deployment và reliability."
-	activeNav="about"
->
-	<AboutContent />
-	<VerificationStatus />
-</ProfileShell>
+<SiteLayout title={{vi:'Nguyễn Văn Duy | Computer Science Student',en:'Nguyễn Văn Duy | Computer Science Student'}} description={{vi:'Sinh viên Khoa học máy tính. Định hướng ML Systems, MLOps, Platform Engineering và các hệ thống nghiên cứu.',en:'Computer Science Student exploring ML Systems, MLOps, Platform Engineering and research-oriented systems.'}}>
+  <section class="home-intro">
+    <h1>Nguyễn Văn Duy</h1>
+    <p class="home-role">Computer Science Student</p>
+    <p class="home-direction"><Copy vi="Định hướng ML Systems, MLOps và Platform Engineering, qua các dự án phần mềm và nghiên cứu hệ thống." en="Exploring ML Systems, MLOps and Platform Engineering through software projects and research-oriented systems." /></p>
+    <p class="current-focus"><a href="/projects/sites/"><Copy vi="Đang nghiên cứu SITES" en="Currently researching SITES" /> <span aria-hidden="true">→</span></a></p>
+    <div class="link-row"><a href="/portfolio"><Copy vi="Xem dự án" en="Portfolio" /> <span aria-hidden="true">↗</span></a><a href="https://github.com/Dyu20705">GitHub <span aria-hidden="true">↗</span></a><a href="/resume"><Copy vi="Hồ sơ" en="Resume" /> <span aria-hidden="true">↗</span></a></div>
+  </section>
+  <section class="editorial-section" aria-labelledby="selected-work-title">
+    <div class="section-heading"><h2 id="selected-work-title"><Copy vi="Dự án chọn lọc" en="Selected work" /></h2><a href="/portfolio"><Copy vi="Xem tất cả" en="All projects" /> <span aria-hidden="true">↗</span></a></div>
+    <ProjectList projects={projects} headingLevel="h3" />
+  </section>
+</SiteLayout>
+<style>
+  .home-intro { max-width: 880px; }
+  .home-intro h1 { font-size: clamp(2.65rem, 6vw, 5rem); }
+  .home-role { margin-top: 22px; color: var(--text); font-size: 1.25rem; }
+  .home-direction { max-width: 650px; margin-top: 18px; font-size: 1.15rem; }
+  .home-intro .link-row { margin-top: 28px; }
+  .current-focus { margin-top: 20px; }
+  .current-focus a { display: inline-flex; align-items: center; min-height: 44px; gap: 10px; font-size: .9rem; }
+  @media(max-width:767px) { .home-direction { font-size: 1rem; } .home-role { font-size: 1.1rem; } }
+</style>

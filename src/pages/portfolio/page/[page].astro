@@ -1,0 +1,14 @@
+---
+import PortfolioPage from '../../../components/projects/PortfolioPage.astro';
+import { publishedProjects, PROJECTS_PER_PAGE } from '../../../data/content';
+export async function getStaticPaths() {
+  const all = await publishedProjects();
+  const pages = Math.ceil(all.length / PROJECTS_PER_PAGE);
+  return Array.from({length: Math.max(0, pages - 1)}, (_, i) => ({
+    params: {page: String(i + 2)},
+    props: {projects: all.slice((i + 1) * PROJECTS_PER_PAGE, (i + 2) * PROJECTS_PER_PAGE), page: i + 2, pages},
+  }));
+}
+const props = Astro.props;
+---
+<PortfolioPage {...props} />

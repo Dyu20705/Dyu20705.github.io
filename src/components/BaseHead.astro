@@ -1,75 +1,64 @@
 ---
 import '../styles/global.css';
-import type { ImageMetadata } from 'astro';
 import BrowserIcon from '../assets/img/image.png';
 import { SITE_TITLE } from '../consts';
+import { publicProfile } from '../data/profile.js';
 import { Font } from 'astro:assets';
-
-interface Props {
-	title: string;
-	description: string;
-	image?: ImageMetadata | string;
-	type?: 'website' | 'article';
-}
-
+interface Props { title: string; titleEn?: string; description: string; descriptionEn?: string; noindex?: boolean; }
+const { title, titleEn = title, description, descriptionEn = description, noindex = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const { title, description, image = '/readme-preview.svg', type = 'website' } = Astro.props;
-const imageURL = new URL(typeof image === 'string' ? image : image.src, Astro.site);
-
-const structuredData = {
-	'@context': 'https://schema.org',
-	'@type': 'Person',
-	name: 'Nguyễn Văn Duy',
-	url: Astro.site?.toString(),
-	image: new URL('/readme-preview.svg', Astro.site).toString(),
-	jobTitle: 'Computer Science student focused on MLOps and platform engineering',
-	sameAs: [
-		'https://github.com/Dyu20705',
-		'https://www.linkedin.com/in/duynguyenvan05/',
-	],
-	knowsAbout: [
-		'MLOps',
-		'Machine learning systems',
-		'Platform engineering',
-		'CI/CD',
-		'Observability',
-		'Reproducible systems',
-	],
+const imageURL = new URL('/readme-preview.png', Astro.site);
+const person = {
+  '@context': 'https://schema.org', '@type': 'Person', name: publicProfile.name,
+  url: Astro.site?.toString(), jobTitle: publicProfile.role,
+  sameAs: ['https://github.com/Dyu20705', 'https://www.linkedin.com/in/duynguyenvan05/'],
+  knowsAbout: ['ML Systems', 'MLOps', 'ML Infrastructure', 'Platform Engineering'],
 };
 ---
-
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<meta name="color-scheme" content="dark light" />
-<meta name="theme-color" content="#070b12" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#121315" />
 <meta name="format-detection" content="telephone=no, email=no, address=no" />
-<meta name="robots" content="index,follow,max-image-preview:large" />
+<meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large'} />
 <link rel="icon" type="image/png" href={BrowserIcon.src} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL('rss.xml', Astro.site)} />
 <meta name="generator" content={Astro.generator} />
-
 <Font cssVariable="--font-atkinson" preload />
-
 <link rel="canonical" href={canonicalURL} />
-<title>{title}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
-
-<meta property="og:type" content={type} />
+<title data-meta-vi={title} data-meta-en={titleEn}>{title}</title>
+<meta name="description" content={description} data-meta-vi={description} data-meta-en={descriptionEn} />
+<meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL} />
-<meta property="og:site_name" content="Nguyễn Văn Duy — Engineering Portfolio" />
+<meta property="og:site_name" content="Nguyễn Văn Duy — Computer Science Student" />
 <meta property="og:locale" content="vi_VN" />
 <meta property="og:locale:alternate" content="en_US" />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:title" content={title} data-meta-vi={title} data-meta-en={titleEn} />
+<meta property="og:description" content={description} data-meta-vi={description} data-meta-en={descriptionEn} />
 <meta property="og:image" content={imageURL} />
-<meta property="og:image:alt" content="Nguyễn Văn Duy — MLOps and platform engineering portfolio" />
-
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Nguyễn Văn Duy — Computer Science Student" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:description" content={description} />
+<meta name="twitter:title" content={title} data-meta-vi={title} data-meta-en={titleEn} />
+<meta name="twitter:description" content={description} data-meta-vi={description} data-meta-en={descriptionEn} />
 <meta name="twitter:image" content={imageURL} />
-<meta name="twitter:image:alt" content="Nguyễn Văn Duy — MLOps and platform engineering portfolio" />
+<script type="application/ld+json" set:html={JSON.stringify(person)} />
 
-<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+<script is:inline>
+  // Pre-paint only: the shared controller handles controls and subsequent switches.
+  (() => {
+    let lang = 'vi';
+    try { if (localStorage.getItem('siteLang') === 'en') lang = 'en'; } catch {}
+    document.documentElement.lang = lang;
+    for (const el of document.querySelectorAll('[data-meta-vi]')) {
+      const value = el.dataset[lang === 'vi' ? 'metaVi' : 'metaEn'];
+      if (el.tagName === 'TITLE') el.textContent = value;
+      else el.setAttribute('content', value);
+    }
+    document.querySelector('[property="og:locale"]').content = lang === 'vi' ? 'vi_VN' : 'en_US';
+    document.querySelector('[property="og:locale:alternate"]').content = lang === 'vi' ? 'en_US' : 'vi_VN';
+  })();
+</script>

@@ -1,0 +1,12 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Copy from '../Copy.astro';
+interface Props { projects: CollectionEntry<'projects'>[]; headingLevel?: 'h2' | 'h3'; }
+const { projects, headingLevel: Heading = 'h2' } = Astro.props;
+---
+<div class="project-list">
+  {projects.map(({data}) => <article class="project-row">
+    <div><Heading><a href={`/projects/${data.slug}/`}>{data.title}</a></Heading><p><Copy {...data.summary} /></p><div class="project-meta"><Copy {...data.domain} /></div></div>
+    <div class="project-side"><time>{data.year}</time><span><Copy {...data.status} /></span><a href={`/projects/${data.slug}/`} aria-label={`Xem ${data.title}`} data-aria-vi={`Xem ${data.title}`} data-aria-en={`Explore ${data.title}`}><span aria-hidden="true">↗</span></a></div>
+  </article>)}
+</div>

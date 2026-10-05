@@ -1,20 +1,16 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-
+import { render } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Copy from '../../components/Copy.astro';
+import { publishedPosts, withdrawnPostSlugs } from '../../data/content';
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+  const posts = await publishedPosts();
+  const current = new Set(posts.map(post => post.id));
+  return [...posts.map(post => ({params:{slug:post.id},props:{post}})),...withdrawnPostSlugs.filter(slug => !current.has(slug)).map(slug => ({params:{slug},props:{post:null}}))];
 }
-type Props = CollectionEntry<'blog'>;
-
-const post = Astro.props;
-const { Content } = await render(post);
+const { post } = Astro.props;
+const rendered = post ? await render(post) : null;
+const Content = rendered?.Content;
 ---
-
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+{post && Content ? <ArticleLayout post={post}><Content /></ArticleLayout> : <SiteLayout activeNav="blog" noindex title={{vi:'Bài viết đã được gỡ | Nguyễn Văn Duy',en:'Withdrawn article | Nguyễn Văn Duy'}} description={{vi:'Bài viết trước đây đã được gỡ vì không phải nội dung do chủ website tự viết.',en:'The previous article has been removed because it was not owner-authored writing.'}}><div class="page-intro"><h1><Copy vi="Bài viết đã được gỡ." en="This article has been withdrawn." /></h1><p><Copy vi="Blog hiện dành cho ghi chép do tôi tự viết. Nội dung trước đây không phải bài viết của tôi và đã được gỡ." en="The Blog is reserved for notes I write myself. The previous content was not my own writing and has been removed." /></p><div class="link-row"><a href="/blog"><Copy vi="Đến Blog" en="Visit Blog" /></a></div></div></SiteLayout>}

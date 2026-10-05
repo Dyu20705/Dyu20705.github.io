@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Copy from '../Copy.astro';
+import ProjectList from './ProjectList.astro';
+interface Props { projects: CollectionEntry<'projects'>[]; page?: number; pages?: number; }
+const { projects, page = 1, pages = 1 } = Astro.props;
+---
+<SiteLayout activeNav="portfolio" title={{vi:'Dự án | Nguyễn Văn Duy',en:'Portfolio | Nguyễn Văn Duy'}} description={{vi:'SITES và openDownloader: nghiên cứu hiện tại và bằng chứng phần mềm đã phát hành.',en:'SITES and openDownloader: current research and released software evidence.'}}>
+  <div class="page-intro"><p class="eyebrow">Portfolio</p><h1><Copy vi="Dự án" en="Selected projects" /></h1><p><Copy vi="Từ chuẩn bị nghiên cứu đến phần mềm có release. Mỗi dự án ghi rõ trạng thái, bằng chứng và giới hạn." en="From research preparation to released software. Each project records its state, evidence and limitations." /></p></div>
+  <ProjectList projects={projects} />
+  {pages > 1 && <nav class="pagination" aria-label="Pagination">
+    {page > 1 && <a href={page === 2 ? '/portfolio' : `/portfolio/page/${page - 1}/`}><Copy vi="← Trước" en="← Previous" /></a>}
+    <span>{page} / {pages}</span>
+    {page < pages && <a href={`/portfolio/page/${page + 1}/`}><Copy vi="Tiếp →" en="Next →" /></a>}
+  </nav>}
+</SiteLayout>
