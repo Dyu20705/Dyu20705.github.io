@@ -12,5 +12,6 @@ Project pages carry evidence links and the verification date. Recheck when updat
 Keep uncertain skills as development areas, not proficiency scores.
 
 OWNER MUST WRITE: future engineering/research articles and any personal narrative
-beyond the current factual introduction. The existing PDF is owner-provided and
-unchanged; the owner must update it separately if its dates or identity change.
+beyond the current factual introduction. The PDF is owner-provided; synchronize
+its public and source copies when the owner supplies an updated document. Both
+copies now use the owner's updated CV with expected graduation 2028.

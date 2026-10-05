@@ -1,6 +1,8 @@
 # Implementation decisions
 
-- Branch: `redesign/editorial-portfolio`; no main edits, merge or deployment.
+- Branch: `redesign/editorial-portfolio`. The final owner-requested release
+  sequence authorizes a merge commit after the CV sync and successful PR CI;
+  merging to main triggers the existing GitHub Pages workflow.
 - Baseline: locked install succeeds; build and validation pass for 19 pages when
   run outside the port-restricted sandbox. Astro telemetry is disabled locally.
   Initial sandbox failures were configuration-directory access and local-port
@@ -27,9 +29,9 @@
   migration: a small head bootstrap restores the saved locale and metadata
   before body copy paints; CSS chooses the visible language immediately. One
   storage-backed controller handles subsequent switches and utilities.
-- Owner confirmed expected graduation 2028. HTML Resume states this explicitly.
-  The owner will update the PDF later; both existing PDF copies remain unchanged
-  and currently state 2027. PDF/HTML agreement remains a pre-release owner task.
+- Owner confirmed expected graduation 2028. HTML Resume and the updated
+  owner-provided CV PDF both state this. The public PDF is copied to the retained
+  source asset so both PDF copies are byte-identical.
 - A temporary publication test using shared node_modules exposed Astro's empty
   glob behavior: the loader returns without clearing stored entries. The new
   writing loader explicitly clears an empty collection, and cacheDir is local to
@@ -39,7 +41,8 @@
 - Automatic review rejected cleanup of the duplicate source PDF and other
   remaining assets because CV preservation is required. Both PDF copies and the
   remaining assets are preserved; only references actually used enter the page
-  bundles. Public/source PDFs were compared against Git and are byte-identical.
+  bundles. At the initial review, public/source PDFs matched the original Git
+  bytes. The final release batch synchronizes both to the owner's updated PDF.
 - Bounded review polish: current focus is one hero link; Selected Work contains
   one listing each for SITES/openDownloader. Public SITES summary omits internal
   Month-1 wording; research gates remain in the detailed case study. Desktop

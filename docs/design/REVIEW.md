@@ -21,7 +21,8 @@ machine-readable results are local review artifacts in `/tmp/portfolio-review`.
   9.78:1, muted 6.27:1, accent 9.41:1 (all above 4.5:1). Focus ring exceeds 3:1.
   Shared controls meet 44px targets; gallery alt text follows inspected photos.
 - Contact: required fields and email-application feedback tested in VI/EN;
-  no message was sent. PDF returns HTTP 200 and matches the original Git bytes.
+  no message was sent. At the initial browser review, the PDF returned HTTP 200
+  and matched the original Git bytes.
 - Publication regression: isolated 7-project/9-post fixture passes pagination;
   generated, draft and unclassified posts do not publish. Removing the final
   post with warm cache clears stored writing, generated routes and RSS.
@@ -36,6 +37,10 @@ machine-readable results are local review artifacts in `/tmp/portfolio-review`.
 - Homepage now has current-focus hero link and one Selected Work list. Internal
   Month-1 terminology stays in the case study. No framework hydration or new
   runtime dependency.
+- Final CV release batch: clean `npm ci`, `npm run verify` (21 HTML files) and
+  `npm run test:publication` pass. The built PDF matches the public/source copies
+  byte-for-byte and states expected graduation 2028. The local Astro checks ran
+  outside the port-restricted sandbox to allow the temporary font server.
 
 ## Remaining boundaries
 
@@ -45,12 +50,13 @@ are selected client-side; Vietnamese remains static default without URL migratio
 The existing dependency lockfile reports 9 advisories; upgrades are separate work.
 
 OWNER MUST WRITE: genuine future articles and optional personal narrative.
-Owner confirmed expected graduation 2028; HTML Resume is updated. The owner
-will edit the PDF later; the preserved document still says 2027 and must be
-synchronized before public release.
+Owner confirmed expected graduation 2028. The final release batch uses the
+owner's updated one-page PDF, which states expected graduation 2028, matching
+the HTML Resume. Public and source PDF copies are byte-identical; text extraction
+and a rendered-page inspection confirm the date and readable layout.
 
-No merge, deployment, DNS change or destructive remote operation is part of this
-redesign. Only the redesign branch is pushed once after successful validation in each
-authorized implementation batch. Review requests a draft PR to main for a
-clean-checkout CI run; PR checks do not deploy. Remote CI results are reported
+The owner-requested final release sequence is one branch push after successful
+local validation, one successful PR CI run, Draft → Ready for review, an updated
+PR description and a merge commit. PR checks do not deploy; the merge to main
+triggers the existing GitHub Pages deployment. Remote CI results are reported
 with the PR, separately from the local evidence documented here.
