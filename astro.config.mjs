@@ -3,11 +3,20 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
+import { archivedProjectSlugs, withdrawnPostSlugs } from './src/data/archive.js';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://dyu20705.github.io',
-	integrations: [mdx(), sitemap()],
+	cacheDir: './.astro/cache',
+	integrations: [mdx(), sitemap({
+		filter: (page) => {
+			const route = new URL(page).pathname.replace(/\/$/, '');
+			return route !== '/404' &&
+				!archivedProjectSlugs.some((slug) => route === `/projects/${slug}`) &&
+				!withdrawnPostSlugs.some((slug) => route === `/blog/${slug}`);
+		},
+	})],
 	fonts: [
 		{
 			provider: fontProviders.local(),

@@ -1,12 +1,14 @@
 ---
-import AboutContent from '../components/AboutContent.astro';
-import ProfileShell from '../layouts/ProfileShell.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Copy from '../components/Copy.astro';
 ---
-
-<ProfileShell
-	headTitle="Về tôi | Nguyễn Văn Duy"
-	description="Trang giới thiệu định hướng MLOps Engineer của Nguyễn Văn Duy, kết nối machine learning, software engineering, cloud và operations."
-	activeNav="about"
->
-	<AboutContent />
-</ProfileShell>
+<SiteLayout activeNav="about" title={{vi:'Giới thiệu | Nguyễn Văn Duy',en:'About | Nguyễn Văn Duy'}} description={{vi:'Nguyễn Văn Duy, sinh viên Khoa học máy tính tại Đại học Giao thông Vận tải.',en:'Nguyễn Văn Duy, a Computer Science student at the University of Transport and Communications.'}}>
+  <div class="page-intro"><p class="eyebrow"><Copy vi="Giới thiệu" en="About" /></p><h1><Copy vi="Sinh viên, xây dựng và nghiên cứu." en="A student, building and researching." /></h1></div>
+  <div class="prose">
+    <section><h2><Copy vi="Hiện tại" en="Currently" /></h2><p><Copy vi="Tôi là Nguyễn Văn Duy, sinh viên Khoa học máy tính tại Đại học Giao thông Vận tải, Hà Nội. Portfolio này tập hợp các dự án phần mềm và công việc nghiên cứu của tôi." en="I'm Nguyễn Văn Duy, a Computer Science student at the University of Transport and Communications in Hanoi. This portfolio brings together my software projects and research work." /></p></section>
+    <section><h2><Copy vi="Trọng tâm" en="Focus" /></h2><p><Copy vi="Tôi đang phát triển theo hướng ML Systems, MLOps, ML Infrastructure và Platform Engineering. Các chủ đề hiện tại gồm xử lý bằng chứng, khả năng tái lập, ranh giới runtime và quy trình kiểm tra phần mềm." en="My current direction is ML Systems, MLOps, ML Infrastructure and Platform Engineering. Current topics include evidence handling, reproducibility, runtime boundaries and software validation workflows." /></p></section>
+    <section><h2><Copy vi="Công việc hiện tại" en="Current work" /></h2><p><Copy vi="SITES là dự án nghiên cứu chính: khảo sát cách các khái niệm khoa học và công nghệ thay đổi qua tài liệu học thuật. Phạm vi hiện tại là chuẩn bị nghiên cứu Month-1, chưa có sản phẩm đang chạy." en="SITES is my main research project: studying how scientific and technological concepts change in scholarly literature. Its current scope is Month-1 research preparation, without a running product yet." /></p><p><Copy vi="openDownloader là dự án phần mềm desktop có mã nguồn Rust/Tauri, frontend React và release package công khai. Trang dự án ghi rõ bằng chứng và giới hạn hiện tại." en="openDownloader is a desktop software project with Rust/Tauri source, a React frontend and public release packages. Its project page records current evidence and limitations." /></p></section>
+    <section><h2><Copy vi="Hướng dài hạn" en="Longer-term direction" /></h2><p><Copy vi="ML Systems và các hệ thống phục vụ nghiên cứu là hướng phát triển dài hạn. Đây là định hướng học tập và dự án, không phải chức danh công việc hiện tại." en="ML Systems and research-oriented systems are my longer-term direction. This describes my studies and projects, rather than a current professional role." /></p></section>
+  </div>
+  <div class="link-row editorial-section"><a href="/portfolio"><Copy vi="Dự án" en="Portfolio" /></a><a href="/resume"><Copy vi="Hồ sơ" en="Resume" /></a><a href="/contact"><Copy vi="Liên hệ" en="Contact" /></a></div>
+</SiteLayout>

@@ -1,263 +1,47 @@
 ---
-import ProfileShell from '../layouts/ProfileShell.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Copy from '../components/Copy.astro';
 import { profile } from '../data/site';
 ---
+<SiteLayout activeNav="contact" title={{vi:'Liên hệ | Nguyễn Văn Duy',en:'Contact | Nguyễn Văn Duy'}} description={{vi:'Liên hệ Nguyễn Văn Duy về dự án, nghiên cứu, thực tập và cơ hội kỹ thuật.',en:'Contact Nguyễn Văn Duy about projects, research, internships and technical opportunities.'}}>
+  <div class="page-intro"><p class="eyebrow"><Copy vi="Liên hệ" en="Contact" /></p><h1><Copy vi="Trao đổi qua email." en="Get in touch." /></h1><p><Copy vi="Về dự án, nghiên cứu, thực tập hoặc cơ hội kỹ thuật. Email là cách liên hệ chính; các hồ sơ công khai ở cuối trang." en="For project discussions, research, internships or technical opportunities. Email is the primary way to reach me; public profiles are linked below." /></p><div class="link-row"><a href={`mailto:${profile.email}`}><Copy vi="Gửi email" en="Email me" /> <span aria-hidden="true">↗</span></a></div></div>
+  <form class="contact-form" action={`mailto:${profile.email}`} method="post" enctype="text/plain" data-contact-email={profile.email}>
+    <h2><Copy vi="Soạn tin nhắn" en="Compose a message" /></h2>
+    <p class="muted"><Copy vi="Form này mở ứng dụng email của bạn, không gửi qua máy chủ website." en="This form opens your email application; it does not send through a website server." /></p>
+    <div class="form-row"><label><Copy vi="Họ tên" en="Name" /><input name="name" autocomplete="name" required /></label><label><Copy vi="Email của bạn" en="Your email" /><input type="email" name="email" autocomplete="email" required /></label></div>
+    <label><Copy vi="Nội dung" en="Message" /><textarea name="message" rows="6" required></textarea></label>
+    <button class="submit-button" type="submit"><Copy vi="Mở ứng dụng email" en="Open email application" /></button>
+    <p class="form-status" role="status" hidden><Copy vi="Đã yêu cầu mở ứng dụng email. Nếu không mở được, hãy dùng liên kết email ở cuối trang." en="Your email application was requested. If it does not open, use the email link in the footer." /></p>
+  </form>
+</SiteLayout>
+<script>
+ const form = document.querySelector<HTMLFormElement>('.contact-form');
+ form?.addEventListener('submit', event => {
+   event.preventDefault();
+   const fields = new FormData(form);
+   const name = String(fields.get('name') || '');
+   const email = String(fields.get('email') || '');
+   const message = String(fields.get('message') || '');
+   const subject = encodeURIComponent(`Portfolio contact: ${name}`);
+   const body = encodeURIComponent(`${name}
+${email}
 
-<ProfileShell
-	headTitle="Liên hệ | Nguyễn Văn Duy"
-	description="Liên hệ Nguyễn Văn Duy để trao đổi về MLOps, ML systems, cloud infrastructure, open source và dự án nghiên cứu."
-	activeNav="contact"
->
-	<section>
-		<h2 class="page-title" data-i18n="page.contact.title">Liên hệ</h2>
-		<div class="page-accent"></div>
-	</section>
-
-	<section class="contact-hero">
-		<div>
-			<h3 data-i18n="contact.hero.title">Sẵn sàng trao đổi về MLOps, ML systems và cloud infrastructure</h3>
-			<p data-i18n="contact.hero.body">
-				Nếu anh/chị muốn trao đổi về pipeline ML, automation, cloud infrastructure, open-source hoặc dự án
-				AI mang tính nghiên cứu, có thể liên hệ trực tiếp qua email hoặc gửi form bên dưới.
-			</p>
-		</div>
-	</section>
-
-	<section class="contact-grid">
-		<article class="contact-card">
-			<div class="contact-card-icon">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Zm2.2-.5 5.8 5.1L17.8 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-			</div>
-			<div>
-				<small data-i18n="contact.card.email">Email</small>
-				<a href={`mailto:${profile.email}`}>{profile.email}</a>
-			</div>
-		</article>
-		<article class="contact-card">
-			<div class="contact-card-icon">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20s6-5.6 6-10a6 6 0 1 0-12 0c0 4.4 6 10 6 10Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" stroke="currentColor" stroke-width="1.7"/></svg>
-			</div>
-			<div>
-				<small data-i18n="contact.card.location">Địa điểm</small>
-				<span>{profile.location}</span>
-			</div>
-		</article>
-	</section>
-
-	<form class="contact-form" action={`mailto:${profile.email}`} method="post" enctype="text/plain">
-		<div class="form-row">
-			<label>
-				<span data-i18n="contact.form.name">Họ và tên</span>
-				<input type="text" name="name" placeholder="Nguyễn Văn A" data-i18n-placeholder="contact.form.name.placeholder" required />
-			</label>
-			<label>
-				<span data-i18n="contact.form.email">Email</span>
-				<input type="email" name="email" placeholder="tenban@example.com" data-i18n-placeholder="contact.form.email.placeholder" required />
-			</label>
-		</div>
-		<label>
-			<span data-i18n="contact.form.message">Nội dung</span>
-			<textarea name="message" placeholder="Viết nội dung cần trao đổi..." data-i18n-placeholder="contact.form.message.placeholder" required></textarea>
-		</label>
-		<button class="submit-button" type="submit" data-i18n="contact.form.submit">Gửi tin nhắn</button>
-		<p class="form-status" id="contact-form-status" data-i18n="contact.form.mailto" hidden>
-			Ứng dụng email sẽ mở bằng mailto. Nếu không mở, hãy gửi trực tiếp tới email ở trên.
-		</p>
-	</form>
-
-	<script is:inline>
-		(() => {
-			const form = document.querySelector('.contact-form');
-			const status = document.getElementById('contact-form-status');
-			const button = form?.querySelector('.submit-button');
-			const t = (key) => {
-				const lang = localStorage.getItem('siteLang') || 'vi';
-				return window.controlRoomTranslations?.[lang]?.[key] || key;
-			};
-			form?.addEventListener('submit', () => {
-				if (status) {
-					status.hidden = false;
-					status.textContent = t('contact.form.mailto');
-				}
-				if (button) {
-					button.textContent = t('contact.form.preparing');
-					window.setTimeout(() => {
-						button.textContent = t('contact.form.submit');
-					}, 2200);
-				}
-			});
-		})();
-	</script>
-
-	<style>
-		.page-title {
-			font-size: clamp(2.2rem, 4vw, 3.4rem);
-		}
-
-		.page-accent {
-			width: 58px;
-			height: 4px;
-			margin-top: 0.9rem;
-			border-radius: 999px;
-			background: #17b8ff;
-		}
-
-		.contact-hero {
-			margin-top: 1.5rem;
-			padding: 1.5rem;
-			border-radius: 1.3rem;
-			border: 1px solid rgba(216, 190, 154, 0.35);
-			background:
-				radial-gradient(circle at top right, rgba(24, 189, 255, 0.16), transparent 30%),
-				rgba(255, 255, 255, 0.03);
-		}
-
-		.contact-hero h3 {
-			font-size: 1.5rem;
-			margin-bottom: 0.7rem;
-		}
-
-		.contact-hero p {
-			color: #b8c5d2;
-			line-height: 1.82;
-			max-width: 56rem;
-		}
-
-		.contact-grid {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 1rem;
-			margin-top: 1.2rem;
-		}
-
-		.contact-card {
-			display: grid;
-			grid-template-columns: 52px minmax(0, 1fr);
-			gap: 0.85rem;
-			padding: 1rem;
-			border-radius: 1.2rem;
-			border: 1px solid rgba(216, 190, 154, 0.35);
-			background: rgba(255, 255, 255, 0.03);
-		}
-
-		.contact-card-icon {
-			width: 52px;
-			height: 52px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			border-radius: 1rem;
-			color: #19c9ff;
-			background: rgba(17, 161, 255, 0.12);
-		}
-
-		.contact-card small {
-			display: block;
-			margin-bottom: 0.22rem;
-			font-size: 0.74rem;
-			color: #a9b9c9;
-		}
-
-		.contact-card a,
-		.contact-card span {
-			color: #ffffff;
-			text-decoration: none;
-			font-weight: 700;
-		}
-
-		.contact-form {
-			display: grid;
-			gap: 1rem;
-			margin-top: 1.3rem;
-		}
-
-		.form-row {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 1rem;
-		}
-
-		.contact-form label {
-			display: grid;
-			gap: 0.55rem;
-		}
-
-		.contact-form span {
-			font-weight: 700;
-			color: #ffffff;
-		}
-
-		.contact-form input,
-		.contact-form textarea {
-			width: 100%;
-			padding: 1rem 1rem;
-			border-radius: 1rem;
-			border: 1px solid rgba(216, 190, 154, 0.35);
-			background: rgba(255, 255, 255, 0.04);
-			color: #f2f7fb;
-			font: inherit;
-		}
-
-		.contact-form textarea {
-			min-height: 180px;
-			resize: vertical;
-		}
-
-		.submit-button {
-			width: fit-content;
-			padding: 0.95rem 1.4rem;
-			border: none;
-			border-radius: 1rem;
-			background: linear-gradient(135deg, #149cff, #11c4ff);
-			color: #ffffff;
-			font: inherit;
-			font-weight: 700;
-			cursor: pointer;
-		}
-
-		.form-status {
-			width: min(100%, 36rem);
-			margin: 0;
-			padding: 0.85rem 1rem;
-			border: 1px solid rgba(97, 213, 255, 0.22);
-			border-radius: 1rem;
-			background: rgba(97, 213, 255, 0.08);
-			color: #d7e6f6;
-			line-height: 1.6;
-		}
-
-		.form-status[hidden] {
-			display: none;
-		}
-
-		:global(body[data-theme='light']) .contact-hero,
-		:global(body[data-theme='light']) .contact-card,
-		:global(body[data-theme='light']) .contact-form input,
-		:global(body[data-theme='light']) .contact-form textarea,
-		:global(body[data-theme='light']) .form-status {
-			background: rgba(255, 255, 255, 0.78);
-			border-color: rgba(28, 76, 112, 0.22);
-		}
-
-		:global(body[data-theme='light']) .contact-hero p,
-		:global(body[data-theme='light']) .contact-card small,
-		:global(body[data-theme='light']) .form-status {
-			color: var(--text-body);
-		}
-
-		:global(body[data-theme='light']) .contact-card a,
-		:global(body[data-theme='light']) .contact-card span,
-		:global(body[data-theme='light']) .contact-form span,
-		:global(body[data-theme='light']) .contact-form input,
-		:global(body[data-theme='light']) .contact-form textarea {
-			color: var(--text-strong);
-		}
-
-		@media (max-width: 900px) {
-			.contact-grid,
-			.form-row {
-				grid-template-columns: 1fr;
-			}
-		}
-	</style>
-</ProfileShell>
+${message}`);
+   window.location.href = `mailto:${form.dataset.contactEmail}?subject=${subject}&body=${body}`;
+   const status = form.querySelector<HTMLElement>('.form-status');
+   if (status) status.hidden = false;
+ });
+</script>
+<style>
+ .contact-form { max-width: 740px; display: grid; gap: 24px; padding-top: 36px; border-top: 1px solid var(--line); }
+ .contact-form > h2 { font-size: 1.35rem; }
+ .contact-form .muted { font-size: .85rem; }
+ .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+ label { display: block; }
+ input, textarea { display: block; width: 100%; min-height: 48px; margin-top: 10px; padding: 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 4px; }
+ textarea { resize: vertical; }
+ .submit-button { justify-self: start; min-height: 48px; padding: 12px 20px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+ .submit-button:hover { border-color: var(--accent); }
+ .form-status { font-size: .85rem; }
+ @media(max-width:767px) { .form-row { grid-template-columns: 1fr; } }
+</style>

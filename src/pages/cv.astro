@@ -1,65 +1,10 @@
 ---
-import ProfileShell from '../layouts/ProfileShell.astro';
-
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Copy from '../components/Copy.astro';
 const cvFile = '/cv/NguyenVanDuy_CV.pdf';
 ---
-
-<ProfileShell
-	headTitle="CV | Nguyễn Văn Duy"
-	description="Trang xem và tải CV của Nguyễn Văn Duy."
-	activeNav="cv"
->
-	<section>
-		<h2 class="page-title" data-i18n="page.cv.title">CV</h2>
-		<div class="page-accent"></div>
-	</section>
-
-	<section class="cv-panel">
-		<iframe class="cv-frame" src={cvFile} title="CV Nguyễn Văn Duy" loading="lazy"></iframe>
-		<div class="cv-actions">
-			<a href={cvFile} target="_blank" rel="noopener noreferrer" data-i18n="cv.open">Mở ở tab mới</a>
-			<a href={cvFile} download="NguyenVanDuy_CV.pdf" data-i18n="cv.download">Tải xuống</a>
-		</div>
-	</section>
-
-	<style>
-		.page-title {
-			font-size: clamp(2.2rem, 4vw, 3.4rem);
-		}
-
-		.page-accent {
-			width: 58px;
-			height: 4px;
-			margin-top: 0.9rem;
-			border-radius: 999px;
-			background: #17b8ff;
-		}
-
-		.cv-panel {
-			margin-top: 1.5rem;
-		}
-
-		.cv-frame {
-			width: 100%;
-			height: 780px;
-			border: 1px solid rgba(216, 190, 154, 0.35);
-			border-radius: 1.2rem;
-			background: #ffffff;
-		}
-
-		.cv-actions {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.8rem;
-			margin-top: 1rem;
-		}
-
-		.cv-actions a {
-			padding: 0.85rem 1.15rem;
-			border-radius: 0.95rem;
-			text-decoration: none;
-			background: rgba(255, 255, 255, 0.04);
-			border: 1px solid rgba(216, 190, 154, 0.35);
-		}
-	</style>
-</ProfileShell>
+<SiteLayout activeNav="cv" title={{vi:'CV PDF | Nguyễn Văn Duy',en:'PDF CV | Nguyễn Văn Duy'}} description={{vi:'Xem và tải CV PDF của Nguyễn Văn Duy.',en:'View and download Nguyễn Văn Duy’s PDF CV.'}}>
+  <div class="page-intro"><p class="eyebrow"><Copy vi="Tài liệu PDF" en="PDF document" /></p><h1>CV</h1><p><Copy vi="CV là tài liệu PDF có thể xem và tải xuống. Resume là hồ sơ HTML trên website." en="The CV is a PDF document you can view and download. Resume is the HTML profile on this website." /></p><div class="link-row"><a href={cvFile} target="_blank" rel="noopener noreferrer"><Copy vi="Mở PDF ở tab mới" en="Open PDF in a new tab" /> <span aria-hidden="true">↗</span></a><a href={cvFile} download="NguyenVanDuy_CV.pdf"><Copy vi="Tải PDF" en="Download PDF" /></a><a href="/resume"><Copy vi="Hồ sơ HTML" en="HTML Resume" /></a></div></div>
+  <iframe class="cv-frame" src={cvFile} title="CV Nguyễn Văn Duy — PDF" loading="lazy"></iframe>
+</SiteLayout>
+<style>.cv-frame { width: 100%; height: 780px; border: 1px solid var(--line); border-radius: 4px; background: #fff; } @media(max-width:767px) { .cv-frame { height: 600px; } }</style>

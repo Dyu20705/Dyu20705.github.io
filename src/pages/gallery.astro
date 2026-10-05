@@ -1,88 +1,16 @@
 ---
 import { Image } from 'astro:assets';
-import ProfileShell from '../layouts/ProfileShell.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Copy from '../components/Copy.astro';
 import { galleryItems } from '../data/site';
 ---
-
-<ProfileShell
-	headTitle="Thư viện | Nguyễn Văn Duy"
-	description="Bộ sưu tập hình ảnh cá nhân của Nguyễn Văn Duy."
-	activeNav="gallery"
->
-	<section>
-		<h2 class="page-title" data-i18n="page.gallery.title">Thư viện</h2>
-		<div class="page-accent"></div>
-	</section>
-
-	<section class="gallery-grid">
-		{galleryItems.map((item, index) => (
-			<article class="gallery-card">
-				<Image src={item.image} alt={item.title} loading="lazy" decoding="async" sizes="(max-width: 720px) 100vw, (max-width: 980px) 50vw, 33vw" />
-				<div class="gallery-copy">
-					<h3 data-i18n={`gallery.item.${index}.title`}>{item.title}</h3>
-					<p data-i18n={`gallery.item.${index}.caption`}>{item.caption}</p>
-				</div>
-			</article>
-		))}
-	</section>
-
-	<style>
-		.page-title {
-			font-size: clamp(2.2rem, 4vw, 3.4rem);
-		}
-
-		.page-accent {
-			width: 58px;
-			height: 4px;
-			margin-top: 0.9rem;
-			border-radius: 999px;
-			background: #17b8ff;
-		}
-
-		.gallery-grid {
-			display: grid;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-			gap: 1rem;
-			margin-top: 1.5rem;
-		}
-
-		.gallery-card {
-			overflow: hidden;
-			border-radius: 1.2rem;
-			border: 1px solid rgba(216, 190, 154, 0.35);
-			background: rgba(255, 255, 255, 0.03);
-		}
-
-		.gallery-card img {
-			width: 100%;
-			height: 240px;
-			object-fit: cover;
-			border-radius: 0;
-		}
-
-		.gallery-copy {
-			padding: 0.95rem;
-		}
-
-		.gallery-copy h3 {
-			font-size: 1.2rem;
-			margin-bottom: 0.35rem;
-		}
-
-		.gallery-copy p {
-			color: #b8c5d2;
-		}
-
-		@media (max-width: 980px) {
-			.gallery-grid {
-				grid-template-columns: 1fr 1fr;
-			}
-		}
-
-		@media (max-width: 720px) {
-			.gallery-grid {
-				grid-template-columns: 1fr;
-			}
-		}
-	</style>
-</ProfileShell>
+<SiteLayout activeNav="gallery" title={{vi:'Ảnh | Nguyễn Văn Duy',en:'Gallery | Nguyễn Văn Duy'}} description={{vi:'Một số hình ảnh trong bộ sưu tập cá nhân của Nguyễn Văn Duy.',en:'Photographs from Nguyễn Văn Duy’s personal collection.'}}>
+  <div class="page-intro"><p class="eyebrow"><Copy vi="Bộ sưu tập cá nhân" en="Personal collection" /></p><h1><Copy vi="Ảnh" en="Gallery" /></h1></div>
+  <div class="gallery-grid">{galleryItems.map(item => <Image src={item.image} alt={item.alt.vi} data-alt-vi={item.alt.vi} data-alt-en={item.alt.en} width={960} widths={[360,640,960]} sizes="(max-width:767px) calc(100vw - 32px), (max-width:1199px) 45vw, 30vw" format="webp" loading="lazy" />)}</div>
+</SiteLayout>
+<style>
+ .gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; }
+ .gallery-grid img { width: 100%; height: auto; border-radius: 4px; }
+ @media(min-width:768px) and (max-width:1199px) { .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+ @media(max-width:767px) { .gallery-grid { grid-template-columns: 1fr; gap: 20px; } }
+</style>

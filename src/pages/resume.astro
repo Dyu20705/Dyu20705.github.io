@@ -1,184 +1,28 @@
 ---
-import ProfileShell from '../layouts/ProfileShell.astro';
-import { education, experience, skills } from '../data/site';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Copy from '../components/Copy.astro';
 ---
-
-<ProfileShell
-	headTitle="Hồ sơ | Nguyễn Văn Duy"
-	description="Học vấn, kinh nghiệm dự án và nhóm kỹ năng liên quan đến MLOps, ML engineering, cloud infrastructure và software engineering."
-	activeNav="resume"
->
-	<section class="page-section">
-		<h2 class="page-title" data-i18n="page.resume.title">Hồ sơ</h2>
-		<div class="page-accent"></div>
-	</section>
-
-	<section class="resume-block">
-		<h3 class="block-title" data-i18n="resume.education.title">Học vấn</h3>
-		<div class="timeline-list">
-			{education.map((item, index) => (
-				<article class="timeline-item">
-					<div class="timeline-dot"></div>
-					<div class="timeline-copy">
-						<h4 data-i18n={`resume.education.${index}.title`}>{item.title}</h4>
-						<span data-i18n={`resume.education.${index}.time`}>{item.time}</span>
-						<p data-i18n={`resume.education.${index}.body`}>{item.body}</p>
-					</div>
-				</article>
-			))}
-		</div>
-	</section>
-
-	<section class="resume-block">
-		<h3 class="block-title" data-i18n="resume.experience.title">Kinh nghiệm</h3>
-		<div class="timeline-list">
-			{experience.map((item, index) => (
-				<article class="timeline-item">
-					<div class="timeline-dot"></div>
-					<div class="timeline-copy">
-						<h4 data-i18n={`resume.experience.${index}.title`}>{item.title}</h4>
-						<span data-i18n={`resume.experience.${index}.time`}>{item.time}</span>
-						<p data-i18n={`resume.experience.${index}.body`}>{item.body}</p>
-					</div>
-				</article>
-			))}
-		</div>
-	</section>
-
-	<section class="resume-block">
-		<h3 class="block-title" data-i18n="resume.skills.title">Kỹ năng chính</h3>
-		<div class="skills-grid">
-			{skills.map((skill, index) => (
-				<article class="skill-card">
-					<div class="skill-icon">
-						{
-							skill.icon === 'linux' ? (
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 6.5c0-1.9 1.1-3.5 2.5-3.5s2.5 1.6 2.5 3.5c0 1-.3 1.9-.8 2.5.7.7 1.3 1.8 1.3 3 0 2.4-1.4 4.5-3 4.5s-3-2.1-3-4.5c0-1.2.5-2.3 1.3-3-.5-.6-.8-1.5-.8-2.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M8 20c.5-1.8 2.1-3 4-3s3.5 1.2 4 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-							) : skill.icon === 'docker' ? (
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10h3v3H4zm4 0h3v3H8zm4 0h3v3h-3zm-6-4h3v3H6zm4 0h3v3h-3zm4 4h3c1.2 0 2.1-.3 2.7-.8.3 2.7-1.4 5.8-5.5 5.8H9.2C6.4 15 4 12.9 4 10h14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-							) : skill.icon === 'cloud' ? (
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 18H7a4 4 0 1 1 .7-7.9A5.5 5.5 0 0 1 18.4 8 3.5 3.5 0 1 1 19 18Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-							) : skill.icon === 'nginx' ? (
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 7 4v10l-7 4-7-4V7l7-4Z" stroke="currentColor" stroke-width="1.7"/><path d="M9 15V9l6 6V9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-							) : skill.icon === 'code' ? (
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m8 8-4 4 4 4m8-8 4 4-4 4m-3-8-2 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-							) : skill.icon === 'python' ? (
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4h4a3 3 0 0 1 3 3v2H9a2 2 0 0 0-2 2v2H5a3 3 0 0 1-3-3V9a5 5 0 0 1 5-5h2Zm6 16h-4a3 3 0 0 1-3-3v-2h7a2 2 0 0 0 2-2v-2h2a3 3 0 0 1 3 3v1a5 5 0 0 1-5 5h-2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-							) : skill.icon === 'ci' ? (
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h6l2-6 3 12 2-6h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-							) : (
-								<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5.5 6v5.5c0 4.2 2.8 8 6.5 9.5 3.7-1.5 6.5-5.3 6.5-9.5V6L12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 12.5 11 14l3.5-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-							)
-						}
-					</div>
-					<div>
-						<h4 data-i18n={`resume.skill.${index}.title`}>{skill.title}</h4>
-						<p data-i18n={`resume.skill.${index}.note`}>{skill.note}</p>
-					</div>
-				</article>
-			))}
-		</div>
-	</section>
-
-	<style>
-		.page-title {
-			font-size: clamp(2.2rem, 4vw, 3.4rem);
-		}
-
-		.page-accent {
-			width: 58px;
-			height: 4px;
-			margin-top: 0.9rem;
-			border-radius: 999px;
-			background: #17b8ff;
-		}
-
-		.resume-block {
-			margin-top: 2rem;
-		}
-
-		.block-title {
-			font-size: 1.9rem;
-			margin-bottom: 1rem;
-		}
-
-		.timeline-list {
-			display: grid;
-			gap: 1rem;
-		}
-
-		.timeline-item {
-			display: grid;
-			grid-template-columns: 22px minmax(0, 1fr);
-			gap: 1rem;
-			padding-left: 0.15rem;
-		}
-
-		.timeline-dot {
-			width: 14px;
-			height: 14px;
-			margin-top: 0.4rem;
-			border-radius: 999px;
-			background: #15bfff;
-		}
-
-		.timeline-copy {
-			padding-left: 1rem;
-			border-left: 1px solid rgba(255, 255, 255, 0.12);
-			padding-bottom: 1.2rem;
-		}
-
-		.timeline-copy h4 {
-			font-size: 1.35rem;
-			margin-bottom: 0.35rem;
-		}
-
-		.timeline-copy span {
-			display: inline-block;
-			margin-bottom: 0.55rem;
-			color: #19c9ff;
-			font-weight: 700;
-		}
-
-		.timeline-copy p {
-			color: #b6c4d3;
-			line-height: 1.85;
-		}
-
-		.skills-grid {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 1rem;
-		}
-
-		.skill-card {
-			display: grid;
-			grid-template-columns: 56px minmax(0, 1fr);
-			gap: 1rem;
-			padding: 1.15rem;
-			border-radius: 1.2rem;
-			border: 1px solid rgba(216, 190, 154, 0.4);
-			background: rgba(255, 255, 255, 0.03);
-		}
-
-		.skill-icon {
-			color: #19c9ff;
-		}
-
-		.skill-card h4 {
-			font-size: 1.18rem;
-			margin-bottom: 0.3rem;
-		}
-
-		.skill-card p {
-			color: #b6c4d3;
-			line-height: 1.7;
-		}
-
-		@media (max-width: 900px) {
-			.skills-grid {
-				grid-template-columns: 1fr;
-			}
-		}
-	</style>
-</ProfileShell>
+<SiteLayout activeNav="resume" title={{vi:'Hồ sơ | Nguyễn Văn Duy',en:'Resume | Nguyễn Văn Duy'}} description={{vi:'Học vấn, dự án kỹ thuật và công cụ của Nguyễn Văn Duy, sinh viên Khoa học máy tính.',en:'Education, engineering projects and tools of Nguyễn Văn Duy, Computer Science Student.'}}>
+  <div class="page-intro"><p class="eyebrow">Resume</p><h1><Copy vi="Hồ sơ" en="Resume" /></h1><p>Computer Science Student</p><div class="link-row"><a href="/cv"><Copy vi="Xem CV PDF" en="View PDF CV" /> <span aria-hidden="true">↗</span></a></div></div>
+  <div class="resume-sections">
+    <section class="resume-section"><h2><Copy vi="Học vấn" en="Education" /></h2><div><h3><Copy vi="Đại học Giao thông Vận tải" en="University of Transport and Communications" /></h3><p><Copy vi="Khoa học máy tính · Hà Nội" en="Computer Science · Hanoi" /></p><p class="muted"><Copy vi="2023–hiện tại" en="2023–present" /></p></div></section>
+    <section class="resume-section"><h2><Copy vi="Kinh nghiệm kỹ thuật" en="Engineering experience" /></h2><div class="experience-list">
+      <article><h3><a href="/projects/sites/">SITES</a></h3><p class="muted"><Copy vi="Dự án nghiên cứu và kỹ thuật · 2026" en="Research & Engineering Project · 2026" /></p><p><Copy vi="Chuẩn bị nghiên cứu về sự thay đổi của khái niệm trong tài liệu học thuật: research protocol, evidence ledger, evaluation và phạm vi Month-1. Chưa có product implementation." en="Research preparation for studying concept evolution in scholarly literature: research protocol, evidence ledger, evaluation and Month-1 scope. No current product implementation yet." /></p></article>
+      <article><h3><a href="/projects/opendownloader/">openDownloader</a></h3><p class="muted"><Copy vi="Dự án phần mềm độc lập · 2026" en="Independent Software Project · 2026" /></p><p><Copy vi="Ứng dụng desktop Rust/Tauri với frontend React, child-process media tools, SQLite và workflow kiểm tra/đóng gói. Có release công khai; giới hạn production support được ghi trên trang dự án." en="Rust/Tauri desktop application with a React frontend, child-process media tools, SQLite and check/packaging workflows. Public releases exist; production-support limits are recorded on the project page." /></p></article>
+    </div></section>
+    <section class="resume-section"><h2><Copy vi="Kỹ năng cốt lõi" en="Core skills" /></h2><div class="skills-list">
+      <div><h3><Copy vi="Công cụ dùng trong dự án" en="Tools used in projects" /></h3><p>Rust · TypeScript · React · Tauri · SQLite · Git · GitHub Actions</p><p class="muted"><Copy vi="Desktop/backend boundaries, process orchestration, validation, packaging và tài liệu kỹ thuật." en="Desktop/backend boundaries, process orchestration, validation, packaging and technical documentation." /></p></div>
+      <div><h3><Copy vi="Đang phát triển" en="Development areas" /></h3><p>ML Systems · MLOps · ML Infrastructure · Platform Engineering</p><p class="muted"><Copy vi="Research protocols, scholarly evidence, reproducibility và evaluation design." en="Research protocols, scholarly evidence, reproducibility and evaluation design." /></p></div>
+    </div></section>
+  </div>
+</SiteLayout>
+<style>
+ .resume-sections { max-width: 1040px; }
+ .resume-section { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px; padding-block: 36px; border-top: 1px solid var(--line); }
+ .resume-section > h2 { font-size: 1.1rem; }
+ .resume-section h3 { margin-bottom: 12px; }
+ .resume-section p + p { margin-top: 12px; }
+ .resume-section h3 a { text-decoration: none; display: inline-flex; min-height: 44px; align-items: center; }
+ .experience-list, .skills-list { display: grid; gap: 36px; }
+ @media(max-width:767px) { .resume-section { grid-template-columns: 1fr; gap: 24px; } }
+</style>

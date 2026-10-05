@@ -1,175 +1,46 @@
 ---
-import { SITE_TITLE } from '../consts';
-import HeaderLink from './HeaderLink.astro';
+import { Image } from 'astro:assets';
+import { profile, navItems } from '../data/site';
+import Copy from './Copy.astro';
+interface Props { activeNav?: string; }
+const { activeNav } = Astro.props;
 ---
-
 <header class="site-header">
-	<nav class="site-nav" aria-label="Primary">
-		<a class="site-brand" href="/">{SITE_TITLE}</a>
-		<div class="site-nav-links">
-			<HeaderLink href="/"><span data-i18n="nav.home">Home</span></HeaderLink>
-			<HeaderLink href="/about"><span data-i18n="nav.about">About</span></HeaderLink>
-			<HeaderLink href="/resume"><span data-i18n="nav.resume">Resume</span></HeaderLink>
-			<HeaderLink href="/portfolio"><span data-i18n="nav.portfolio">Portfolio</span></HeaderLink>
-			<HeaderLink href="/blog"><span data-i18n="nav.blog">Blog</span></HeaderLink>
-			<HeaderLink href="/gallery"><span data-i18n="nav.gallery">Gallery</span></HeaderLink>
-			<HeaderLink href="/cv"><span data-i18n="nav.cv">CV</span></HeaderLink>
-		</div>
-		<div style="display:flex;align-items:center;gap:0.5rem;">
-			<a class="site-nav-cta" href="/contact" data-i18n="nav.contact">Contact</a>
-		</div>
-	</nav>
-
-	<button id="lang-float" aria-label="Toggle language" title="Toggle language" style="position:fixed;right:18px;bottom:18px;z-index:60;min-width:44px;padding:0.5rem 0.8rem;border-radius:999px;border:1px solid rgba(120,169,255,0.18);background:linear-gradient(180deg,rgba(10,18,30,0.9),rgba(10,18,30,0.6));color:var(--text-strong);box-shadow:0 6px 18px rgba(0,0,0,0.45);">EN</button>
-
-	<script>
-		(function () {
-			const btn = document.getElementById('lang-float');
-			const translations = {
-				'en': {
-					'nav.home': 'Home',
-					'nav.about': 'About',
-					'nav.resume': 'Resume',
-					'nav.portfolio': 'Portfolio',
-					'nav.blog': 'Blog',
-					'nav.contact': 'Contact',
-					'nav.gallery': 'Gallery',
-					'nav.cv': 'CV',
-					'role.main': 'MLOps Engineer',
-					'section.about.title': 'About Me',
-					'section.resume.title': 'Resume',
-					'section.portfolio.title': 'Portfolio',
-					'section.blog.title': 'Blog',
-					'section.contact.title': 'Contact',
-					'section.gallery.title': 'Gallery',
-					'section.cv.title': 'CV',
-				},
-				'vi': {
-					'nav.home': 'Trang chủ',
-					'nav.about': 'Giới thiệu',
-					'nav.resume': 'Hồ sơ',
-					'nav.portfolio': 'Dự án',
-					'nav.blog': 'Blog',
-					'nav.contact': 'Liên hệ',
-					'nav.gallery': 'Thư viện',
-					'nav.cv': 'CV',
-					'role.main': 'MLOps Engineer',
-					'section.about.title': 'Về tôi',
-					'section.resume.title': 'Hồ sơ',
-					'section.portfolio.title': 'Dự án',
-					'section.blog.title': 'Blog',
-					'section.contact.title': 'Liên hệ',
-					'section.gallery.title': 'Thư viện',
-					'section.cv.title': 'CV',
-				},
-			};
-
-			function applyLang(lang) {
-				const els = document.querySelectorAll('[data-i18n]');
-				els.forEach((el) => {
-					const key = el.getAttribute('data-i18n');
-					if (translations[lang] && translations[lang][key]) {
-						el.innerText = translations[lang][key];
-					}
-				});
-				const roleEls = document.querySelectorAll('[data-i18n-role]');
-				roleEls.forEach((el) => {
-					if (translations[lang] && translations[lang]['role.main']) el.innerText = translations[lang]['role.main'];
-				});
-				if (btn) btn.textContent = lang === 'vi' ? 'EN' : 'VI';
-				localStorage.setItem('siteLang', lang);
-			}
-
-			function init() {
-				const cur = localStorage.getItem('siteLang') || 'en';
-				applyLang(cur);
-				if (btn) btn.addEventListener('click', () => applyLang(localStorage.getItem('siteLang') === 'vi' ? 'en' : 'vi'));
-			}
-
-			if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-			else init();
-		})();
-</script>
+  <div class="header-inner container">
+    <a class="identity" href="/">
+      <Image src={profile.photo} width={52} height={52} format="webp" alt="" class="avatar" loading="eager" />
+      <span class="identity-copy"><strong>{profile.name}</strong><span>{profile.role}</span></span>
+    </a>
+    <div class="header-utilities">
+      <button id="language-toggle" class="language-toggle" type="button" aria-label="Chuyển sang tiếng Anh" data-ui-aria="language" data-lang="vi" hidden><span class="lang-vi" aria-hidden="true">VI</span><span class="lang-divider" aria-hidden="true">/</span><span class="lang-en" aria-hidden="true">EN</span></button>
+      <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" hidden><span data-ui="menu">Menu</span><span aria-hidden="true" class="menu-indicator">+</span></button>
+    </div>
+    <nav id="primary-navigation" class="primary-nav" aria-label="Điều hướng chính" data-ui-aria="navigation">
+      {navItems.map(item => <a href={item.href} aria-current={item.id === activeNav ? 'page' : undefined}><Copy vi={item.vi} en={item.en} /></a>)}
+    </nav>
+  </div>
 </header>
-<style>
-	.site-header {
-		position: sticky;
-		top: 0;
-		z-index: 30;
-		padding: 1rem 1rem 0;
-		background: linear-gradient(180deg, rgba(8, 12, 24, 0.92), rgba(8, 12, 24, 0.72));
-		backdrop-filter: blur(18px);
-	}
-
-	.site-nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		width: min(1120px, calc(100% - 2rem));
-		margin: 0 auto;
-		padding: 0.9rem 1rem;
-		border: 1px solid rgba(180, 208, 255, 0.14);
-		border-radius: 999px;
-		background: rgba(8, 12, 24, 0.72);
-		box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
-	}
-
-	.site-brand {
-		font-size: 0.95rem;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--text-strong);
-		text-decoration: none;
-		white-space: nowrap;
-	}
-
-	.site-nav-links {
-		display: flex;
-		align-items: center;
-		gap: 0.3rem;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	.site-nav-cta {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 2.8rem;
-		padding: 0.7rem 1rem;
-		border-radius: 999px;
-		border: 1px solid rgba(120, 169, 255, 0.35);
-		background: linear-gradient(135deg, rgba(110, 166, 255, 0.18), rgba(42, 78, 155, 0.36));
-		color: var(--text-strong);
-		text-decoration: none;
-		font-weight: 600;
-		white-space: nowrap;
-	}
-
-	.site-nav-cta:hover {
-		border-color: rgba(170, 205, 255, 0.55);
-		background: linear-gradient(135deg, rgba(110, 166, 255, 0.28), rgba(42, 78, 155, 0.5));
-	}
-
-	@media (max-width: 820px) {
-		.site-header {
-			padding-inline: 0;
-		}
-
-		.site-nav {
-			width: calc(100% - 1rem);
-			border-radius: 1.4rem;
-			flex-wrap: wrap;
-			justify-content: center;
-			padding: 0.85rem;
-		}
-
-		.site-brand,
-		.site-nav-cta {
-			flex: 1 1 auto;
-			text-align: center;
-		}
-	}
-</style>
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const menu = document.querySelector<HTMLButtonElement>('#menu-toggle');
+  const mobile = window.matchMedia('(max-width: 767px)');
+  if (header && menu) {
+    function close(returnFocus = false) {
+      header!.classList.remove('menu-open');
+      menu!.setAttribute('aria-expanded', 'false');
+      if (returnFocus) menu!.focus();
+    }
+    header.classList.add('menu-enhanced');
+    menu.hidden = false;
+    menu.addEventListener('click', () => {
+      const open = menu.getAttribute('aria-expanded') !== 'true';
+      header.classList.toggle('menu-open', open);
+      menu.setAttribute('aria-expanded', String(open));
+    });
+    header.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') close(true);
+    });
+    header.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => close()));
+    mobile.addEventListener('change', () => close());
+  }
+</script>

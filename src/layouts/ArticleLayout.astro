@@ -1,0 +1,15 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SiteLayout from './SiteLayout.astro';
+import Copy from '../components/Copy.astro';
+interface Props { post: CollectionEntry<'blog'>; }
+const { post } = Astro.props;
+const { title, titleEn, description, descriptionEn, pubDate, lang } = post.data;
+---
+<SiteLayout activeNav="blog" title={{vi:`${title} | Nguyễn Văn Duy`,en:`${titleEn || title} | Nguyễn Văn Duy`}} description={{vi:description,en:descriptionEn || description}}>
+  <div class="link-row"><a href="/blog"><Copy vi="← Blog" en="← Blog" /></a></div>
+  <article class="prose" lang={lang}>
+    <div class="page-intro"><h1><Copy vi={title} en={titleEn || title} /></h1><p class="muted"><time datetime={pubDate.toISOString()}>{pubDate.toISOString().slice(0,10)}</time> · {lang.toUpperCase()}</p></div>
+    <slot />
+  </article>
+</SiteLayout>
