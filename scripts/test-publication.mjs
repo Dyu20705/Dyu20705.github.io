@@ -31,7 +31,7 @@ for (let i = 0; i < 5; i++) {
   await writeFile(path.join(projectsDir,`fixture-${i}.md`),`---\n${JSON.stringify(data)}\n---\n`);
 }
 for (let i = 0; i < 9; i++) {
-  await writeFile(path.join(postsDir,`owner-fixture-${i}.md`),`---\ntitle: Publication fixture ${i}\ndescription: Isolated test data, never published.\npubDate: 2026-10-01\nownerWritten: true\ndraft: false\n---\nIsolated test body.\n`);
+  await writeFile(path.join(postsDir,`owner-fixture-${i}.md`),`---\ntitle: Publication fixture ${i}\ndescription: Isolated test data, never published.\npubDate: 2026-10-01\nownerWritten: true\ndraft: false\n---\nAn MLOps Engineer may work on model deployment. This is a publication fixture, not the owner identity.\n`);
 }
 for (const [id, flags] of [['generated','ownerWritten: false\ndraft: false'],['draft','ownerWritten: true\ndraft: true'],['unclassified','']]) {
   await writeFile(path.join(postsDir,`${id}-fixture.md`),`---\ntitle: Unpublished fixture\ndescription: Test data.\npubDate: 2026-10-01\n${flags}\n---\nUnpublished.\n`);

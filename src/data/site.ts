@@ -1,3 +1,4 @@
+import { publicProfile } from './profile.js';
 import profilePhoto from '../assets/selfie/toi.png';
 import gallery01 from '../assets/img/IMG_20240927_082039_070.jpg';
 import gallery02 from '../assets/img/IMG_20241111_143050_109.jpg';
@@ -7,8 +8,7 @@ import gallery05 from '../assets/img/IMG_20241203_093918_015.jpg';
 import gallery06 from '../assets/img/IMG_20241203_103715_582.jpg';
 
 export const profile = {
-  name: 'Nguyễn Văn Duy', role: 'Computer Science Student',
-  email: 'nguyenvanduy20072005@gmail.com',
+  ...publicProfile,
   location: { vi: 'Hà Nội, Việt Nam', en: 'Hanoi, Vietnam' }, photo: profilePhoto,
 };
 export const navItems = [

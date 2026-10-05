@@ -2,14 +2,15 @@
 import '../styles/global.css';
 import BrowserIcon from '../assets/img/image.png';
 import { SITE_TITLE } from '../consts';
+import { publicProfile } from '../data/profile.js';
 import { Font } from 'astro:assets';
 interface Props { title: string; titleEn?: string; description: string; descriptionEn?: string; noindex?: boolean; }
 const { title, titleEn = title, description, descriptionEn = description, noindex = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const imageURL = new URL('/readme-preview.svg', Astro.site);
+const imageURL = new URL('/readme-preview.png', Astro.site);
 const person = {
-  '@context': 'https://schema.org', '@type': 'Person', name: 'Nguyễn Văn Duy',
-  url: Astro.site?.toString(), jobTitle: 'Computer Science Student',
+  '@context': 'https://schema.org', '@type': 'Person', name: publicProfile.name,
+  url: Astro.site?.toString(), jobTitle: publicProfile.role,
   sameAs: ['https://github.com/Dyu20705', 'https://www.linkedin.com/in/duynguyenvan05/'],
   knowsAbout: ['ML Systems', 'MLOps', 'ML Infrastructure', 'Platform Engineering'],
 };
@@ -36,9 +37,28 @@ const person = {
 <meta property="og:title" content={title} data-meta-vi={title} data-meta-en={titleEn} />
 <meta property="og:description" content={description} data-meta-vi={description} data-meta-en={descriptionEn} />
 <meta property="og:image" content={imageURL} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="Nguyễn Văn Duy — Computer Science Student" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} data-meta-vi={title} data-meta-en={titleEn} />
 <meta name="twitter:description" content={description} data-meta-vi={description} data-meta-en={descriptionEn} />
 <meta name="twitter:image" content={imageURL} />
 <script type="application/ld+json" set:html={JSON.stringify(person)} />
+
+<script is:inline>
+  // Pre-paint only: the shared controller handles controls and subsequent switches.
+  (() => {
+    let lang = 'vi';
+    try { if (localStorage.getItem('siteLang') === 'en') lang = 'en'; } catch {}
+    document.documentElement.lang = lang;
+    for (const el of document.querySelectorAll('[data-meta-vi]')) {
+      const value = el.dataset[lang === 'vi' ? 'metaVi' : 'metaEn'];
+      if (el.tagName === 'TITLE') el.textContent = value;
+      else el.setAttribute('content', value);
+    }
+    document.querySelector('[property="og:locale"]').content = lang === 'vi' ? 'vi_VN' : 'en_US';
+    document.querySelector('[property="og:locale:alternate"]').content = lang === 'vi' ? 'en_US' : 'vi_VN';
+  })();
+</script>

@@ -1,6 +1,6 @@
 # Responsive contract
 
-- 1200px and above: avatar/identity, seven text links and locale share one row.
+- 1200px and above: 64px avatar/identity, seven text links and locale share one row.
 - 768–1199px: identity/locale first row, navigation on a deliberate second row.
 - Below 768px: compact identity, locale and Menu; expanded links form a list.
 - Without JavaScript all navigation remains visible. Hidden links are removed

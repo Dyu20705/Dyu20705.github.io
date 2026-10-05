@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "validate:build": "node scripts/validate-build.mjs",
     "verify": "npm run build && npm run validate:build",
-    "astro": "astro"
+    "astro": "astro",
+    "test:publication": "node scripts/test-publication.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.3",

@@ -7,7 +7,7 @@ software projects, resume, owner-written notes, photographs and contact.
 npm ci
 npm run dev
 npm run verify
-node scripts/test-publication.mjs
+npm run test:publication
 ```
 
 `verify` builds the site and checks generated routes, links, landmarks, content
@@ -26,12 +26,14 @@ withdrawn article and archived project addresses have noindex notices and are
 excluded from RSS/sitemap.
 
 Vietnamese is the static default. The language utility updates visible copy,
-document language and metadata without changing canonical URLs. Browser checks
+document language and metadata without changing canonical URLs. A small head
+bootstrap restores saved English before body copy paints. Browser checks
 can be run with `node scripts/review-browser.mjs` when Playwright and Chrome are
 available externally; no browser dependency is included in production.
 For example: `PORTFOLIO_PLAYWRIGHT_PATH=/tmp/portfolio-browser/node_modules/playwright node scripts/review-browser.mjs`.
 The publication regression test uses an isolated temporary copy and checks
-owner/draft exclusion, pagination and last-post removal with a populated cache.
+owner/draft exclusion, pagination and last-post removal with a populated cache;
+it runs as a separate CI step after build validation.
 
 GitHub Pages publishing remains managed by the existing quality-gated workflow.
 The redesign branch is reviewed without merging or deploying.

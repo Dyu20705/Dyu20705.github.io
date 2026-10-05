@@ -14,8 +14,8 @@
     "en": "Research · Data · Systems"
   },
   "summary": {
-    "vi": "Nghiên cứu sự thay đổi của khái niệm khoa học và công nghệ qua tài liệu học thuật. Hiện ở giai đoạn chuẩn bị nghiên cứu Month-1.",
-    "en": "Research into how scientific and technological concepts evolve in scholarly literature. Currently in Month-1 research preparation."
+    "vi": "Nghiên cứu sự thay đổi của khái niệm khoa học và công nghệ qua tài liệu học thuật.",
+    "en": "Research into how scientific and technological concepts evolve in scholarly literature."
   },
   "stack": [
     "Research protocols",

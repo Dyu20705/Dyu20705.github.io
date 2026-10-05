@@ -1,3 +1,4 @@
+import { publicProfile } from '../src/data/profile.js';
 // Optional review tooling: Playwright is installed outside this repository.
 // PORTFOLIO_PLAYWRIGHT_PATH=/path/to/playwright node scripts/review-browser.mjs
 import { createRequire } from 'node:module';
@@ -107,7 +108,7 @@ try {
     const metaTitle = await page.title();
     record(metaTitle.startsWith(next === 'en' ? 'About' : 'Giới thiệu'), `${lang}: metadata title mismatch`);
     await page.locator('.copy-email').click();
-    record(await page.evaluate(() => navigator.clipboard.readText()) === 'nguyenvanduy20072005@gmail.com', `${lang}: copy email`);
+    record(await page.evaluate(() => navigator.clipboard.readText()) === publicProfile.email, `${lang}: copy email`);
     // Visible focus and contrast on representative screens.
     await page.locator('.identity').focus();
     await page.keyboard.press('Tab');
@@ -115,6 +116,28 @@ try {
     record(await page.locator('.primary-nav a').first().evaluate(el => getComputedStyle(el).outlineStyle === 'solid'), `${lang}: focus outline`);
     await context.close();
   }
+  // Block deferred bundles: a returning English visitor must see English using
+  // only the synchronous head bootstrap and CSS, before the controller runs.
+  const prepaint = await browser.newContext({viewport:{width:390,height:900}});
+  await prepaint.addInitScript(() => localStorage.setItem('siteLang','en'));
+  await prepaint.route('**/*.js', route => route.abort());
+  await prepaint.route(origin + '/', async route => {
+    const response = await route.fetch();
+    const html = (await response.text()).replace(/<script\b[^>]*type=["']module["'][^>]*>[\s\S]*?<\/script>/gi, '');
+    await route.fulfill({response,body:html});
+  });
+  const prepaintPage = await prepaint.newPage();
+  await prepaintPage.goto(origin + '/');
+  record(await prepaintPage.locator('html').getAttribute('lang') === 'en', 'Pre-paint: saved English not applied');
+  record(await prepaintPage.locator('#language-toggle').isHidden(), 'Pre-paint: deferred controller unexpectedly ran');
+  const prepaintState = await prepaintPage.evaluate(() => ({
+    wrongCopy: [...document.querySelectorAll('[data-copy-lang]')].some(el => el.getClientRects().length && el.dataset.copyLang !== 'en'),
+    description: document.querySelector('meta[name="description"]').content,
+    expected: document.querySelector('meta[name="description"]').dataset.metaEn,
+    og: document.querySelector('meta[property="og:locale"]').content,
+  }));
+  record(!prepaintState.wrongCopy && prepaintState.description === prepaintState.expected && prepaintState.og === 'en_US', 'Pre-paint: visible copy or metadata mismatch');
+  await prepaint.close();
   const fallback = await browser.newContext({javaScriptEnabled:false,viewport:{width:360,height:900}});
   const fallbackPage = await fallback.newPage();
   await fallbackPage.goto(origin + '/');

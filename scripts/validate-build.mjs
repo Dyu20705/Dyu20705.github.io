@@ -1,5 +1,6 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import { publicProfile } from '../src/data/profile.js';
 
 const root = process.cwd();
 const dist = path.join(root, 'dist');
@@ -103,8 +104,13 @@ for (const file of htmlFiles) {
 		if (count !== 1) failures.push(`${relativeFile}: expected one <${landmark}>, found ${count}`);
 	}
 	if (!html.includes('id="primary-navigation"')) failures.push(`${relativeFile}: missing shared navigation`);
-	if (!html.includes('nguyenvanduy20072005@gmail.com')) failures.push(`${relativeFile}: missing footer email`);
-	for (const obsolete of [/MLOps Engineer/i, /MLOps Control Room/i, /command-dialog/i, /command-open/i, /lang-float/i, /controlRoom/i, /AudioContext/, /design-lab/i]) {
+	const footer = html.match(/<footer\b[^>]*>[\s\S]*?<\/footer>/i)?.[0] || '';
+	const header = html.match(/<header\b[^>]*>[\s\S]*?<\/header>/i)?.[0] || '';
+	if (!footer.includes(`mailto:${publicProfile.email}`)) failures.push(`${relativeFile}: missing footer contact contract`);
+	if (!header.includes(publicProfile.name) || !header.includes(publicProfile.role) || /MLOps Engineer/i.test(header)) {
+		failures.push(`${relativeFile}: shared header violates student identity contract`);
+	}
+	for (const obsolete of [/MLOps Control Room/i, /command-dialog/i, /command-open/i, /lang-float/i, /controlRoom/i, /AudioContext/, /design-lab/i]) {
 		if (obsolete.test(html)) failures.push(`${relativeFile}: contains removed legacy UI or identity (${obsolete})`);
 	}
 	if (!/<html\b[^>]*\blang=/i.test(html)) failures.push(`${relativeFile}: missing html[lang]`);

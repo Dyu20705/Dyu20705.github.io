@@ -25,8 +25,17 @@ machine-readable results are local review artifacts in `/tmp/portfolio-review`.
 - Publication regression: isolated 7-project/9-post fixture passes pagination;
   generated, draft and unclassified posts do not publish. Removing the final
   post with warm cache clears stored writing, generated routes and RSS.
-- No package/lockfile or deploy-workflow change. Approximately 3KB of homepage
-  client JS; local font and responsive WebP images, no framework hydration.
+- Review polish: npm scripts/CI now run publication regression after verify;
+  package dependencies and lockfile remain unchanged. The profile contract is
+  shared with validators, and a valid article may discuss an MLOps Engineer.
+- A returning EN visitor shows EN copy/metadata with all module scripts removed
+  and external JS blocked: the head bootstrap runs before body content. No-JS
+  still renders static VI and accessible navigation.
+- Social preview: original SVG exported to PNG, verified 1200×630; OG/Twitter
+  metadata points to the PNG. Desktop avatar is 64px; mobile remains compact.
+- Homepage now has current-focus hero link and one Selected Work list. Internal
+  Month-1 terminology stays in the case study. No framework hydration or new
+  runtime dependency.
 
 ## Remaining boundaries
 
@@ -36,8 +45,12 @@ are selected client-side; Vietnamese remains static default without URL migratio
 The existing dependency lockfile reports 9 advisories; upgrades are separate work.
 
 OWNER MUST WRITE: genuine future articles and optional personal narrative.
-Graduation confirmation remains with the owner: old PDF says 2027, newer brief
-says 2028; HTML currently states 2023–present. PDF content is unchanged.
+Owner confirmed expected graduation 2028; HTML Resume is updated. The owner
+will edit the PDF later; the preserved document still says 2027 and must be
+synchronized before public release.
 
 No merge, deployment, DNS change or destructive remote operation is part of this
-redesign. Only the redesign branch is pushed once after successful validation.
+redesign. Only the redesign branch is pushed once after successful validation in each
+authorized implementation batch. Review requests a draft PR to main for a
+clean-checkout CI run; PR checks do not deploy. Remote CI results are reported
+with the PR, separately from the local evidence documented here.

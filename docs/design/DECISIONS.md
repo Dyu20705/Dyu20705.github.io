@@ -23,13 +23,13 @@
   Their existing detail URLs receive a factual archive notice with no stale
   capability claims. Withdrawn generated article URLs receive a noindex notice;
   neither notices nor removed writing appear in RSS/sitemap.
-- No bilingual URL migration: Vietnamese static HTML plus one storage-backed
-  locale controller updates visible copy, document language and metadata.
-  Canonical URLs do not change. No framework/runtime dependency is added.
-- PDF CV remains byte-for-byte unchanged. It currently states graduation 2027;
-  the newer owner brief says expected 2028. The HTML therefore records the
-  supported start date as 2023–present, without asserting a disputed graduation
-  year. The owner can confirm the expected year separately; the PDF is not edited.
+- Owner confirmed Vietnamese static default during review. No bilingual URL
+  migration: a small head bootstrap restores the saved locale and metadata
+  before body copy paints; CSS chooses the visible language immediately. One
+  storage-backed controller handles subsequent switches and utilities.
+- Owner confirmed expected graduation 2028. HTML Resume states this explicitly.
+  The owner will update the PDF later; both existing PDF copies remain unchanged
+  and currently state 2027. PDF/HTML agreement remains a pre-release owner task.
 - A temporary publication test using shared node_modules exposed Astro's empty
   glob behavior: the loader returns without clearing stored entries. The new
   writing loader explicitly clears an empty collection, and cacheDir is local to
@@ -40,3 +40,18 @@
   remaining assets because CV preservation is required. Both PDF copies and the
   remaining assets are preserved; only references actually used enter the page
   bundles. Public/source PDFs were compared against Git and are byte-identical.
+- Bounded review polish: current focus is one hero link; Selected Work contains
+  one listing each for SITES/openDownloader. Public SITES summary omits internal
+  Month-1 wording; research gates remain in the detailed case study. Desktop
+  avatar is 64px with a slightly larger name; compact mobile identity is retained.
+- Social preview is a 1200×630 PNG exported from the original local SVG. Metadata
+  includes PNG MIME type and dimensions; no reference assets were introduced.
+- Publication regression runs in CI after verify. Contact/identity validation
+  imports the same public profile as pages; career wording in an owner article
+  is permitted. Markdown/MDX case-study body migration is deferred until richer
+  owner-authored content warrants it; no schema migration in this polish.
+- Dependency audit triage confirms the same nine affected packages. This site
+  deploys static files, not a Node server or runtime image-optimization endpoint.
+  Build tooling remains affected (Astro, sharp and transitive parsing/processing
+  libraries); static deployment does not resolve those advisories. Package/lock
+  upgrades are separate follow-up work, not silently combined with this polish.
