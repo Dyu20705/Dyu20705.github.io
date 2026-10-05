@@ -27,5 +27,16 @@
   locale controller updates visible copy, document language and metadata.
   Canonical URLs do not change. No framework/runtime dependency is added.
 - PDF CV remains byte-for-byte unchanged. It currently states graduation 2027;
-  the newer owner brief says expected 2028. Resolve HTML date with the owner,
-  and report the PDF discrepancy without silently editing the document.
+  the newer owner brief says expected 2028. The HTML therefore records the
+  supported start date as 2023–present, without asserting a disputed graduation
+  year. The owner can confirm the expected year separately; the PDF is not edited.
+- A temporary publication test using shared node_modules exposed Astro's empty
+  glob behavior: the loader returns without clearing stored entries. The new
+  writing loader explicitly clears an empty collection, and cacheDir is local to
+  `.astro/cache` instead of shared dependency directories. Validation rejects
+  writing routes without approved source and requires empty RSS/Blog when no
+  approved posts exist. The warm-cache last-post-removal regression is tested.
+- Automatic review rejected cleanup of the duplicate source PDF and other
+  remaining assets because CV preservation is required. Both PDF copies and the
+  remaining assets are preserved; only references actually used enter the page
+  bundles. Public/source PDFs were compared against Git and are byte-identical.
